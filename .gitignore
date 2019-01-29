@@ -1,0 +1,12 @@
+*.pyc
+data/
+__pycache__/
+checkpoints/
+*.pth
+*.jpg
+*.tif
+*.png
+images/
+outputs/
+weights/
+
