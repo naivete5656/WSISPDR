@@ -1,0 +1,11 @@
+images/
+
+__pycache__/
+
+.idea/
+
+weight/
+
+output/
+
+*.tif
