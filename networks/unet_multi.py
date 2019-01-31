@@ -1,4 +1,3 @@
-from .unet_parts import *
 import torch.nn as nn
 import torch
 

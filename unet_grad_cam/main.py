@@ -17,7 +17,7 @@ from call_backprop import *
 
 if __name__ == "__main__":
     gpu = True
-    plot_size = 12
+    plot_size = 9
     radius = 1
     date = datetime.now().date()
 
@@ -32,21 +32,21 @@ if __name__ == "__main__":
     output_path = Path(f"./output/{date}/test18")
     weight_path = f"../weights/MSELoss/best_{plot_size}.pth"
 
-    torch.cuda.set_device(0)
+    torch.cuda.set_device(1)
 
     # net = UNet(n_channels=1, n_classes=1)
     # net.load_state_dict(torch.load(weight_path, map_location={"cuda:3": "cuda:0"}))
     # response_map = TopDownBackprop(net)
     # response_map.inference()
 
-    # bp = TopDown(input_path, output_path, weight_path)
-    # bp.main()
-
-    bp = BackPropBackGround(
-        input_path=input_path, output_path=output_path, weight_path=weight_path
-    )
-
+    bp = TopDown(input_path, output_path, weight_path)
     bp.main()
+
+    # bp = BackPropBackGround(
+    #     input_path=input_path, output_path=output_path, weight_path=weight_path
+    # )
+
+    # bp.main()
 
     # bp = BackpropagationEachPeak(
     #     input_path=input_path, output_path=output_path, weight_path=weight_path

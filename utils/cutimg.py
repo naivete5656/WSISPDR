@@ -4,10 +4,16 @@ from PIL import Image
 import numpy as np
 
 
-def cut_image(plot_size="6", sequence=18, size=320, override=100, norm_value=4096):
-    paths = sorted(Path("../images/test").glob("*.tif"))
+def cut_image(plot_size="6", sequence=18, size=320, override=100, norm_value=255):
+    paths = sorted(
+        Path(
+            "/home/kazuya/weakly_supervised_instance_segmentation/phase_off_background_no/output/test_norm"
+        ).glob("*.tif")
+    )
     i = 0
-    savepath = Path("../images/test_cut")
+    savepath = Path(
+        "/home/kazuya/weakly_supervised_instance_segmentation/test_norm_cut"
+    )
     savepath.mkdir(parents=True, exist_ok=True)
     for path in paths:
         img = np.array(Image.open(path)).astype(np.float32)

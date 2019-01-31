@@ -138,7 +138,7 @@ class _TLink(_NLink):
                 )
 
         # 前景seed
-        x, y = np.where((self.detection_result > 200) | (self.backprop_result > 10))
+        x, y = np.where((self.detection_result > 200) | (self.backprop_result > 3))
         for index in zip(x, y):
             current_index = self.row * index[1] + index[0]
             self.graph.add_edge("s", current_index, capacity=1_000_000)

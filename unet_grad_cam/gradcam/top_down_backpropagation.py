@@ -7,6 +7,7 @@ import torch.nn.functional as F
 import numpy as np
 from scipy.misc import imresize
 from .pr_conv import pr_conv2d
+from .gaidedbackprop import GuidedBackpropReLU,guide
 
 
 import numpy as np
@@ -70,9 +71,9 @@ class TopDownBackprop(nn.Sequential):
             class_response_maps.backward(grad_output, retain_graph=True)
             img = input.grad.detach().sum(1).clone().clamp(min=0).cpu().numpy()
             import matplotlib.pyplot as plt
-
-            plt.imshow(img[0]), plt.show()
-            prms.append(input.grad.detach().sum(1).clone().clamp(min=0).cpu().numpy()[0])
+            prms.append(
+                input.grad.detach().sum(1).clone().clamp(min=0).cpu().numpy()[0]
+            )
         return prms
 
     def train(self, mode=True):
@@ -84,6 +85,37 @@ class TopDownBackprop(nn.Sequential):
 
     def inference(self):
         super().train(False)
+        self._patch()
+        self.inferencing = True
+        return self
+
+
+class TopDownAfterReLu(TopDownBackprop):
+    def __init__(self, *args, **kargs):
+        super().__init__(*args, **kargs)
+        self.count = 0
+        super().train(False)
+
+    def _patch(self):
+        for module in self.modules():
+            if self.count < 3:
+                if isinstance(module, nn.Conv2d):
+                    module._original_forward = module.forward
+                    module.forward = MethodType(pr_conv2d, module)
+                    self.count += 1
+            elif isinstance(module, nn.ReLU):
+                module._original_forward = module.forward
+                module.forward = MethodType(guide, module)
+
+
+        # modules = list(self.modules())
+        # for module in modules:
+        #     for i, child in enumerate(module.children()):
+        #         if isinstance(child, nn.ReLU):
+        #             module._modules[str(i)] = GuidedBackpropReLU()
+
+    def inference(self):
+        # super().train(False)
         self._patch()
         self.inferencing = True
         return self

@@ -121,7 +121,7 @@ for frame = 1:length(ori_paths)
     precd_img=precondition_local_phase_contrast(img,fpos,basisList,kernelList,optparas,kernparas,mode,debug);
     
     % normalize
-%     precd_img=normalize(precd_img);
+    precd_img=normalize(precd_img);
     
     precd_img = (precd_img-min(precd_img(:)))/(max(precd_img(:))-min(precd_img(:)));
     
@@ -129,7 +129,7 @@ for frame = 1:length(ori_paths)
     
 %     figure(1),imshow(precd_img);
     
-    save_path = sprintf('./output/test/%05d.tif',frame);
+    save_path = sprintf('./output/test_norm/%05d.tif',frame-1);
     imwrite(precd_img,save_path);
 end
 

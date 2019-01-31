@@ -1,7 +1,5 @@
-from utils import *
-import torch
+from ..utils import *
 from pathlib import Path
-from eval import eval_net
 from datetime import datetime
 from PIL import Image
 import cv2
@@ -142,13 +140,13 @@ if __name__ == "__main__":
 
     date = datetime.now().date()
     gpu = True
-    plot_size = 6
+    plot_size = 12
     key = 1
     models = {1: UNet, 2: UNetCascade, 3: UNetInternalCascade, 4: UnetMultiFixedWeight}
 
     weight_path = f"../weights/MSELoss/best_{plot_size}.pth"
-    root_path = Path("../images/sequ_cut/sequ18")
-    save_path = Path("./output/{}/test18/{}".format(date, plot_size))
+    root_path = Path("../images/sequence/sequ2-0303")
+    save_path = Path("./output/{}/test2/{}".format(date, plot_size))
 
     net = models[key](n_channels=1, n_classes=1)
     net.cuda()

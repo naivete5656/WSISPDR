@@ -8,20 +8,18 @@ import torch.nn.functional as F
 
 
 class GuidedBackpropReLU(Function):
-    def forward(self, input):
+    @staticmethod
+    def forward(ctx, input):
         positive_mask = (input > 0).type_as(input)
         output = torch.addcmul(
             torch.zeros(input.size()).type_as(input), input, positive_mask
         )
-        self.save_for_backward(input, output)
+        ctx.save_for_backward(input, output)
         return output
 
-    def backward(self, grad_output):
-        # import pdb
-        #
-        # pdb.set_trace()
-
-        input, output = self.saved_tensors
+    @staticmethod
+    def backward(ctx, grad_output):
+        input, output = ctx.saved_tensors
 
         positive_mask_1 = (input > 0).type_as(grad_output)
         positive_mask_2 = (grad_output > 0).type_as(grad_output)
@@ -34,6 +32,11 @@ class GuidedBackpropReLU(Function):
         )
 
         return grad_input
+
+
+def guide(self, input):
+    output = GuidedBackpropReLU.apply(input)
+    return output
 
 
 class GuidedBack(nn.Module):

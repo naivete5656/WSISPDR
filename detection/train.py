@@ -1,8 +1,14 @@
 from tqdm import tqdm
 from torch import optim
-from .eval import *
-from .unet import *
-from .utils import get_imgs_and_masks, batch, get_imgs_internal, get_imgs_multi
+from eval import *
+import os
+import sys
+
+path = os.path.join(os.path.dirname(__file__), "../")
+sys.path.append(path)
+
+from networks import *
+from utils import get_imgs_and_masks, batch, get_imgs_internal, get_imgs_multi
 from pathlib import Path
 import matplotlib.pyplot as plt
 from datetime import datetime
@@ -11,17 +17,17 @@ import numpy as np
 
 class TrainNet:
     def __init__(
-        self,
-        net,
-        mode,
-        epochs,
-        batch_size,
-        lr,
-        gpu,
-        plot_size,
-        train_path,
-        val_path,
-        weight_path,
+            self,
+            net,
+            mode,
+            epochs,
+            batch_size,
+            lr,
+            gpu,
+            plot_size,
+            train_path,
+            val_path,
+            weight_path,
     ):
         self.net = net
         self.mode = mode
@@ -129,16 +135,16 @@ class TrainNet:
 
 class TrainMulti(TrainNet):
     def __init__(
-        self,
-        net,
-        epochs,
-        batch_size,
-        lr,
-        gpu,
-        plot_size,
-        train_path,
-        val_path,
-        weight_path,
+            self,
+            net,
+            epochs,
+            batch_size,
+            lr,
+            gpu,
+            plot_size,
+            train_path,
+            val_path,
+            weight_path,
     ):
         super().__init__(
             net,
@@ -233,11 +239,11 @@ class TrainMulti(TrainNet):
 if __name__ == "__main__":
     torch.cuda.set_device(1)
     mode = "single"
-    plot_size = 20
+    plot_size = 12
     date = datetime.now().date()
-    train_path = Path("./images/challenge/fr1_center")
-    val_path = Path("./images/challenge/val_center")
-    save_weight_path = Path("./weight/{}/challenge/best_{}.pth".format(date, plot_size))
+    train_path = Path("../images/challenge_cut/fr1_center")
+    val_path = Path("../images/challenge_cut/val_center")
+    save_weight_path = Path("../weight/{}/challenge/best_{}.pth".format(date, plot_size))
 
     models = {"single": UNet, "multi": UnetMultiFixedWeight}
     net = models[mode](n_channels=1, n_classes=1)
@@ -256,4 +262,4 @@ if __name__ == "__main__":
         weight_path=save_weight_path,
     )
 
-    train.train()
+    train.main()

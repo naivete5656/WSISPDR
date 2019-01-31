@@ -5,6 +5,11 @@ import matplotlib.pyplot as plt
 import cv2
 from skimage.feature import peak_local_max
 from pathlib import Path
+import xml.etree.ElementTree as ET
+import pandas as pd
+from PIL import Image
+from utils import local_maxima
+
 
 def optimum(target, pred, dist_threshold):
     """
@@ -135,4 +140,69 @@ def gaus_filter(img, kernel_size, sigma):
     return img_t
 
 
+def gt_id_gen():
+    f_path = Path('./image/gt_id.txt')
+
+    tree = ET.parse('./image/sequence18.xml')
+    root = tree.getroot()
+    annotations = []
+    for i in root.findall(".//s"):
+        annotations.append([int(float(i.get('i'))), int(float(i.get('x'))), int(float(i.get('y')))])
+    j = 0
+    annotations = np.array(annotations)
+    with f_path.open(mode='w') as f:
+        for i in range(600, 700):
+            frame_per_annotations = annotations[annotations[:, 0] == (i - 1)]
+            for annotation in frame_per_annotations:
+                f.write('%d,%d,%d,%d\n' % (j, i, annotation[2], annotation[1]))
+                j += 1
+
+
+def matching():
+    # targetのIDを取ってきて端削除
+    gts = np.loadtxt('./image/gt_id.txt', delimiter=',')
+    gts = gts[(10 < gts[:, 2]) | (gts[:, 2] < 1030)]
+    gts = gts[(10 < gts[:, 3]) | (gts[:, 3] < 1382)]
+
+    # 検出できたIDを保持する配列
+    id_lis = np.zeros((gts.shape[0], 5), dtype=np.int64)
+    id_lis[:, 0] = gts[:, 0]
+    df = pd.DataFrame(data=id_lis[:, 1:5], columns=['expert1', 'expert2', 'expert3', 'expert4'])
+
+    # plot_size = '3'
+    # expert = 'expert1'
+    # df = associate(plot_size, gts, expert, df)
+
+    plot_size = '6'
+    expert = 'expert2'
+    df = associate(plot_size, gts, expert, df)
+
+    plot_size = '9'
+    expert = 'expert3'
+    df = associate(plot_size, gts, expert, df)
+
+    plot_size = '12'
+    expert = 'expert4'
+    df = associate(plot_size, gts, expert, df)
+    df.to_csv('./output/each_expert_tp.csv')
+
+
+def associate(plot_size, gts, expert, df):
+    res_paths = sorted(Path('/home/kazuya/ssd/detection/output/test18/MSELoss/%s/res' % plot_size).glob('*.tif'))
+    ori_paths = sorted(Path('./image/originalTiff18').glob('*.tif'))
+    paths = zip(res_paths, ori_paths)
+    for i, path in enumerate(paths):
+        # 画像読み込み
+        img = np.array(Image.open(str(path[0])))
+        ori = np.array(Image.open(str(path[1])))
+        # local local_maxima取得
+        res = local_maxima(img, 100, 2)
+        gt = gts[gts[:, 1] == i + 600][:, [3, 2, 0]]
+
+        # 対応付
+        associate_id = optimum(gt, res, 10).astype(int)
+
+        # 対応付けされたID
+        df.loc[gt[associate_id[:, 0]][:, 2], expert] = 1
+    return df
 

@@ -19,26 +19,6 @@ def normalize(x):
     return x / 255
 
 
-def get_imgs_and_masks_boundaries(dir_img, dir_mask, dir_boundary):
-    """Return all the couples (img, mask)"""
-    paths = list(dir_img.glob("*.tif"))
-    random.shuffle(list(paths))
-
-    imgs = to_cropped_imgs(paths, dir_img)
-    imgs_switched = map(hwc_to_chw, imgs)
-    imgs_normalized = map(normalize, imgs_switched)
-
-    masks = to_cropped_imgs(paths, dir_mask)
-    masks_switched = map(hwc_to_chw, masks)
-    masks_normalized = map(normalize, masks_switched)
-
-    boundaries = to_cropped_imgs(paths, dir_boundary)
-    boundaries_switched = map(hwc_to_chw, boundaries)
-    boundaries_normalized = map(normalize, boundaries_switched)
-
-    return zip(imgs_normalized, masks_normalized, boundaries_normalized)
-
-
 def batch(iterable, batch_size):
     """Yields lists by batch"""
     b = []
@@ -63,3 +43,101 @@ def local_maxima(img, threshold=100, dist=2):
     for j in range(1, labels):
         data = np.append(data, [[center[j, 0], center[j, 1]]], axis=0).astype(int)
     return data
+
+
+def get_imgs_and_masks(dir_img, dir_mask):
+    """Return all the couples (img, mask)"""
+    paths = list(dir_img.glob("*.tif"))
+    random.shuffle(list(paths))
+    imgs = to_cropped_imgs(paths, dir_img)
+    # need to transform from HWC to CHW
+    imgs_switched = map(hwc_to_chw, imgs)
+    imgs_normalized = map(normalize, imgs_switched)
+    masks = to_cropped_imgs(paths, dir_mask)
+    masks_switched = map(hwc_to_chw, masks)
+    masks_normalized = map(normalize, masks_switched)
+    return zip(imgs_normalized, masks_normalized)
+
+
+def get_imgs_and_masks_boundaries(dir_img, dir_mask, dir_boundary):
+    """Return all the couples (img, mask)"""
+    paths = list(dir_img.glob("*.tif"))
+    random.shuffle(list(paths))
+
+    imgs = to_cropped_imgs(paths, dir_img)
+    imgs_switched = map(hwc_to_chw, imgs)
+    imgs_normalized = map(normalize, imgs_switched)
+
+    masks = to_cropped_imgs(paths, dir_mask)
+    masks_switched = map(hwc_to_chw, masks)
+    masks_normalized = map(normalize, masks_switched)
+
+    boundaries = to_cropped_imgs(paths, dir_boundary)
+    boundaries_switched = map(hwc_to_chw, boundaries)
+    boundaries_normalized = map(normalize, boundaries_switched)
+
+    return zip(imgs_normalized, masks_normalized, boundaries_normalized)
+
+
+def get_imgs_cascade(dir_img, dir_before, dir_after):
+    """Return all the couples (img, mask)"""
+    paths = list(dir_img.glob("*.tif"))
+    random.shuffle(list(paths))
+    imgs = to_cropped_imgs(paths, dir_img)
+    # need to transform from HWC to CHW
+    imgs_switched = map(hwc_to_chw, imgs)
+    imgs_normalized = map(normalize, imgs_switched)
+
+    masks = to_cropped_imgs(paths, dir_before)
+    masks_switched = map(hwc_to_chw, masks)
+    before_normalized = map(normalize, masks_switched)
+
+    masks = to_cropped_imgs(paths, dir_before)
+    masks_switched = map(hwc_to_chw, masks)
+    after_normalized = map(normalize, masks_switched)
+    return zip(imgs_normalized, before_normalized, after_normalized)
+
+
+def get_imgs_internal(dir_img, dir_before, dir_after):
+    """Return all the couples (img, mask)"""
+    paths = list(dir_img.glob("*.tif"))
+    random.shuffle(list(paths))
+    imgs = to_cropped_imgs(paths, dir_img)
+    # need to transform from HWC to CHW
+    imgs_switched = map(hwc_to_chw, imgs)
+    imgs_normalized = map(normalize, imgs_switched)
+
+    masks = to_cropped_imgs(paths, dir_before)
+    masks_switched = map(hwc_to_chw, masks)
+    before_normalized = map(normalize, masks_switched)
+
+    feature = get_feature_map(paths, dir_after)
+    return zip(imgs_normalized, before_normalized, feature)
+
+
+def get_imgs_multi(ori, ex1, ex2, ex3):
+    paths = list(ori.glob("*.tif"))
+    random.shuffle(list(paths))
+
+    imgs = to_cropped_imgs(paths, ori)
+    imgs_switched = map(hwc_to_chw, imgs)
+    imgs_normalized = map(normalize, imgs_switched)
+
+    imgs = to_cropped_imgs(paths, ex1)
+    imgs_switched = map(hwc_to_chw, imgs)
+    ex1_normalized = map(normalize, imgs_switched)
+
+    imgs = to_cropped_imgs(paths, ex2)
+    imgs_switched = map(hwc_to_chw, imgs)
+    ex2_normalized = map(normalize, imgs_switched)
+
+    imgs = to_cropped_imgs(paths, ex3)
+    imgs_switched = map(hwc_to_chw, imgs)
+    ex3_normalized = map(normalize, imgs_switched)
+
+    return zip(imgs_normalized, ex1_normalized, ex2_normalized, ex3_normalized)
+
+
+def get_feature_map(ids, dir_after):
+    for id in ids:
+        yield np.load(dir_after / Path(id.name[:-4] + ".npy"))[0]

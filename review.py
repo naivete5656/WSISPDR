@@ -20,25 +20,35 @@ from statistics import mean
 
 def original_add_pred():
     # original 画像に　外線を加える
-    img = cv2.imread("./outputs/2019-01-18/test/mask_pred/00009.tif", 0)
-    # img = cv2.imread("./outputs/2019-01-18/test/mask_pred/00000.tif", 0)
-    mask = np.zeros(img.shape, dtype=np.uint8)
-    plt.imshow(img > 0.5), plt.show()
-    contours = measure.find_contours(img, 0.5)
-    for contour in contours:
-        for x, y in contour:
-            mask[int(x), int(y)] = 255
-    # img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
-    # mask_color = np.zeros(img.shape)
-    # mask_color[:, :, 0] = mask
-    original = cv2.imread("./images/test/exp1_F0003-00700.tif", -1)
-    # original = cv2.imread("./images/test/exp1_F0002-00300.tif", -1)
-    original = (original / 4096 * 255).astype(np.uint8)
-    original = cv2.cvtColor(original, cv2.COLOR_GRAY2BGR)
-    mask_color = np.zeros(original.shape, dtype=np.uint8)
-    mask_color[:, :, 2] = mask
-    img = cv2.addWeighted(original, 0.8, mask_color, 0.2, 1)
-    cv2.imwrite("out.png", img)
+    input_path = sorted(
+        Path(
+            "/home/kazuya/weakly_supervised_instance_segmentation/outputs/pred/sophisticated_pred/"
+        ).glob("*.tif")
+    )
+    original_path = sorted(Path("./images/test/ori").glob("*.tif"))
+    for i, path in enumerate(input_path):
+        img = cv2.imread(str(path), 0)
+        # img = cv2.imread("./outputs/2019-01-18/test/mask_pred/00000.tif", 0)
+        mask = np.zeros(img.shape, dtype=np.uint8)
+        plt.imshow(img > 0.5), plt.show()
+        for label in range(1, img.max() + 1):
+            contours = measure.find_contours(img, 0.5)
+            for contour in contours:
+                for x, y in contour:
+                    mask[int(x), int(y)] = 255
+        # img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+        # mask_color = np.zeros(img.shape)
+        # mask_color[:, :, 0] = mask
+        original = cv2.imread(str(original_path[i]), -1)
+        # original = cv2.imread("./images/test/exp1_F0002-00300.tif", -1)
+        original = (original / 4096 * 255).astype(np.uint8)
+        original = cv2.cvtColor(original, cv2.COLOR_GRAY2BGR)
+        mask_color = np.zeros(original.shape, dtype=np.uint8)
+        mask_color[:, :, 2] = mask
+        img = cv2.addWeighted(original, 0.8, mask_color, 0.2, 1)
+        plt.imshow(img), plt.show()
+
+        cv2.imwrite(f"out{i:05d}.png", img)
 
 
 def make_ground_truth(file_path, save_path):
@@ -55,24 +65,6 @@ def make_ground_truth(file_path, save_path):
         cv2.imwrite(save_path, mask)
 
 
-def calculate_dice(pred, target):
-    pred = pred.flatten()
-    target = target.flatten()
-    numerator = pred.dot(target)
-    denominator = pred.sum() + target.sum()
-    t = 2 * numerator / denominator
-    return t
-
-
-def calculate_iou(pred, target):
-    pred = pred.flatten()
-    target = target.flatten()
-    numerator = pred.dot(target)
-    denominator = pred.sum() + target.sum() - pred.dot(target)
-    t = numerator / denominator
-    return t
-
-
 class EvaluationMethods:
     def __init__(self, pred_path, target_path, save_path, each_save=False):
         self.pred_paths = sorted(pred_path.glob("*.tif"))
@@ -83,7 +75,6 @@ class EvaluationMethods:
         save_path.mkdir(parents=True, exist_ok=True)
         self.calculate = None
         self.mode = None
-        self.methods = [calculate_dice, calculate_iou]
 
     def save_result(self, mode, result):
         save_path = self.save_path / Path(self.mode + f"{mode}.txt")
@@ -94,9 +85,9 @@ class EvaluationMethods:
 
     def instance_eval(self, pred, target):
         assert pred.shape == target.shape, print("different shape at pred and target")
-        tp = 0
-        fp = 0
-        fn = 0
+        tps = 0
+        fps = 0
+        fns = 0
         for target_label in range(1, target.max() + 1):
             # seek pred label correspond to the label of target
             correspond_labels = pred[target == target_label]
@@ -112,12 +103,16 @@ class EvaluationMethods:
             target_mask = np.zeros(target.shape)
             target_mask[target == target_label] = 1
 
-            pred = pred_mask.flatten()
-            target = target_mask.flatten()
-            tp += pred.dot(target)
-            fn += pred.sum() - tp
-            fp += target.sum() - tp
-        return tp, fn, fp
+            pred_mask = pred_mask.flatten()
+            target_mask = target_mask.flatten()
+
+            tp = pred_mask.dot(target_mask)
+            fn = pred_mask.sum() - tp
+            fp = target_mask.sum() - tp
+            tps += tp
+            fns += fn
+            fps += fp
+        return tps, fns, fps
 
     def segmentation_eval(self, pred, target):
         pred_mask = np.zeros(pred.shape)
@@ -177,14 +172,12 @@ class EvaluationMethods:
 
 
 class UseMethods(EvaluationMethods):
-
     def evaluation_all(self):
         evaluations_detection = []
         evaluations_segmentation = []
         evaluations_instance = []
         for path in zip(self.pred_paths, self.target_path):
             pred = cv2.imread(str(path[0]), 0)
-            _, pred = cv2.connectedComponents(pred)
             target = cv2.imread(str(path[1]), 0)
             evaluations_detection.append(self.f_measure(pred, target))
             evaluations_segmentation.append(self.segmentation_eval(pred, target))
@@ -217,7 +210,7 @@ class UseMethods(EvaluationMethods):
         iou = tps / (tps + fns + fps)
 
         # instance segmentation
-        evaluations = np.array(evaluations_segmentation)
+        evaluations = np.array(evaluations_instance)
         tps = np.sum(evaluations[:, 0])
         fns = np.sum(evaluations[:, 1])
         fps = np.sum(evaluations[:, 2])
@@ -237,13 +230,6 @@ class UseMethods(EvaluationMethods):
         print(text)
         with open(self.save_path.joinpath(f"result.txt"), mode="w") as f:
             f.write(text)
-
-    def evaluation_iou(self):
-        for path in zip(self.pred_paths, self.target_path):
-            pred = cv2.imread(str(path[0]), 0)
-            target = cv2.imread(str(path[1]), 0)
-            self.calculate = calculate_iou
-            self.instance_eval(pred, target)
 
     def noize_off(self):
         for img_i, path in enumerate(
@@ -311,9 +297,7 @@ class LinearReview(UseMethods):
         sure_bg = cv2.dilate(opening, kernel, iterations=3)
 
         dist_transform = cv2.distanceTransform(opening, cv2.DIST_L2, 5)
-        ret, sure_fg = cv2.threshold(
-            dist_transform, 0.5 * dist_transform.max(), 255, 0
-        )
+        ret, sure_fg = cv2.threshold(dist_transform, 0.5 * dist_transform.max(), 255, 0)
         pred = cv2.connectedComponentsWithStats(sure_fg.astype(np.uint8))[3]
 
         return pred
@@ -382,7 +366,8 @@ class LinearReview(UseMethods):
             target = cv2.imread(str(path[1]), 0)
             evaluations_detection.append(self.f_measure(pred, target))
             evaluations_segmentation.append(self.segmentation_eval(pred, target))
-            evaluations_instance.append(self.instance_eval(pred, target))
+            nlabels, labelimage = cv2.connectedComponents(pred)
+            evaluations_instance.append(self.instance_eval(labelimage, target))
 
         # detection
         evaluations = np.array(evaluations_detection)
@@ -411,7 +396,7 @@ class LinearReview(UseMethods):
         iou = tps / (tps + fns + fps)
 
         # instance segmentation
-        evaluations = np.array(evaluations_segmentation)
+        evaluations = np.array(evaluations_instance)
         tps = np.sum(evaluations[:, 0])
         fns = np.sum(evaluations[:, 1])
         fps = np.sum(evaluations[:, 2])
