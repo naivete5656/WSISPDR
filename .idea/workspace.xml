@@ -3,43 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="6e56797c-7ef8-4fa1-a274-fdcf870ea749" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detection/predict.py" beforeDir="false" afterPath="$PROJECT_DIR$/detection/predict.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphcut/first_graphcut/graphcut.py" beforeDir="false" afterPath="$PROJECT_DIR$/graphcut/first_graphcut/graphcut.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphcut/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/graphcut/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networks/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networks/custom_loss.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/custom_loss.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phase_off_background_no/demo_linear_sammple_testLocalFit.m" beforeDir="false" afterPath="$PROJECT_DIR$/phase_off_background_no/demo_linear_sammple_testLocalFit.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphcut/second_graphcut/prepro_local_graphcut.py" beforeDir="false" afterPath="$PROJECT_DIR$/graphcut/second_graphcut/prepro_local_graphcut.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/predict.py" beforeDir="false" afterPath="$PROJECT_DIR$/predict.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/review.py" beforeDir="false" afterPath="$PROJECT_DIR$/review.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_grad_cam/call_backprop.py" beforeDir="false" afterPath="$PROJECT_DIR$/unet_grad_cam/call_backprop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_grad_cam/gradcam/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/unet_grad_cam/gradcam/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_grad_cam/gradcam/gaidedbackprop.py" beforeDir="false" afterPath="$PROJECT_DIR$/unet_grad_cam/gradcam/gaidedbackprop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_grad_cam/gradcam/top_down_backpropagation.py" beforeDir="false" afterPath="$PROJECT_DIR$/unet_grad_cam/gradcam/top_down_backpropagation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_grad_cam/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/unet_grad_cam/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/.idea/unet_pytorch.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/eval.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/main.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/predict.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/train.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/unet/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/unet/loss.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/unet/unet_model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/unet/unet_multi.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/unet/unet_parts.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/utils/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/utils/likelymapgen.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/utils/load.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/utils/matching.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/utils/utils.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/unet_pytorch/utils/ven_diagram.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rsync.sh" beforeDir="false" afterPath="$PROJECT_DIR$/rsync.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/cutimg.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/cutimg.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/load.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/load.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/matching.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/matching.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,27 +21,28 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1548933309801" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unet_grad_cam" />
-    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$main.coverage" NAME="main Coverage Results" MODIFIED="1548133361585" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/graphcut" />
-    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$review.coverage" NAME="review Coverage Results" MODIFIED="1548946097125" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1549284188029" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unet_grad_cam" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$main.coverage" NAME="main Coverage Results" MODIFIED="1549025846101" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/graphcut" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$review.coverage" NAME="review Coverage Results" MODIFIED="1549273848932" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$graphcut__1_.coverage" NAME="graphcut (1) Coverage Results" MODIFIED="1548917941935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/graphcut/first_graphcut" />
-    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$predict__1_.coverage" NAME="predict (1) Coverage Results" MODIFIED="1548797773674" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$predict__1_.coverage" NAME="predict (1) Coverage Results" MODIFIED="1548990712671" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$graphcut.coverage" NAME="graphcut Coverage Results" MODIFIED="1548952221628" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/graphcut" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$top_down_backpropagation.coverage" NAME="top_down_backpropagation Coverage Results" MODIFIED="1548927693079" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unet_grad_cam/gradcam" />
-    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$predict.coverage" NAME="predict Coverage Results" MODIFIED="1548948358508" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unet_pytorch" />
-    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$cutimg.coverage" NAME="cutimg Coverage Results" MODIFIED="1548674889784" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$predict.coverage" NAME="predict Coverage Results" MODIFIED="1549199940094" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/detection" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$cutimg.coverage" NAME="cutimg Coverage Results" MODIFIED="1548994321984" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$train.coverage" NAME="train Coverage Results" MODIFIED="1548954957675" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/detection" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$matching.coverage" NAME="matching Coverage Results" MODIFIED="1548995489733" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$test.coverage" NAME="test Coverage Results" MODIFIED="1548421650114" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$likelymapgen.coverage" NAME="likelymapgen Coverage Results" MODIFIED="1548707547657" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unet_pytorch/utils" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$call_backprop.coverage" NAME="call_backprop Coverage Results" MODIFIED="1548779109977" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unet_grad_cam" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/detection/train.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/unet_grad_cam/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="264" selection-start-line="264" selection-end-line="264" />
+            <state relative-caret-position="289">
+              <caret line="50" column="33" lean-forward="true" selection-start-line="50" selection-start-column="33" selection-end-line="50" selection-end-column="33" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -77,87 +51,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/load.py">
+        <entry file="file:///usr/lib/python3/dist-packages/apport_python_hook.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2363">
-              <caret line="143" selection-start-line="143" selection-end-line="143" />
+            <state relative-caret-position="53">
+              <caret line="48" selection-start-line="48" selection-end-line="48" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/review.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1428">
-              <caret line="84" lean-forward="true" selection-start-line="84" selection-end-line="84" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/graphcut/main.py">
+        <entry file="file://$PROJECT_DIR$/unet_grad_cam/call_backprop.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="391">
-              <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
+              <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
               <folding>
-                <element signature="e#0#35#0" expanded="true" />
+                <element signature="e#0#24#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/networks/__init__.py">
+        <entry file="file://$PROJECT_DIR$/unet_grad_cam/gradcam/gaidedbackprop.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" selection-start-line="2" selection-end-line="2" />
-              <folding>
-                <element signature="e#0#46#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/detection/eval.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" selection-start-line="3" selection-end-line="4" selection-end-column="21" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/graphcut/second_graphcut/local_graphcut.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="35" selection-start-line="3" selection-start-column="35" selection-end-line="3" selection-end-column="35" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/networks/unet_parts_plus.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-231">
-              <caret line="5" column="33" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/graphcut/utils/gaidedbackprop.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="-185">
+              <caret line="109" column="6" selection-start-line="109" selection-start-column="6" selection-end-line="109" selection-end-column="6" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -166,10 +84,61 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/networks/unet_plus.py">
+        <entry file="file://$PROJECT_DIR$/unet_grad_cam/unet/unet_model.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/unet_grad_cam/unet/unet_parts.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="410">
+              <caret line="1740" selection-start-line="1740" selection-end-line="1740" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/review.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="257">
+              <caret line="158" selection-start-line="158" selection-end-line="158" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils/cutimg.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="119">
-              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+              <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../.local/lib/python3.6/site-packages/torch/serialization.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="265">
+              <caret line="84" selection-start-line="84" selection-end-line="84" />
             </state>
           </provider>
         </entry>
@@ -194,12 +163,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/unet_pytorch/rsync.sh" />
         <option value="$PROJECT_DIR$/unet_grad_cam/utils/utils.py" />
         <option value="$PROJECT_DIR$/unet_grad_cam/utils/__init__.py" />
         <option value="$PROJECT_DIR$/unet_grad_cam/gradcam/pr_conv.py" />
-        <option value="$PROJECT_DIR$/utils/cutimg.py" />
-        <option value="$PROJECT_DIR$/utils/utils.py" />
         <option value="$PROJECT_DIR$/unet_grad_cam/utils/color.csv" />
         <option value="$PROJECT_DIR$/unet_pytorch/matching.py" />
         <option value="$PROJECT_DIR$/unet_pytorch/utils/likelymapgen.py" />
@@ -213,16 +179,9 @@
         <option value="$PROJECT_DIR$/graphcut/first_graphcut/__init__.py" />
         <option value="$PROJECT_DIR$/graphcut/utils/__init__.py" />
         <option value="$PROJECT_DIR$/graphcut/second_graphcut/__init__.py" />
-        <option value="$PROJECT_DIR$/graphcut/second_graphcut/prepro_local_graphcut.py" />
-        <option value="$PROJECT_DIR$/predict.py" />
-        <option value="$PROJECT_DIR$/graphcut/first_graphcut/graphcut.py" />
         <option value="$PROJECT_DIR$/unet_grad_cam/gradcam/gaidedbackprop.py" />
         <option value="$PROJECT_DIR$/unet_grad_cam/gradcam/__init__.py" />
         <option value="$PROJECT_DIR$/unet_grad_cam/gradcam/top_down_backpropagation.py" />
-        <option value="$PROJECT_DIR$/unet_grad_cam/call_backprop.py" />
-        <option value="$PROJECT_DIR$/unet_grad_cam/main.py" />
-        <option value="$PROJECT_DIR$/review.py" />
-        <option value="$PROJECT_DIR$/graphcut/main.py" />
         <option value="$PROJECT_DIR$/unet_pytorch/utils/load.py" />
         <option value="$PROJECT_DIR$/unet_pytorch/utils/matching.py" />
         <option value="$PROJECT_DIR$/utils/__init__.py" />
@@ -237,7 +196,6 @@
         <option value="$PROJECT_DIR$/networks/__init__.py" />
         <option value="$PROJECT_DIR$/networks/loss.py" />
         <option value="$PROJECT_DIR$/networks/custom_loss.py" />
-        <option value="$PROJECT_DIR$/utils/matching.py" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/graphcut/second_graphcut/local_graphcut.py" />
         <option value="$PROJECT_DIR$/detection/eval.py" />
@@ -245,14 +203,25 @@
         <option value="$PROJECT_DIR$/networks/unet_plus.py" />
         <option value="$PROJECT_DIR$/detection/train.py" />
         <option value="$PROJECT_DIR$/utils/load.py" />
+        <option value="$PROJECT_DIR$/predict.py" />
+        <option value="$PROJECT_DIR$/utils/utils.py" />
+        <option value="$PROJECT_DIR$/utils/cutimg.py" />
+        <option value="$PROJECT_DIR$/graphcut/main.py" />
+        <option value="$PROJECT_DIR$/graphcut/second_graphcut/prepro_local_graphcut.py" />
+        <option value="$PROJECT_DIR$/graphcut/first_graphcut/graphcut.py" />
+        <option value="$PROJECT_DIR$/utils/matching.py" />
+        <option value="$PROJECT_DIR$/detection/predict.py" />
+        <option value="$PROJECT_DIR$/review.py" />
+        <option value="$PROJECT_DIR$/unet_grad_cam/call_backprop.py" />
+        <option value="$PROJECT_DIR$/unet_grad_cam/main.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="3070" />
-    <option name="y" value="323" />
-    <option name="width" value="1064" />
-    <option name="height" value="978" />
+    <option name="x" value="2485" />
+    <option name="y" value="185" />
+    <option name="width" value="1657" />
+    <option name="height" value="1005" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -260,7 +229,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -271,12 +239,29 @@
             <path>
               <item name="weakly_supervised_instance_segmentation" type="b2602c69:ProjectViewProjectNode" />
               <item name="weakly_supervised_instance_segmentation" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="weakly_supervised_instance_segmentation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="weakly_supervised_instance_segmentation" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
+              <item name="sequ_cut" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="weakly_supervised_instance_segmentation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="weakly_supervised_instance_segmentation" type="462c0819:PsiDirectoryNode" />
               <item name="unet_grad_cam" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="weakly_supervised_instance_segmentation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="weakly_supervised_instance_segmentation" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -303,29 +288,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.train">
-    <configuration name="graphcut" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="weakly_supervised_instance_segmentation" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/graphcut" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/graphcut/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.main (1)">
     <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="weakly_supervised_instance_segmentation" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -348,6 +311,50 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="weakly_supervised_instance_segmentation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/graphcut" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/graphcut/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="matching" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="weakly_supervised_instance_segmentation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/matching.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="predict" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="weakly_supervised_instance_segmentation" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -356,12 +363,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/unet_pytorch" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/detection" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/unet_pytorch/predict.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/detection/predict.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -392,35 +399,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="train" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="weakly_supervised_instance_segmentation" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/detection" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/detection/train.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.train" />
-        <item itemvalue="Python.graphcut" />
-        <item itemvalue="Python.predict" />
-        <item itemvalue="Python.review" />
         <item itemvalue="Python.main (1)" />
+        <item itemvalue="Python.review" />
+        <item itemvalue="Python.predict" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.matching" />
       </list>
     </recent_temporary>
   </component>
@@ -446,23 +431,25 @@
       <workItem from="1548684479710" duration="41126000" />
       <workItem from="1548917453482" duration="11433000" />
       <workItem from="1548939231459" duration="7556000" />
-      <workItem from="1548953555673" duration="2096000" />
+      <workItem from="1548953555673" duration="12058000" />
+      <workItem from="1549174261048" duration="4390000" />
+      <workItem from="1549243627177" duration="7483000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="117736000" />
+    <option name="totallyTimeSpent" value="139571000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="2639" y="323" width="1841" height="1053" extended-state="6" />
+    <frame x="2627" y="224" width="1853" height="1053" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17456776" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17839335" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32969433" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3231441" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49972114" weight="0.37772927" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.22707424" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49972114" visible="true" weight="0.37772927" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -470,12 +457,12 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5002789" side_tool="true" weight="0.40502185" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.19281046" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.19213974" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32969433" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" x="79" y="333" width="2481" height="1403" id="SciView" maximized="true" order="3" weight="0.33074793" />
+      <window_info anchor="right" x="79" y="64" width="1841" height="1016" id="SciView" maximized="true" order="3" visible="true" weight="0.2432133" />
       <window_info anchor="right" id="Database" order="4" />
     </layout>
   </component>
@@ -486,19 +473,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/review.py</url>
-          <line>185</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/test.py</url>
           <line>23</line>
           <option name="timeStamp" value="35" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/cutimg.py</url>
-          <line>17</line>
-          <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/detection/predict.py</url>
@@ -517,7 +494,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/review.py</url>
-          <line>350</line>
+          <line>303</line>
           <option name="timeStamp" value="83" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -541,54 +518,14 @@
           <option name="timeStamp" value="133" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/graphcut/first_graphcut/graphcut.py</url>
-          <line>60</line>
-          <option name="timeStamp" value="138" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/review.py</url>
-          <line>372</line>
-          <option name="timeStamp" value="139" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/unet_grad_cam/main.py</url>
           <line>57</line>
           <option name="timeStamp" value="153" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/graphcut/main.py</url>
-          <line>67</line>
-          <option name="timeStamp" value="155" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/graphcut/first_graphcut/graphcut.py</url>
-          <line>141</line>
-          <option name="timeStamp" value="157" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/unet_grad_cam/call_backprop.py</url>
           <line>111</line>
           <option name="timeStamp" value="185" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/review.py</url>
-          <line>365</line>
-          <option name="timeStamp" value="190" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/detection/predict.py</url>
-          <line>154</line>
-          <option name="timeStamp" value="192" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/detection/predict.py</url>
-          <line>166</line>
-          <option name="timeStamp" value="193" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/graphcut/main.py</url>
-          <line>28</line>
-          <option name="timeStamp" value="194" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/detection/eval.py</url>
@@ -599,6 +536,51 @@
           <url>file://$PROJECT_DIR$/detection/train.py</url>
           <line>264</line>
           <option name="timeStamp" value="196" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/cutimg.py</url>
+          <line>19</line>
+          <option name="timeStamp" value="198" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/graphcut/main.py</url>
+          <line>35</line>
+          <option name="timeStamp" value="219" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/graphcut/second_graphcut/prepro_local_graphcut.py</url>
+          <line>68</line>
+          <option name="timeStamp" value="224" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/utils/matching.py</url>
+          <line>92</line>
+          <option name="timeStamp" value="225" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/review.py</url>
+          <line>329</line>
+          <option name="timeStamp" value="229" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/review.py</url>
+          <line>153</line>
+          <option name="timeStamp" value="231" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/unet_grad_cam/call_backprop.py</url>
+          <line>34</line>
+          <option name="timeStamp" value="232" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/unet_grad_cam/call_backprop.py</url>
+          <line>87</line>
+          <option name="timeStamp" value="235" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/unet_grad_cam/call_backprop.py</url>
+          <line>54</line>
+          <option name="timeStamp" value="236" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -611,20 +593,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/graphcut/second_graphcut/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="28" selection-start-column="28" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../.local/lib/python3.6/site-packages/networkx/algorithms/flow/preflowpush.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1717">
-          <caret line="110" selection-start-line="110" selection-end-line="110" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/graphcut/dataterm2.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -632,31 +600,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="164">
           <caret line="68" column="14" selection-start-line="68" selection-start-column="14" selection-end-line="68" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/unet_grad_cam/unet/unet_parts.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/unet_grad_cam/unet/unet_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/unet_grad_cam/gradcam/gaidedbackprop.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="40" selection-start-line="40" selection-end-line="40" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-            <element signature="e#4695#6008#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -718,48 +661,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/unet_grad_cam/call_backprop.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="64" column="8" selection-start-line="64" selection-start-column="8" selection-end-line="64" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/unet_grad_cam/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-383">
-          <caret line="2" selection-start-line="2" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/networks/network_model.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <folding>
             <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/predict.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="80" column="28" selection-start-line="80" selection-start-column="28" selection-end-line="80" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/cutimg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -777,9 +683,6 @@
     <entry file="file://$PROJECT_DIR$/unet_pytorch/utils/__init__.py" />
     <entry file="file://$PROJECT_DIR$/unet_pytorch/utils/load.py" />
     <entry file="file://$PROJECT_DIR$/unet_pytorch/utils/matching.py" />
-    <entry file="file://$PROJECT_DIR$/utils/utils.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/ven_diagram.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -800,9 +703,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/detection/predict.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/networks/unet_multi.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -817,16 +717,6 @@
         <state>
           <folding>
             <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/matching.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2604">
-          <caret line="10" column="30" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -856,32 +746,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rsync.sh">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/graphcut/second_graphcut/prepro_local_graphcut.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="10" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/graphcut/first_graphcut/graphcut.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2669">
-          <caret line="157" column="8" selection-start-line="157" selection-start-column="8" selection-end-line="157" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/graphcut/utils/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/graphcut/utils/unet_parts.py">
       <provider selected="true" editor-type-id="text-editor" />
@@ -914,13 +778,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/detection/eval.py">
+    <entry file="file://$PROJECT_DIR$/utils/load.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" selection-start-line="3" selection-end-line="4" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="2363">
+          <caret line="143" selection-start-line="143" selection-end-line="143" />
         </state>
       </provider>
     </entry>
@@ -930,6 +791,16 @@
           <caret line="2" selection-start-line="2" selection-end-line="2" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detection/eval.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" selection-start-line="3" selection-end-line="4" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -948,16 +819,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/lib/python3/dist-packages/apport_python_hook.py">
+    <entry file="file://$PROJECT_DIR$/graphcut/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-176">
-          <caret line="46" selection-start-line="46" selection-end-line="46" />
+        <state relative-caret-position="493">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/graphcut/utils/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/graphcut/first_graphcut/graphcut.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="9" column="59" selection-start-line="9" selection-start-column="59" selection-end-line="9" selection-end-column="59" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/predict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="74" column="30" selection-start-line="74" selection-start-column="30" selection-end-line="74" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/graphcut/second_graphcut/prepro_local_graphcut.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="68" selection-start-line="68" selection-end-line="68" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/detection/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
+        <state relative-caret-position="4488">
           <caret line="264" selection-start-line="264" selection-end-line="264" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
@@ -965,29 +889,104 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/load.py">
+    <entry file="file://$PROJECT_DIR$/detection/predict.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2363">
-          <caret line="143" selection-start-line="143" selection-end-line="143" />
+        <state relative-caret-position="726">
+          <caret line="144" column="17" selection-start-line="144" selection-start-column="17" selection-end-line="144" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/review.py">
+    <entry file="file://$PROJECT_DIR$/utils/matching.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1428">
-          <caret line="84" lean-forward="true" selection-start-line="84" selection-end-line="84" />
+        <state relative-caret-position="1445">
+          <caret line="95" column="52" selection-start-line="95" selection-start-column="52" selection-end-line="95" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/cutimg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/graphcut/main.py">
+    <entry file="file://$PROJECT_DIR$/review.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="158" selection-start-line="158" selection-end-line="158" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/unet_grad_cam/unet/unet_parts.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="410">
+          <caret line="1740" selection-start-line="1740" selection-end-line="1740" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../.local/lib/python3.6/site-packages/torch/serialization.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="84" selection-start-line="84" selection-end-line="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib/python3/dist-packages/apport_python_hook.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="53">
+          <caret line="48" selection-start-line="48" selection-end-line="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/unet_grad_cam/unet/unet_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/unet_grad_cam/gradcam/gaidedbackprop.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-185">
+          <caret line="109" column="6" selection-start-line="109" selection-start-column="6" selection-end-line="109" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/unet_grad_cam/call_backprop.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
-          <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
+          <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/unet_grad_cam/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="50" column="33" lean-forward="true" selection-start-line="50" selection-start-column="33" selection-end-line="50" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>

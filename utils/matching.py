@@ -90,10 +90,10 @@ def remove_outside_plot(matrix, associate_id, i, window_size, window_thresh=10):
 
 
 def show_res(img, gt, res, no_detected_id, over_detection_id, path=None):
-    plt.figure(figsize=(4, 3), dpi=500)
-    plt.imshow(img)
-    plt.plot(gt[:, 0], gt[:, 1], "y3", label="gt_mapped")
-    plt.plot(res[:, 0], res[:, 1], "g4", label="res_mapped")
+    plt.figure(figsize=(3, 3), dpi=500)
+    plt.imshow(img, plt.cm.gray)
+    plt.plot(gt[:, 0], gt[:, 1], "y3", label="gt_annotation")
+    plt.plot(res[:, 0], res[:, 1], "g4", label="pred")
     plt.plot(
         gt[no_detected_id][:, 0], gt[no_detected_id][:, 1], "b2", label="no_detected"
     )
@@ -104,8 +104,8 @@ def show_res(img, gt, res, no_detected_id, over_detection_id, path=None):
         label="over_detection",
     )
     plt.legend(bbox_to_anchor=(0, 1.05), loc="upper left", fontsize=4, ncol=4)
-    plt.show()
-    # plt.savefig(path)
+    # plt.show()
+    plt.savefig(path)
 
 
 def local_maxim(img, threshold, dist):

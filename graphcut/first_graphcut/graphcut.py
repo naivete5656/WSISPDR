@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 
 class _GraphcutParams:
-    def __init__(self, dataterm_weight=1, pairwise_weight=1024, k=10, bias=0):
+    def __init__(self, dataterm_weight=1, pairwise_weight=10, k=10, bias=0):
         # parameter
         self.pairwise_weight = pairwise_weight
         self.pairwise_gaussian = k

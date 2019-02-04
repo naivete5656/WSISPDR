@@ -1,4 +1,4 @@
-from ..utils import *
+from utils import *
 from pathlib import Path
 from datetime import datetime
 from PIL import Image
@@ -110,6 +110,7 @@ class PredictFmeasure(Predict):
         self.fps += fp
 
     def main(self):
+        self.net.eval()
         # path def
         path_x = sorted(self.ori_path.glob("*.tif"))
         path_y = sorted(self.gt_path.glob("*.tif"))
@@ -130,6 +131,7 @@ class PredictFmeasure(Predict):
             recall = self.tps / (self.tps + self.fns)
             precision = self.tps / (self.tps + self.fps)
             f_measure = (2 * recall * precision) / (recall + precision)
+
         print(precision, recall, f_measure)
         with self.save_txt_path.open(mode="w") as f:
             f.write("%f,%f,%f" % (precision, recall, f_measure))
@@ -140,17 +142,17 @@ if __name__ == "__main__":
 
     date = datetime.now().date()
     gpu = True
-    plot_size = 12
+    plot_size = 6
     key = 1
     models = {1: UNet, 2: UNetCascade, 3: UNetInternalCascade, 4: UnetMultiFixedWeight}
 
     weight_path = f"../weights/MSELoss/best_{plot_size}.pth"
-    root_path = Path("../images/sequence/sequ2-0303")
+    root_path = Path("../images/sequ_cut/sequ18")
     save_path = Path("./output/{}/test2/{}".format(date, plot_size))
 
     net = models[key](n_channels=1, n_classes=1)
     net.cuda()
-    net.load_state_dict(torch.load(weight_path, map_location={"cuda:3": "cuda:1"}))
+    net.load_state_dict(torch.load(weight_path, map_location={"cuda:2": "cuda:1"}))
 
     pred = PredictFmeasure(
         net=net,

@@ -7,17 +7,17 @@ import numpy as np
 def cut_image(plot_size="6", sequence=18, size=320, override=100, norm_value=255):
     paths = sorted(
         Path(
-            "/home/kazuya/weakly_supervised_instance_segmentation/phase_off_background_no/output/test_norm"
-        ).glob("*.tif")
+            "/home/kazuya/weakly_supervised_instance_segmentation/images/review/sparce"
+        ).glob("*.png")
     )
     i = 0
     savepath = Path(
-        "/home/kazuya/weakly_supervised_instance_segmentation/test_norm_cut"
+        "/home/kazuya/weakly_supervised_instance_segmentation/images/review/sparce-cut"
     )
     savepath.mkdir(parents=True, exist_ok=True)
     for path in paths:
         img = np.array(Image.open(path)).astype(np.float32)
-        img = (img / norm_value * 255).astype(np.uint8)
+        img = (img / img.max() * 255).astype(np.uint8)
         for x in range(0, img.shape[0] - size, size - override):
             for y in range(0, img.shape[1] - size, size - override):
                 cv2.imwrite(

@@ -70,9 +70,9 @@ if __name__ == "__main__":
     net.cuda()
 
     weight_path = "./weights/2019-01-17/multi_task/best.pth"
-    root_path = Path("./images/test_cut")
+    root_path = Path("./images/a/cut")
     # root_path = Path("./images/train/ori")
-    save_path = Path("./outputs/{}/test_cut".format(date))
+    save_path = Path("./outputs/{}/".format(date))
 
     pred = Predict(
         net=net,

@@ -13,7 +13,7 @@ def graphcut_main(root_path, output_root_path, weight_path):
     input_path = sorted((root_path / Path("input")).glob("*.tif"))
     detection_path = sorted((root_path / Path("detection")).glob("*.tif"))
     backprop_path = sorted((root_path / Path("backprop")).glob("*.tif"))
-    phase_off = sorted((root_path / Path("test")).glob("*.tif"))
+    phase_off = sorted((root_path / Path("phase_off")).glob("*.tif"))
 
     output_segmentation = output_root_path / Path("segmentation")
     output_instance = output_root_path / Path("instance")
@@ -61,8 +61,8 @@ if __name__ == "__main__":
     plot_size = 12
     date = datetime.now().date()
 
-    input_path = Path("../images/for_graphcut/test_cut")
-    output_path = Path("./output/{}/test-cut-norm".format(date))
+    input_path = Path("../images/for_graphcut/test18_normalize")
+    output_path = Path("./output/{}/test18".format(date))
     weight_path = Path("../weights/MSELoss/best_{}.pth".format(plot_size))
 
     graphcut_main(input_path, output_path, weight_path=weight_path)

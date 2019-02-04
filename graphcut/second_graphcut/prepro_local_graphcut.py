@@ -65,6 +65,7 @@ def second_graphcut(paths, img, weight_path):
             ][:, 0]
             local_peaks = peaks[peak_index]
 
+            plt.imshow(for_graphcut_mask),plt.plot(local_peaks[:,0],local_peaks[:,1],'rx'),plt.show()
             segments = local_graphcut(
                 paths, for_graphcut_mask, local_peaks, weight_path=weight_path
             )

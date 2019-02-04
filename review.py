@@ -1,9 +1,6 @@
 import cv2
-from skimage import measure
 import numpy as np
 import matplotlib.pyplot as plt
-from PIL import Image, ImageDraw
-import json
 from pathlib import Path
 from datetime import datetime
 from utils import (
@@ -15,54 +12,6 @@ from utils import (
     gaus_filter,
 )
 import collections
-from statistics import mean
-
-
-def original_add_pred():
-    # original 画像に　外線を加える
-    input_path = sorted(
-        Path(
-            "/home/kazuya/weakly_supervised_instance_segmentation/outputs/pred/sophisticated_pred/"
-        ).glob("*.tif")
-    )
-    original_path = sorted(Path("./images/test/ori").glob("*.tif"))
-    for i, path in enumerate(input_path):
-        img = cv2.imread(str(path), 0)
-        # img = cv2.imread("./outputs/2019-01-18/test/mask_pred/00000.tif", 0)
-        mask = np.zeros(img.shape, dtype=np.uint8)
-        plt.imshow(img > 0.5), plt.show()
-        for label in range(1, img.max() + 1):
-            contours = measure.find_contours(img, 0.5)
-            for contour in contours:
-                for x, y in contour:
-                    mask[int(x), int(y)] = 255
-        # img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
-        # mask_color = np.zeros(img.shape)
-        # mask_color[:, :, 0] = mask
-        original = cv2.imread(str(original_path[i]), -1)
-        # original = cv2.imread("./images/test/exp1_F0002-00300.tif", -1)
-        original = (original / 4096 * 255).astype(np.uint8)
-        original = cv2.cvtColor(original, cv2.COLOR_GRAY2BGR)
-        mask_color = np.zeros(original.shape, dtype=np.uint8)
-        mask_color[:, :, 2] = mask
-        img = cv2.addWeighted(original, 0.8, mask_color, 0.2, 1)
-        plt.imshow(img), plt.show()
-
-        cv2.imwrite(f"out{i:05d}.png", img)
-
-
-def make_ground_truth(file_path, save_path):
-    with open(file_path) as f:
-        df = json.load(f)
-        im = Image.new("I", (1392, 1040), 0)
-        draw = ImageDraw.Draw(im)
-        for i, label in enumerate(df["shapes"]):
-            plots = []
-            for x, y in label["points"]:
-                plots.append((x, y))
-            draw.polygon(tuple(plots), fill=i + 1)
-        mask = np.array(im)
-        cv2.imwrite(save_path, mask)
 
 
 class EvaluationMethods:
@@ -134,9 +83,10 @@ class EvaluationMethods:
         target_centers = []
         for target_label in range(1, target.max() + 1):
             y, x = np.where(target == target_label)
-            x = x.sum() / x.shape[0]
-            y = y.sum() / y.shape[0]
-            target_centers.append([x, y])
+            if x.shape[0] != 0:
+                x = x.sum() / x.shape[0]
+                y = y.sum() / y.shape[0]
+                target_centers.append([x, y])
         target_centers = np.array(target_centers)
 
         pred_centers = []
@@ -151,82 +101,84 @@ class EvaluationMethods:
 
     def f_measure(self, pred, target):
         pred_centers, target_centers = self.f_measure_center(pred, target)
+        if pred_centers.shape[0] != 0:
+            associate_id = optimum(target_centers, pred_centers, 40)
 
-        # nlabels, labelimage = cv2.connectedComponents(pred)
-        # pred_centers = cv2.connectedComponentsWithStats(pred)[3]
+            target_final, no_detected_id = remove_outside_plot(
+                target_centers, associate_id, 0, target.shape
+            )
+            pred_final, overdetection_id = remove_outside_plot(
+                pred_centers, associate_id, 1, target.shape
+            )
+            # show_res(target, target_centers, pred_centers, no_detected_id, overdetection_id)
 
-        associate_id = optimum(target_centers, pred_centers, 40)
-
-        target_final, no_detected_id = remove_outside_plot(
-            target_centers, associate_id, 0, target.shape
-        )
-        pred_final, overdetection_id = remove_outside_plot(
-            pred_centers, associate_id, 1, target.shape
-        )
-        show_res(target, target_centers, pred_centers, no_detected_id, overdetection_id)
-
-        tp = associate_id.shape[0]
-        fn = target_final.shape[0] - associate_id.shape[0]
-        fp = pred_final.shape[0] - associate_id.shape[0]
+            tp = associate_id.shape[0]
+            fn = target_final.shape[0] - associate_id.shape[0]
+            fp = pred_final.shape[0] - associate_id.shape[0]
+        else:
+            tp = 0
+            fn = 0
+            fp = 0
         return tp, fn, fp
 
 
 class UseMethods(EvaluationMethods):
     def evaluation_all(self):
-        evaluations_detection = []
-        evaluations_segmentation = []
-        evaluations_instance = []
+        evaluations = []
         for path in zip(self.pred_paths, self.target_path):
             pred = cv2.imread(str(path[0]), 0)
             target = cv2.imread(str(path[1]), 0)
-            evaluations_detection.append(self.f_measure(pred, target))
-            evaluations_segmentation.append(self.segmentation_eval(pred, target))
-            evaluations_instance.append(self.instance_eval(pred, target))
+            detection_tp, detection_fn, detection_fp = self.f_measure(pred, target)
+            seg_tp, seg_fn, seg_fp = self.segmentation_eval(pred, target)
+            instance_tp, instance_fn, instance_fp = self.instance_eval(pred, target)
+            evaluations.append(
+                [
+                    detection_tp,
+                    detection_fn,
+                    detection_fp,
+                    seg_tp,
+                    seg_fn,
+                    seg_fp,
+                    instance_tp,
+                    instance_fn,
+                    instance_fp,
+                ]
+            )
 
         # detection
-        evaluations = np.array(evaluations_detection)
-        tps = np.sum(evaluations[:, 0])
-        fns = np.sum(evaluations[:, 1])
-        fps = np.sum(evaluations[:, 2])
+        evaluations = np.array(evaluations)
+        tps_fns_fps = evaluations.sum(
+            axis=0
+        )
 
-        detection_recall = tps / (tps + fns)
-        detection_precision = tps / (tps + fps)
+        detection_recall = tps_fns_fps[0] / (tps_fns_fps[0] + tps_fns_fps[1])
+        detection_precision = tps_fns_fps[0] / (tps_fns_fps[0] + tps_fns_fps[2])
         detection_f_measure = (2 * detection_recall * detection_precision) / (
             detection_recall + detection_precision
         )
 
-        # segmentation
-        evaluations = np.array(evaluations_segmentation)
-        tps = np.sum(evaluations[:, 0])
-        fns = np.sum(evaluations[:, 1])
-        fps = np.sum(evaluations[:, 2])
-
-        segmentation_recall = tps / (tps + fns)
-        segmentation_precision = tps / (tps + fps)
-        segmentation_f_measure = (2 * segmentation_recall * segmentation_precision) / (
-            segmentation_recall + segmentation_precision
+        seg_recall = tps_fns_fps[3] / (tps_fns_fps[3] + tps_fns_fps[4])
+        seg_precision = tps_fns_fps[3] / (tps_fns_fps[3] + tps_fns_fps[5])
+        seg_f_measure = (2 * seg_recall * seg_precision) / (
+                seg_recall + seg_precision
         )
-        dice = 2 * tps / (2 * tps + fps + fns)
-        iou = tps / (tps + fns + fps)
+
+        dice = 2 * tps_fns_fps[3] / (2 * tps_fns_fps[3] + tps_fns_fps[4] + tps_fns_fps[5])
+        iou = tps_fns_fps[3] / (tps_fns_fps[3] + tps_fns_fps[4] + tps_fns_fps[5])
 
         # instance segmentation
-        evaluations = np.array(evaluations_instance)
-        tps = np.sum(evaluations[:, 0])
-        fns = np.sum(evaluations[:, 1])
-        fps = np.sum(evaluations[:, 2])
-
-        instance_recall = tps / (tps + fns)
-        instance_precision = tps / (tps + fps)
+        instance_recall = tps_fns_fps[6] / (tps_fns_fps[6] + tps_fns_fps[7])
+        instance_precision = tps_fns_fps[6] / (tps_fns_fps[6] + tps_fns_fps[8])
         instance_f_measure = (2 * instance_recall * instance_precision) / (
             instance_recall + instance_precision
         )
-        instance_dice = 2 * tps / (2 * tps + fps + fns)
-        instance_iou = tps / (tps + fns + fps)
+        instance_dice = 2 * tps_fns_fps[6] / (2 * tps_fns_fps[6] + tps_fns_fps[7] + tps_fns_fps[8])
+        instance_iou = tps_fns_fps[6] / (tps_fns_fps[6] + tps_fns_fps[7] + tps_fns_fps[8])
 
         text = f"precision:{detection_precision}\nrecall:{detection_recall}\nf-measure:{detection_f_measure}\n\
-            segmentation_precision:{segmentation_precision}\n segmentation_recall:{segmentation_recall}\n segmentation_f-measure:{segmentation_f_measure}\n\
-            instance_precision:{instance_precision}\ninstance_recall:{instance_recall}\n instance_f-measure:{instance_f_measure}\niou:{iou}\n\
-            instance_iou:{instance_iou}\ndice:{dice}\ninstance-dice:{instance_dice}\n"
+            segmentation_precision:{seg_precision}\n segmentation_recall:{seg_recall}\n segmentation_f-measure:{seg_f_measure}\ndice:{dice}\niou:{iou}\n\
+            instance_precision:{instance_precision}\ninstance_recall:{instance_recall}\n instance_f-measure:{instance_f_measure}\n\
+            instance_iou:{instance_iou}\ninstance-dice:{instance_dice}\n"
         print(text)
         with open(self.save_path.joinpath(f"result.txt"), mode="w") as f:
             f.write(text)
@@ -285,7 +237,7 @@ class LinearReview(UseMethods):
     def center_get(self, pred):
         # しきい値処理
         thresh, bin_img = cv2.threshold(
-            pred, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU
+            pred.astype(np.uint8), 0, 255, cv2.THRESH_BINARY_INV
         )
         # 色を反転
         bin_img = cv2.bitwise_not(bin_img)
@@ -306,9 +258,10 @@ class LinearReview(UseMethods):
         target_centers = []
         for target_label in range(1, target.max() + 1):
             y, x = np.where(target == target_label)
-            x = x.sum() / x.shape[0]
-            y = y.sum() / y.shape[0]
-            target_centers.append([x, y])
+            if x.shape[0] != 0 :
+                x = x.sum() / x.shape[0]
+                y = y.sum() / y.shape[0]
+                target_centers.append([x, y])
         target_centers = np.array(target_centers)
 
         pred_centers = self.center_get(pred)
@@ -361,13 +314,12 @@ class LinearReview(UseMethods):
         evaluations_instance = []
         for path in zip(self.pred_paths, self.target_path):
             pred = cv2.imread(str(path[0]), 0)
-            ret, pred = cv2.threshold(pred, 0, 125, cv2.THRESH_BINARY)
+            pred = cv2.connectedComponents(pred)[1]
 
             target = cv2.imread(str(path[1]), 0)
             evaluations_detection.append(self.f_measure(pred, target))
             evaluations_segmentation.append(self.segmentation_eval(pred, target))
-            nlabels, labelimage = cv2.connectedComponents(pred)
-            evaluations_instance.append(self.instance_eval(labelimage, target))
+            evaluations_instance.append(self.instance_eval(pred, target))
 
         # detection
         evaluations = np.array(evaluations_detection)
@@ -420,17 +372,16 @@ class LinearReview(UseMethods):
 
 if __name__ == "__main__":
     date = datetime.now().date()
-    # target_path = Path("./outputs/target")
-    # pred_path = Path("./outputs/pred/sophisticated_pred")
-    # save_path = Path(f"./outputs/{date}/quantitive")
-    # evaluation = UseMethods(pred_path, target_path, save_path=save_path)
+    target_path = Path("./images/review/target")
+    pred_path = Path("./images/review/pred/sophisticated_pred")
+    save_path = Path(f"./outputs/txt_result/ours")
+    evaluation = UseMethods(pred_path, target_path, save_path=save_path)
     # evaluation.noize_off()
-    # evaluation.evaluation_all()
+    evaluation.evaluation_all()
     # evaluation.evaluation_iou()
-    # original_add_pred()
-
-    target_path = Path("./outputs/target")
-    pred_path = Path("./images/precond_linear")
-    save_path = Path(f"./outputs/{date}/linear")
-    eval = LinearReview(pred_path, target_path, save_path=save_path)
-    eval.evaluation_all()
+    #
+    # target_path = Path("./images/review/target-cut")
+    # pred_path = Path("./images/review/sparce-cut")
+    # save_path = Path(f"./outputs/txt_result/sparce-cut")
+    # eval = LinearReview(pred_path, target_path, save_path=save_path)
+    # eval.evaluation_all()

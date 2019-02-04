@@ -17,7 +17,7 @@ from call_backprop import *
 
 if __name__ == "__main__":
     gpu = True
-    plot_size = 9
+    plot_size = 12
     radius = 1
     date = datetime.now().date()
 
@@ -39,20 +39,20 @@ if __name__ == "__main__":
     # response_map = TopDownBackprop(net)
     # response_map.inference()
 
-    bp = TopDown(input_path, output_path, weight_path)
-    bp.main()
+    # bp = TopDown(input_path, output_path, weight_path)
+    # bp.main()
 
     # bp = BackPropBackGround(
     #     input_path=input_path, output_path=output_path, weight_path=weight_path
     # )
-
-    # bp.main()
-
-    # bp = BackpropagationEachPeak(
-    #     input_path=input_path, output_path=output_path, weight_path=weight_path
-    # )
     #
     # bp.main()
+
+    bp = BackpropagationEachPeak(
+        input_path=input_path, output_path=output_path, weight_path=weight_path
+    )
+
+    bp.main()
 
     # bp = BackpropAll(
     #     input_path=input_path, output_path=output_path, weight_path=weight_path
