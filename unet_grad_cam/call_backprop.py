@@ -1,7 +1,7 @@
 from pathlib import Path
 from gradcam import *
 import torch
-from unet import UNet
+from networks import UNet
 from PIL import Image
 import numpy as np
 import cv2
@@ -123,7 +123,7 @@ class BackpropagationEachPeak(_BackProp):
     def __init__(self, input_path, output_path, weight_path, gpu=True, radius=1):
         super().__init__(input_path, output_path, weight_path, gpu)
 
-        self.back_model = Test(self.net)
+        self.back_model = GuidedBackpropReLUModel(self.net)
         self.per_1ch_path = output_path.parent / Path(f"r={radius}_1ch")
         self.per_1ch_path.mkdir(parents=True, exist_ok=True)
         self.likelymap_savepath = output_path.parent.joinpath("likelymap")
@@ -309,3 +309,4 @@ class BackPropBackGround(_BackProp):
 
             img.requires_grad = True
             gbs = self.calculate(img, pre_img)
+

@@ -32,7 +32,7 @@ if __name__ == "__main__":
     output_path = Path(f"./output/{date}/test18")
     weight_path = f"../weights/MSELoss/best_{plot_size}.pth"
 
-    torch.cuda.set_device(1)
+    torch.cuda.set_device(0)
 
     # net = UNet(n_channels=1, n_classes=1)
     # net.load_state_dict(torch.load(weight_path, map_location={"cuda:3": "cuda:0"}))
@@ -42,7 +42,7 @@ if __name__ == "__main__":
     # bp = TopDown(input_path, output_path, weight_path)
     # bp.main()
 
-    # bp = BackPropBackGround(
+    # bp = BackPropBackGround(GuidedBackpropReLUModel
     #     input_path=input_path, output_path=output_path, weight_path=weight_path
     # )
     #
