@@ -61,7 +61,7 @@ if __name__ == "__main__":
     plot_size = 12
     date = datetime.now().date()
 
-    input_path = Path("../images/for_graphcut/test18_normalize")
+    input_path = Path("../images/for_graphcut/test18")
     output_path = Path("./output/{}/test18".format(date))
     weight_path = Path("../weights/MSELoss/best_{}.pth".format(plot_size))
 

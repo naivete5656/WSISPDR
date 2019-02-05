@@ -1,62 +1,8 @@
 import torch
-from torch.autograd import Function
 import torch.nn as nn
+from .guided_parts import GuidedBackpropReLU, GuidedBackpropMaxPool
 import numpy as np
 from skimage.draw import circle
-from utils import *
-import torch.nn.functional as F
-
-
-class GuidedBackpropReLU(Function):
-    @staticmethod
-    def forward(ctx, input):
-        positive_mask = (input > 0).type_as(input)
-        output = torch.addcmul(
-            torch.zeros(input.size()).type_as(input), input, positive_mask
-        )
-        ctx.save_for_backward(input, output)
-        return output
-
-    @staticmethod
-    def backward(ctx, grad_output):
-        input, output = ctx.saved_tensors
-
-        positive_mask_1 = (input > 0).type_as(grad_output)
-        positive_mask_2 = (grad_output > 0).type_as(grad_output)
-        grad_input = torch.addcmul(
-            torch.zeros(input.size()).type_as(input),
-            torch.addcmul(
-                torch.zeros(input.size()).type_as(input), grad_output, positive_mask_1
-            ),
-            positive_mask_2,
-        )
-
-        return grad_input
-
-
-def guide(self, input):
-    output = GuidedBackpropReLU.apply(input)
-    return output
-
-
-class GuidedBack(nn.Module):
-    def forward(self, input):
-        return GuidedBackpropReLU
-
-
-class GuidedBackpropMaxPool(Function):
-    def forward(self, input):
-        output, indices = F.max_pool2d(input, 2, return_indices=True)
-        self.save_for_backward(indices)
-        return output
-
-    def backward(self, grad_output):
-        # import pdb
-        #
-        # pdb.set_trace()
-        indices = self.saved_tensors[0]
-        unpooled = F.max_unpool2d(grad_output, indices, (2, 2))
-        return unpooled
 
 
 class GuidedBackpropReLUModel(nn.Module):
@@ -217,28 +163,3 @@ class Test3(nn.Module):
         output = output[0, 0, :, :]
 
         return output
-
-
-class Net(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.pool = nn.MaxPool2d(2)
-
-    def forward(self, x):
-        x = self.pool(x)
-        return x
-
-
-if __name__ == "__main__":
-    import os
-
-    os.chdir("../")
-    print(os.getcwd())
-
-    a = torch.rand(1, 1, 64, 64)
-    a.requires_grad = True
-    pool = Net()
-    output = pool(a)
-    # maxpool = GuidedBackpropMaxPool()
-    # maxpool.apply(a)
-    print(output)

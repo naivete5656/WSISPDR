@@ -1,13 +1,7 @@
 from types import MethodType
-
-import cv2
-import torch
 import torch.nn as nn
-import torch.nn.functional as F
-import numpy as np
-from scipy.misc import imresize
 from .pr_conv import pr_conv2d
-from .gaidedbackprop import GuidedBackpropReLU,guide
+from .guided_parts import guide_relu
 
 
 import numpy as np
@@ -105,17 +99,11 @@ class TopDownAfterReLu(TopDownBackprop):
                     self.count += 1
             elif isinstance(module, nn.ReLU):
                 module._original_forward = module.forward
-                module.forward = MethodType(guide, module)
-
-
-        # modules = list(self.modules())
-        # for module in modules:
-        #     for i, child in enumerate(module.children()):
-        #         if isinstance(child, nn.ReLU):
-        #             module._modules[str(i)] = GuidedBackpropReLU()
+                module.forward = MethodType(guide_relu, module)
 
     def inference(self):
         # super().train(False)
         self._patch()
         self.inferencing = True
         return self
+

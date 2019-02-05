@@ -52,12 +52,16 @@ class EvaluationMethods:
             target_mask = np.zeros(target.shape)
             target_mask[target == target_label] = 1
 
+            plt.imshow(pred_mask),plt.show()
+            plt.imshow(target_mask),plt.show()
+
             pred_mask = pred_mask.flatten()
             target_mask = target_mask.flatten()
 
             tp = pred_mask.dot(target_mask)
             fn = pred_mask.sum() - tp
             fp = target_mask.sum() - tp
+            print(tp,fn,fp)
             tps += tp
             fns += fn
             fps += fp
@@ -183,7 +187,7 @@ class UseMethods(EvaluationMethods):
         with open(self.save_path.joinpath(f"result.txt"), mode="w") as f:
             f.write(text)
 
-    def noize_off(self):
+    def noize_off(self, pred_path):
         for img_i, path in enumerate(
             zip(self.pred_paths, self.target_path, self.detection_path)
         ):
@@ -228,9 +232,10 @@ class UseMethods(EvaluationMethods):
                         temp[index_mask == i] = multi_segment_mask[index_mask == i]
                         new_pred[temp > 0] = label
                         label += 1
-                    # plt.imshow(new_pred), plt.show()
             plt.imshow(new_pred), plt.show()
-            cv2.imwrite(str(f"./outputs/pred/sophisticated_pred/{img_i}.tif"), new_pred)
+            output_path = pred_path.joinpath('sophisticated_pred')
+            output_path.mkdir(parents=True, exist_ok=True)
+            cv2.imwrite(str(output_path.joinpath(f'{img_i:05d}.tif')), new_pred)
 
 
 class LinearReview(UseMethods):
@@ -373,10 +378,12 @@ class LinearReview(UseMethods):
 if __name__ == "__main__":
     date = datetime.now().date()
     target_path = Path("./images/review/target")
-    pred_path = Path("./images/review/pred/sophisticated_pred")
+    pred_path = Path("./images/review/pred")
     save_path = Path(f"./outputs/txt_result/ours")
+    pred_path = pred_path.joinpath('sophisticated_pred')
     evaluation = UseMethods(pred_path, target_path, save_path=save_path)
-    # evaluation.noize_off()
+    evaluation.pred_paths = sorted(pred_path.glob("*.tif"))
+    # evaluation.noize_off(pred_path)
     evaluation.evaluation_all()
     # evaluation.evaluation_iou()
     #

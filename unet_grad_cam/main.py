@@ -28,8 +28,8 @@ if __name__ == "__main__":
     # input_path = sorted(Path("../images/challenge/challenge2").glob("*.tif"))
     # output_path = Path(f"./output/{date}/challenge")
     # weight_path = f"../weights/challenge/best_{plot_size}.pth"
-    input_path = sorted(Path("../images/sequ_cut/sequ18/ori").glob("*.tif"))
-    output_path = Path(f"./output/{date}/test18")
+    input_path = sorted(Path("../images/test/ori").glob("*.tif"))
+    output_path = Path(f"./output/{date}/test")
     weight_path = f"../weights/MSELoss/best_{plot_size}.pth"
 
     torch.cuda.set_device(0)
@@ -42,23 +42,23 @@ if __name__ == "__main__":
     # bp = TopDown(input_path, output_path, weight_path)
     # bp.main()
 
-    # bp = BackPropBackGround(GuidedBackpropReLUModel
+    # bp = BackPropBackGround(
     #     input_path=input_path, output_path=output_path, weight_path=weight_path
     # )
     #
     # bp.main()
 
-    bp = BackpropagationEachPeak(
+    # bp = BackpropagationEachPeak(
+    #     input_path=input_path, output_path=output_path, weight_path=weight_path
+    # )
+    #
+    # bp.main()
+
+    bp = BackpropAll(
         input_path=input_path, output_path=output_path, weight_path=weight_path
     )
 
     bp.main()
-
-    # bp = BackpropAll(
-    #     input_path=input_path, output_path=output_path, weight_path=weight_path
-    # )
-    #
-    # bp.main()
 
 
 

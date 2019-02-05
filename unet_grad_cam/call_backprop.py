@@ -1,16 +1,15 @@
 from pathlib import Path
-from gradcam import *
 import torch
-from networks import UNet
+from unet import UNet
 from PIL import Image
 import numpy as np
 import cv2
-from utils import plot_3d, local_maxima, gaus_filter
+from utils import local_maxima, gaus_filter
 import matplotlib.pyplot as plt
-from scipy.io import savemat
+from gradcam import Test3, Test2, Test
 
 
-class _BackProp(object):
+class BackProp(object):
     def __init__(self, input_path, output_path, weight_path, gpu=True):
         self.input_path = input_path
         self.output_path = output_path
@@ -61,69 +60,11 @@ class _BackProp(object):
             self.save_img(gbs, img_i)
 
 
-class TopDown(_BackProp):
-    def __init__(self, input_path, output_path, weight_path, gpu=True, radius=1):
-        super().__init__(input_path, output_path, weight_path, gpu)
-        self.back_model = TopDownAfterReLu(self.net)
-        self.back_model.inference()
-        print(self)
-
-    def main(self):
-        each_back = self.output_path.joinpath("each")
-        each_back.mkdir(parents=True, exist_ok=True)
-        all_back = self.output_path.joinpath("all")
-        all_back.mkdir(parents=True, exist_ok=True)
-        for img_i, path in enumerate(self.input_path):
-            # load image
-            img = np.array(Image.open(path))
-            img = (img.astype(np.float32) / 255).reshape(
-                (1, 1, img.shape[0], img.shape[1])
-            )
-            img = torch.from_numpy(img)
-
-            # throw unet
-            if self.gpu:
-                img = img.cuda()
-            module = self.back_model
-            prms = module(img)
-            prms = np.array(prms)
-            prms = prms / prms.max() * 255
-            r, g, b = np.loadtxt("./utils/color.csv", delimiter=",")
-            prms_coloring = []
-
-            for peak_i, prm in enumerate(prms):
-                prm = prm/prm.max() * 10
-                prm = prm.clip(0, 255).astype(np.uint8)
-                result = np.ones((320, 320, 3))
-                result = prm[..., np.newaxis] * result
-                peak_i = peak_i % 20
-                result[..., 0][result[..., 0] != 0] = r[peak_i] * prm[prm != 0]
-                result[..., 1][result[..., 1] != 0] = g[peak_i] * prm[prm != 0]
-                result[..., 2][result[..., 2] != 0] = b[peak_i] * prm[prm != 0]
-                prms_coloring.append(result)
-
-            prms_coloring = np.array(prms_coloring)
-            index = np.argmax(prms, axis=0)
-            mask = np.zeros((320, 320, 3))
-            for x in range(1, index.max() + 1):
-                mask[index == x, :] = prms_coloring[x][index == x, :]
-            plt.imshow(mask), plt.show()
-            prms_coloring = (
-                    prms_coloring.astype(np.float) / prms_coloring.max() * 255
-            ).astype(np.uint8)
-
-            prms_coloring = np.max(prms_coloring, axis=0)
-
-            prm = np.max(prms, axis=0)
-            plt.imshow(prms_coloring), plt.show()
-            cv2.imwrite(str(all_back.joinpath(f"{i:05d}.tif")), prm.astype(np.uint8))
-
-
-class BackpropagationEachPeak(_BackProp):
+class BackpropagationEachPeak(BackProp):
     def __init__(self, input_path, output_path, weight_path, gpu=True, radius=1):
         super().__init__(input_path, output_path, weight_path, gpu)
 
-        self.back_model = GuidedBackpropReLUModel(self.net)
+        self.back_model = Test(self.net)
         self.per_1ch_path = output_path.parent / Path(f"r={radius}_1ch")
         self.per_1ch_path.mkdir(parents=True, exist_ok=True)
         self.likelymap_savepath = output_path.parent.joinpath("likelymap")
@@ -183,7 +124,7 @@ class BackpropagationEachPeak(_BackProp):
         return gbs
 
 
-class BackpropAll(_BackProp):
+class BackpropAll(BackProp):
     def __init__(self, input_path, output_path, weight_path, gpu=True, radius=1):
         super().__init__(input_path, output_path, weight_path, gpu)
 
@@ -209,7 +150,7 @@ class BackpropAll(_BackProp):
         )
 
 
-class BackPropBackGround(_BackProp):
+class BackPropBackGround(BackProp):
     def __init__(self, input_path, output_path, weight_path, gpu=True, radius=1):
         super().__init__(input_path, output_path, weight_path, gpu)
         self.output_path_each = None
@@ -240,7 +181,7 @@ class BackPropBackGround(_BackProp):
             mask[region == i, 0] = r[i] * 255
             mask[region == i, 1] = g[i] * 255
             mask[region == i, 2] = b[i] * 255
-        cv2.imwrite('mask.png', mask)
+        cv2.imwrite("mask.png", mask)
 
         gbs = []
         # each propagate
@@ -279,7 +220,7 @@ class BackPropBackGround(_BackProp):
             mask = np.zeros((320, 320, 3))
             for x in range(1, index.max() + 1):
                 mask[index == x, :] = gbs_coloring[x][index == x, :]
-            cv2.imwrite('instance_backprop.png', mask)
+            cv2.imwrite("instance_backprop.png", mask)
 
             gbs = np.array(gbs)
             gbs = (gbs / gbs.max() * 255).astype(np.uint8)
