@@ -69,7 +69,7 @@ class TopDown(BackProp):
             prms = module(img)
             prms = np.array(prms)
             prms = prms / prms.max() * 255
-            r, g, b = np.loadtxt("./utils/color.csv", delimiter=",")
+            r, g, b = np.loadtxt("../utils/color.csv", delimiter=",")
             prms_coloring = []
 
             for peak_i, prm in enumerate(prms):
@@ -97,4 +97,4 @@ class TopDown(BackProp):
 
             prm = np.max(prms, axis=0)
             plt.imshow(prms_coloring), plt.show()
-            cv2.imwrite(str(all_back.joinpath(f"{i:05d}.tif")), prm.astype(np.uint8))
+            cv2.imwrite(str(all_back.joinpath(f"{img_i:05d}.tif")), prm.astype(np.uint8))

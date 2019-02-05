@@ -5,10 +5,11 @@ import numpy as np
 import cv2
 from utils import local_maxima, gaus_filter
 from gradcam import Test3, Test2, Test
+import matplotlib.pyplot as plt
 import sys
+
 path = Path.cwd().parent
 sys.path.append(path)
-import matplotlib.pyplot as plt
 from networks import UNet
 
 
@@ -42,7 +43,7 @@ class BackProp(object):
 
     def coloring(self, gbs):
         # coloring
-        r, g, b = np.loadtxt("./utils/color.csv", delimiter=",")
+        r, g, b = np.loadtxt("../utils/color.csv", delimiter=",")
         gbs_coloring = []
         for peak_i, gb in enumerate(gbs):
             gb = gb * 255
@@ -77,53 +78,6 @@ class BackProp(object):
             gbs = self.calculate(img, pre_img)
 
             self.save_img(gbs, img_i)
-
-
-class BackpropagationEachPeak(BackProp):
-    def __init__(self, input_path, output_path, weight_path, gpu=True, radius=1):
-        super().__init__(input_path, output_path, weight_path, gpu)
-
-        self.back_model = Test(self.net)
-        self.per_1ch_path = output_path.parent / Path(f"r={radius}_1ch")
-        self.per_1ch_path.mkdir(parents=True, exist_ok=True)
-        self.likelymap_savepath = output_path.parent.joinpath("likelymap")
-        self.likelymap_savepath.mkdir(parents=True, exist_ok=True)
-        self.text_output = output_path.parent.joinpath("id")
-        self.text_output.mkdir(parents=True, exist_ok=True)
-
-    def save_img(self, gbs, i):
-        # coloring
-        try:
-            # normalize
-            max_value = np.array(gbs).max()
-            gbs = (gbs / max_value) * 1000
-            gbs = gbs.clip(0, 255).astype(np.uint8)
-
-            gbs_coloring = self.coloring(gbs)
-
-            gbs_coloring = np.array(gbs_coloring)
-            gbs_coloring = (
-                gbs_coloring.astype(np.float) / gbs_coloring.max() * 255
-            ).astype(np.uint8)
-
-            gbs_coloring = np.max(gbs_coloring, axis=2)
-            cv2.imwrite(str(self.output_path / Path("%05d.tif" % i)), gbs_coloring)
-        except ValueError:
-            cv2.imwrite(
-                str(self.output_path / Path("%05d.tif" % i)), np.zeros(self.shape)
-            )
-
-    def calculate(self, img, pre_img):
-        # peak
-        peaks = local_maxima((pre_img * 255).astype(np.uint8), 125, 2).astype(np.int)
-
-        gbs = []
-        for i, peak in enumerate(peaks):
-            with open(self.temp_path, mode="a") as f:
-                f.write(str(i) + "," + str(peak[0]) + "," + str(peak[1]) + "\n")
-            result = self.back_model(img, peak[0], peak[1]).copy()
-            gbs.append(result)
-        return gbs
 
 
 class BackpropAll(BackProp):
@@ -175,14 +129,15 @@ class BackPropBackGround(BackProp):
         likely_map = np.max(gauses, axis=0)
         region[likely_map < 0.05] = 0
 
-        r, g, b = np.loadtxt("./utils/color.csv", delimiter=",")
+        r, g, b = np.loadtxt("../utils/color.csv", delimiter=",")
 
         # mask gen
         mask = np.zeros((320, 320, 3))
         for i in range(1, region.max() + 1):
-            mask[region == i, 0] = r[i] * 255
-            mask[region == i, 1] = g[i] * 255
-            mask[region == i, 2] = b[i] * 255
+            peak_i = i % 20
+            mask[region == i, 0] = r[peak_i] * 255
+            mask[region == i, 1] = g[peak_i] * 255
+            mask[region == i, 2] = b[peak_i] * 255
         cv2.imwrite("mask.png", mask)
 
         gbs = []
@@ -218,10 +173,7 @@ class BackPropBackGround(BackProp):
 
             for i, gb in enumerate(gbs):
                 cv2.imwrite(str(save_path.joinpath("{:04d}.tif".format(i))), gb)
-            cv2.imwrite(
-                str(save_path.parent.joinpath("backward.tif".format(i))),
-                gbs.max(axis=0),
-            )
+            cv2.imwrite(str(save_path.parent.joinpath("backward.tif")), gbs.max(axis=0))
 
     def main(self):
         for img_i, path in enumerate(self.input_path):
@@ -241,5 +193,3 @@ class BackPropBackGround(BackProp):
 
             img.requires_grad = True
             self.calculate(img, pre_img)
-
-

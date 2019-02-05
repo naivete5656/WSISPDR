@@ -11,18 +11,17 @@ if __name__ == "__main__":
     plot_size = 12
     radius = 1
     date = datetime.now().date()
-    key = 1
+    key = 2
 
-    input_path = sorted(Path("../images/test/ori").glob("*.tif"))
+    input_path = sorted(Path("../images/sequ_cut/sequ18/ori").glob("*.tif"))
     output_path = Path(f"./output/{date}/test")
     weight_path = f"../weights/MSELoss/best_{plot_size}.pth"
 
     torch.cuda.set_device(0)
     call_method = {
         0: TopDown,
-        1: BackPropBackGround,
-        2: BackpropagationEachPeak,
-        3: BackpropAll,
+        1: BackpropAll,
+        2: BackPropBackGround,
     }
     bp = call_method[key](input_path, output_path, weight_path)
     bp.main()
