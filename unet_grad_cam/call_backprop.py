@@ -1,12 +1,15 @@
 from pathlib import Path
 import torch
-from unet import UNet
 from PIL import Image
 import numpy as np
 import cv2
 from utils import local_maxima, gaus_filter
-import matplotlib.pyplot as plt
 from gradcam import Test3, Test2, Test
+import sys
+path = Path.cwd().parent
+sys.path.append(path)
+import matplotlib.pyplot as plt
+from networks import UNet
 
 
 class BackProp(object):
@@ -36,6 +39,22 @@ class BackProp(object):
         if save_path is not None:
             cv2.imwrite(str(save_path), (pre_img * 255).astype(np.uint8))
         return pre_img
+
+    def coloring(self, gbs):
+        # coloring
+        r, g, b = np.loadtxt("./utils/color.csv", delimiter=",")
+        gbs_coloring = []
+        for peak_i, gb in enumerate(gbs):
+            gb = gb * 255
+            gb = gb.clip(0, 255).astype(np.uint8)
+            result = np.ones((self.shape[0], self.shape[1], 3))
+            result = gb[..., np.newaxis] * result
+            peak_i = peak_i % 20
+            result[..., 0][result[..., 0] != 0] = r[peak_i] * gb[gb != 0]
+            result[..., 1][result[..., 1] != 0] = g[peak_i] * gb[gb != 0]
+            result[..., 2][result[..., 2] != 0] = b[peak_i] * gb[gb != 0]
+            gbs_coloring.append(result)
+        return gbs_coloring
 
     def main(self):
         for img_i, path in enumerate(self.input_path):
@@ -75,30 +94,14 @@ class BackpropagationEachPeak(BackProp):
     def save_img(self, gbs, i):
         # coloring
         try:
-            r, g, b = np.loadtxt("./utils/color.csv", delimiter=",")
-            gbs_coloring = []
             # normalize
             max_value = np.array(gbs).max()
             gbs = (gbs / max_value) * 1000
             gbs = gbs.clip(0, 255).astype(np.uint8)
 
-            # colorling
-            for peak_i, gb in enumerate(gbs):
-                gb = gb * 255
-                gb = gb.clip(0, 255).astype(np.uint8)
-                result = np.ones((self.shape[0], self.shape[1], 3))
-                result = gb[..., np.newaxis] * result
-                peak_i = peak_i % 20
-                result[..., 0][result[..., 0] != 0] = r[peak_i] * gb[gb != 0]
-                result[..., 1][result[..., 1] != 0] = g[peak_i] * gb[gb != 0]
-                result[..., 2][result[..., 2] != 0] = b[peak_i] * gb[gb != 0]
-                # cv2.imwrite(
-                #     str(self.per_1ch_path / Path("%04d-%04d.tif" % (i, peak_i))),
-                #     (result / result.max() * 255).astype(np.uint8),
-                # )
-                # result = gb * 10
-                gbs_coloring.append(result)
+            gbs_coloring = self.coloring(gbs)
 
+            gbs_coloring = np.array(gbs_coloring)
             gbs_coloring = (
                 gbs_coloring.astype(np.float) / gbs_coloring.max() * 255
             ).astype(np.uint8)
@@ -115,7 +118,6 @@ class BackpropagationEachPeak(BackProp):
         peaks = local_maxima((pre_img * 255).astype(np.uint8), 125, 2).astype(np.int)
 
         gbs = []
-        target_index = None
         for i, peak in enumerate(peaks):
             with open(self.temp_path, mode="a") as f:
                 f.write(str(i) + "," + str(peak[0]) + "," + str(peak[1]) + "\n")
@@ -201,18 +203,7 @@ class BackPropBackGround(BackProp):
                 # )
                 gbs.append(result)
 
-            # coloring
-            gbs_coloring = []
-            for peak_i, gb in enumerate(gbs):
-                gb = gb * 255
-                gb = gb.clip(0, 255).astype(np.uint8)
-                result = np.ones((self.shape[0], self.shape[1], 3))
-                result = gb[..., np.newaxis] * result
-                peak_i = peak_i % 20
-                result[..., 0][result[..., 0] != 0] = r[peak_i] * gb[gb != 0]
-                result[..., 1][result[..., 1] != 0] = g[peak_i] * gb[gb != 0]
-                result[..., 2][result[..., 2] != 0] = b[peak_i] * gb[gb != 0]
-                gbs_coloring.append(result)
+            gbs_coloring = self.coloring(gbs)
 
             # mask gen
             gbs_coloring = np.array(gbs_coloring)
@@ -249,5 +240,6 @@ class BackPropBackGround(BackProp):
             )
 
             img.requires_grad = True
-            gbs = self.calculate(img, pre_img)
+            self.calculate(img, pre_img)
+
 
