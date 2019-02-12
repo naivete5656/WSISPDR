@@ -52,19 +52,23 @@ class EvaluationMethods:
             target_mask = np.zeros(target.shape)
             target_mask[target == target_label] = 1
 
-            plt.imshow(pred_mask),plt.show()
-            plt.imshow(target_mask),plt.show()
-
             pred_mask = pred_mask.flatten()
             target_mask = target_mask.flatten()
 
             tp = pred_mask.dot(target_mask)
             fn = pred_mask.sum() - tp
             fp = target_mask.sum() - tp
-            print(tp,fn,fp)
             tps += tp
             fns += fn
             fps += fp
+            # print(tps/(tps+fns+fps))
+            # target_mask = np.zeros(target.shape)
+            # target_mask[target == target_label] = 1
+            # plt.imshow(target_mask),plt.show()
+            # pred_mask = np.zeros(pred.shape)
+            # pred_mask[pred == max_label] = 1
+            # plt.imshow(pred_mask), plt.show()
+            # print(target_label)
         return tps, fns, fps
 
     def segmentation_eval(self, pred, target):
@@ -125,35 +129,10 @@ class EvaluationMethods:
             fp = 0
         return tp, fn, fp
 
-
-class UseMethods(EvaluationMethods):
-    def evaluation_all(self):
-        evaluations = []
-        for path in zip(self.pred_paths, self.target_path):
-            pred = cv2.imread(str(path[0]), 0)
-            target = cv2.imread(str(path[1]), 0)
-            detection_tp, detection_fn, detection_fp = self.f_measure(pred, target)
-            seg_tp, seg_fn, seg_fp = self.segmentation_eval(pred, target)
-            instance_tp, instance_fn, instance_fp = self.instance_eval(pred, target)
-            evaluations.append(
-                [
-                    detection_tp,
-                    detection_fn,
-                    detection_fp,
-                    seg_tp,
-                    seg_fn,
-                    seg_fp,
-                    instance_tp,
-                    instance_fn,
-                    instance_fp,
-                ]
-            )
-
+    def review(self, evaluations):
         # detection
         evaluations = np.array(evaluations)
-        tps_fns_fps = evaluations.sum(
-            axis=0
-        )
+        tps_fns_fps = evaluations.sum(axis=0)
 
         detection_recall = tps_fns_fps[0] / (tps_fns_fps[0] + tps_fns_fps[1])
         detection_precision = tps_fns_fps[0] / (tps_fns_fps[0] + tps_fns_fps[2])
@@ -161,31 +140,59 @@ class UseMethods(EvaluationMethods):
             detection_recall + detection_precision
         )
 
-        seg_recall = tps_fns_fps[3] / (tps_fns_fps[3] + tps_fns_fps[4])
-        seg_precision = tps_fns_fps[3] / (tps_fns_fps[3] + tps_fns_fps[5])
-        seg_f_measure = (2 * seg_recall * seg_precision) / (
-                seg_recall + seg_precision
+        # segmentation
+        dice = (
+            2 * tps_fns_fps[3] / (2 * tps_fns_fps[3] + tps_fns_fps[4] + tps_fns_fps[5])
         )
-
-        dice = 2 * tps_fns_fps[3] / (2 * tps_fns_fps[3] + tps_fns_fps[4] + tps_fns_fps[5])
         iou = tps_fns_fps[3] / (tps_fns_fps[3] + tps_fns_fps[4] + tps_fns_fps[5])
 
         # instance segmentation
-        instance_recall = tps_fns_fps[6] / (tps_fns_fps[6] + tps_fns_fps[7])
-        instance_precision = tps_fns_fps[6] / (tps_fns_fps[6] + tps_fns_fps[8])
-        instance_f_measure = (2 * instance_recall * instance_precision) / (
-            instance_recall + instance_precision
+        instance_dice = (
+            2 * tps_fns_fps[6] / (2 * tps_fns_fps[6] + tps_fns_fps[7] + tps_fns_fps[8])
         )
-        instance_dice = 2 * tps_fns_fps[6] / (2 * tps_fns_fps[6] + tps_fns_fps[7] + tps_fns_fps[8])
-        instance_iou = tps_fns_fps[6] / (tps_fns_fps[6] + tps_fns_fps[7] + tps_fns_fps[8])
+        instance_iou = tps_fns_fps[6] / (
+            tps_fns_fps[6] + tps_fns_fps[7] + tps_fns_fps[8]
+        )
 
-        text = f"precision:{detection_precision}\nrecall:{detection_recall}\nf-measure:{detection_f_measure}\n\
-            segmentation_precision:{seg_precision}\n segmentation_recall:{seg_recall}\n segmentation_f-measure:{seg_f_measure}\ndice:{dice}\niou:{iou}\n\
-            instance_precision:{instance_precision}\ninstance_recall:{instance_recall}\n instance_f-measure:{instance_f_measure}\n\
-            instance_iou:{instance_iou}\ninstance-dice:{instance_dice}\n"
+        text = f"detection\n precision:{detection_precision}\nrecall:{detection_recall}\nf-measure:{detection_f_measure}\
+                                    \nsegmentation\ndice:{dice}\niou:{iou}\n\
+                                    \ninstance-segmentation\ninstance_iou:{instance_iou}\ninstance-dice:{instance_dice}\n"
         print(text)
         with open(self.save_path.joinpath(f"result.txt"), mode="w") as f:
             f.write(text)
+
+    def update_evaluation(self, pred, target, evaluations):
+        plt.imshow(pred),plt.show()
+        plt.imshow(target),plt.show()
+        detection_tp, detection_fn, detection_fp = self.f_measure(pred, target)
+        seg_tp, seg_fn, seg_fp = self.segmentation_eval(pred, target)
+        instance_tp, instance_fn, instance_fp = self.instance_eval(pred, target)
+        evaluations.append(
+            [
+                detection_tp,
+                detection_fn,
+                detection_fp,
+                seg_tp,
+                seg_fn,
+                seg_fp,
+                instance_tp,
+                instance_fn,
+                instance_fp,
+            ]
+        )
+        print(instance_tp/(instance_tp+instance_fp+instance_fn))
+        return evaluations
+
+
+class UseMethods(EvaluationMethods):
+    def evaluation_all(self):
+        evaluations = []
+        for path in zip(self.pred_paths, self.target_path):
+            # pred = cv2.imread(str(path[0]), 0)
+            pred = np.load(path[0]).astype(np.int)
+            target = cv2.imread(str(path[1]), 0)
+            evaluations = self.update_evaluation(pred, target, evaluations)
+        self.review(evaluations)
 
     def noize_off(self, pred_path):
         for img_i, path in enumerate(
@@ -232,10 +239,10 @@ class UseMethods(EvaluationMethods):
                         temp[index_mask == i] = multi_segment_mask[index_mask == i]
                         new_pred[temp > 0] = label
                         label += 1
-            plt.imshow(new_pred), plt.show()
-            output_path = pred_path.joinpath('sophisticated_pred')
+            output_path = pred_path.joinpath("sophisticated_pred")
             output_path.mkdir(parents=True, exist_ok=True)
-            cv2.imwrite(str(output_path.joinpath(f'{img_i:05d}.tif')), new_pred)
+            np.save(output_path.joinpath(f"{img_i:05d}.npy"), new_pred)
+            cv2.imwrite(str(output_path.joinpath(f"{img_i:05d}.tif")), new_pred)
 
 
 class LinearReview(UseMethods):
@@ -263,7 +270,7 @@ class LinearReview(UseMethods):
         target_centers = []
         for target_label in range(1, target.max() + 1):
             y, x = np.where(target == target_label)
-            if x.shape[0] != 0 :
+            if x.shape[0] != 0:
                 x = x.sum() / x.shape[0]
                 y = y.sum() / y.shape[0]
                 target_centers.append([x, y])
@@ -314,76 +321,28 @@ class LinearReview(UseMethods):
             plt.imshow(markers), plt.show()
 
     def evaluation_all(self):
-        evaluations_detection = []
-        evaluations_segmentation = []
-        evaluations_instance = []
+        evaluations = []
         for path in zip(self.pred_paths, self.target_path):
             pred = cv2.imread(str(path[0]), 0)
             pred = cv2.connectedComponents(pred)[1]
-
             target = cv2.imread(str(path[1]), 0)
-            evaluations_detection.append(self.f_measure(pred, target))
-            evaluations_segmentation.append(self.segmentation_eval(pred, target))
-            evaluations_instance.append(self.instance_eval(pred, target))
-
-        # detection
-        evaluations = np.array(evaluations_detection)
-        tps = np.sum(evaluations[:, 0])
-        fns = np.sum(evaluations[:, 1])
-        fps = np.sum(evaluations[:, 2])
-
-        detection_recall = tps / (tps + fns)
-        detection_precision = tps / (tps + fps)
-        detection_f_measure = (2 * detection_recall * detection_precision) / (
-            detection_recall + detection_precision
-        )
-
-        # segmentation
-        evaluations = np.array(evaluations_segmentation)
-        tps = np.sum(evaluations[:, 0])
-        fns = np.sum(evaluations[:, 1])
-        fps = np.sum(evaluations[:, 2])
-
-        segmentation_recall = tps / (tps + fns)
-        segmentation_precision = tps / (tps + fps)
-        segmentation_f_measure = (2 * segmentation_recall * segmentation_precision) / (
-            segmentation_recall + segmentation_precision
-        )
-        dice = 2 * tps / (2 * tps + fps + fns)
-        iou = tps / (tps + fns + fps)
-
-        # instance segmentation
-        evaluations = np.array(evaluations_instance)
-        tps = np.sum(evaluations[:, 0])
-        fns = np.sum(evaluations[:, 1])
-        fps = np.sum(evaluations[:, 2])
-
-        instance_recall = tps / (tps + fns)
-        instance_precision = tps / (tps + fps)
-        instance_f_measure = (2 * instance_recall * instance_precision) / (
-            instance_recall + instance_precision
-        )
-        instance_dice = 2 * tps / (2 * tps + fps + fns)
-        instance_iou = tps / (tps + fns + fps)
-
-        text = f"precision:{detection_precision}\nrecall:{detection_recall}\nf-measure:{detection_f_measure}\n\
-                    segmentation_precision:{segmentation_precision}\n segmentation_recall:{segmentation_recall}\n segmentation_f-measure:{segmentation_f_measure}\n\
-                    instance_precision:{instance_precision}\ninstance_recall:{instance_recall}\n instance_f-measure:{instance_f_measure}\niou:{iou}\n\
-                    instance_iou:{instance_iou}\ndice:{dice}\ninstance-dice:{instance_dice}\n"
-        print(text)
-        with open(self.save_path.joinpath(f"result.txt"), mode="w") as f:
-            f.write(text)
+            evaluations = self.update_evaluation(pred, target, evaluations)
+        self.review(evaluations)
+        self.review(evaluations)
 
 
 if __name__ == "__main__":
     date = datetime.now().date()
     target_path = Path("./images/review/target")
-    pred_path = Path("./images/review/pred")
-    save_path = Path(f"./outputs/txt_result/ours")
-    pred_path = pred_path.joinpath('sophisticated_pred')
+    pred_path = Path("./images/review/test")
+    save_path = Path(f"./outputs/txt_result/graphcut")
+
     evaluation = UseMethods(pred_path, target_path, save_path=save_path)
-    evaluation.pred_paths = sorted(pred_path.glob("*.tif"))
+
     # evaluation.noize_off(pred_path)
+
+    pred_path = pred_path.joinpath("sophisticated_pred")
+    evaluation.pred_paths = sorted(pred_path.glob("*.npy"))
     evaluation.evaluation_all()
     # evaluation.evaluation_iou()
     #

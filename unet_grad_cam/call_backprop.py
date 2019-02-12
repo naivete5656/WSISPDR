@@ -55,6 +55,7 @@ class BackProp(object):
             result[..., 1][result[..., 1] != 0] = g[peak_i] * gb[gb != 0]
             result[..., 2][result[..., 2] != 0] = b[peak_i] * gb[gb != 0]
             gbs_coloring.append(result)
+            cv2.imwrite(str(self.save_path.joinpath("{:04d}.png".format(peak_i))), result)
         return gbs_coloring
 
     def main(self):
@@ -114,8 +115,8 @@ class BackPropBackGround(BackProp):
 
     def calculate(self, img, pre_img):
         file_path = self.output_path_each.joinpath("peaks.txt")
-        save_path = self.output_path_each.joinpath("each_peak")
-        save_path.mkdir(parents=True, exist_ok=True)
+        self.save_path = self.output_path_each.joinpath("each_peak")
+        self.save_path.mkdir(parents=True, exist_ok=True)
 
         # peak
         peaks = local_maxima((pre_img * 255).astype(np.uint8), 125, 2).astype(np.int)
@@ -163,16 +164,19 @@ class BackPropBackGround(BackProp):
             # mask gen
             gbs_coloring = np.array(gbs_coloring)
             index = np.argmax(gbs, axis=0)
-            mask = np.zeros((320, 320, 3))
+            masks = np.zeros((320, 320, 3))
             for x in range(1, index.max() + 1):
-                mask[index == x, :] = gbs_coloring[x][index == x, :]
-            cv2.imwrite("instance_backprop.png", mask)
+                # mask = np.zeros((320, 320, 3))
+                # mask[index == x, :] = gbs_coloring[x][index == x, :]
+                masks[index == x, :] = gbs_coloring[x][index == x, :]
+
+            cv2.imwrite("instance_backprop.png", masks)
 
             gbs = np.array(gbs)
             gbs = (gbs / gbs.max() * 255).astype(np.uint8)
 
-            for i, gb in enumerate(gbs):
-                cv2.imwrite(str(save_path.joinpath("{:04d}.tif".format(i))), gb)
+            # for i, gb in enumerate(gbs):
+                # cv2.imwrite(str(save_path.joinpath("{:04d}.tif".format(i))), gb)
             cv2.imwrite(str(save_path.parent.joinpath("backward.tif")), gbs.max(axis=0))
 
     def main(self):

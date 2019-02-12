@@ -14,7 +14,7 @@ if __name__ == "__main__":
     key = 2
 
     input_path = sorted(Path("../images/sequ_cut/sequ18/ori").glob("*.tif"))
-    output_path = Path(f"./output/{date}/test")
+    output_path = Path(f"../outputs/gradcam/{date}/test")
     weight_path = f"../weights/MSELoss/best_{plot_size}.pth"
 
     torch.cuda.set_device(0)

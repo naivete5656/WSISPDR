@@ -64,10 +64,10 @@ clc
 %% Read a phase contrast image:
 addpath('./func')
 
-ori_path = sprintf('../images/test/ori/*.tif');
+ori_path = sprintf('../images/sequence/sequ17/ori/*.tif');
 ori_paths = dir(ori_path);
 
-network_pre_path = sprintf('../images/test/pred/*.tif');
+network_pre_path = sprintf('../images/sequence/sequ17/9/*.tif');
 network_pre_paths = dir(network_pre_path);
 
 for frame = 1:length(ori_paths)
@@ -129,7 +129,7 @@ for frame = 1:length(ori_paths)
     
 %     figure(1),imshow(precd_img);
     
-    save_path = sprintf('./output/test_norm/%05d.tif',frame-1);
+    save_path = sprintf('../outputs/phase-off/sequ17/%05d.tif',frame-1);
     imwrite(precd_img,save_path);
 end
 
