@@ -3,7 +3,7 @@ import cv2
 import torch
 
 
-class FeatureExtractor():
+class FeatureExtractor:
     """ Class for extracting activations and
     registering gradients from targetted intermediate layers """
 
@@ -24,7 +24,7 @@ class FeatureExtractor():
         return outputs, x
 
 
-class ModelOutputs():
+class ModelOutputs:
     """ Class for making a forward pass, and getting:
     1. The network output.
     2. Activations from intermeddiate targetted layers.

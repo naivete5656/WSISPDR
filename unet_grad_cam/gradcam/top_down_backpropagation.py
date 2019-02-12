@@ -65,6 +65,7 @@ class TopDownBackprop(nn.Sequential):
             class_response_maps.backward(grad_output, retain_graph=True)
             img = input.grad.detach().sum(1).clone().clamp(min=0).cpu().numpy()
             import matplotlib.pyplot as plt
+
             prms.append(
                 input.grad.detach().sum(1).clone().clamp(min=0).cpu().numpy()[0]
             )
@@ -106,4 +107,3 @@ class TopDownAfterReLu(TopDownBackprop):
         self._patch()
         self.inferencing = True
         return self
-

@@ -1,15 +1,14 @@
-import os
-import sys
 
-path = os.path.join(os.path.dirname(__file__), "../")
-sys.path.append(path)
-
-
-from utils import *
 import torch
 import numpy as np
 from pathlib import Path
 import torch.nn as nn
+import sys
+
+path = Path.cwd().parent
+
+sys.path.append(path)
+from utils import *
 
 
 def eval_net(
