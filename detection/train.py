@@ -241,7 +241,7 @@ if __name__ == "__main__":
     mode = "single"
     plot_size = 12
     date = datetime.now().date()
-    train_path = Path("../images/challenge_cut/fr1_center")
+    train_path = [Path("../images/sequ_cut/sequ9"), Path("../images/sequ_cut/sequ17")]
     val_path = Path("../images/challenge_cut/val_center")
     save_weight_path = Path("../weight/{}/challenge/best_{}.pth".format(date, plot_size))
 
