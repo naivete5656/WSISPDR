@@ -75,7 +75,7 @@ def like_map_gen_handmade(plot_size, height=1040, width=1392):
     # number of cell
     annotations = np.array(annotations)
     # 1013 - number of frame
-    for i in range(25, 100):
+    for i in range(50, 100):
         # likelihood map of one input
         result = np.zeros((height, width))
         frame_per_annotations = annotations[annotations[:, 0] == i]

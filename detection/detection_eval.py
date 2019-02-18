@@ -37,7 +37,7 @@ def eval_net(
             else:
                 _, _, _, mask_pred = net(img)
         pre_img = mask_pred.detach().cpu().numpy()[0, 0]
-        pre_img = (pre_img * 255).astype(np.uint8)
+        pre_img = ((pre_img + 1) * (255 / 2)).astype(np.uint8)
         if i == 1500:
             plt.subplot(121)
             plt.imshow(pre_img)

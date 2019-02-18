@@ -22,6 +22,11 @@ def hwc_to_chw(img):
 
 
 def normalize(x):
+    x = x / (255 / 2) - 1
+    return x
+
+
+def normalize2(x):
     return x / 255
 
 

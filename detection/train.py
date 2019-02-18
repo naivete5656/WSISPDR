@@ -1,23 +1,14 @@
-
 from tqdm import tqdm
 from torch import optim
 from .detection_eval import *
-import os
-import sys
-path = os.path.join(os.path.dirname(__file__), "../")
-sys.path.append(path)
-
-from networks import *
 from utils import (
     get_imgs_and_masks,
     get_imgs_and_masks2,
     batch,
-    get_imgs_internal,
     get_imgs_multi,
 )
 from pathlib import Path
 import matplotlib.pyplot as plt
-from datetime import datetime
 import numpy as np
 
 
@@ -34,6 +25,7 @@ class TrainNet:
         train_path,
         val_path,
         weight_path,
+        save_path=None,
     ):
         self.net = net
         self.mode = mode
@@ -43,6 +35,8 @@ class TrainNet:
         self.val_mask_path = val_path / Path("{}".format(plot_size))
         self.save_weight_path = weight_path
         self.save_weight_path.parent.mkdir(parents=True, exist_ok=True)
+        self.save_path = save_path
+        self.save_path.parent.mkdir(parents=True, exist_ok=True)
         print(
             "Starting training:\nEpochs: {}\nBatch size: {} \nLearning rate: {}\ngpu:{}\n"
             "plot_size:{}\nmode:{}".format(epochs, batch_size, lr, gpu, plot_size, mode)
@@ -77,6 +71,7 @@ class TrainNet:
         print(
             "Epoch finished ! Loss: {}".format(self.epoch_loss / number_of_train_data)
         )
+        self.epoch_loss = 0
         loss = self.epoch_loss / number_of_train_data
         self.losses.append(loss)
 
@@ -141,6 +136,10 @@ class TrainNet:
                 self.optimizer.step()
 
                 pbar.update(self.batch_size)
+                if i == 500:
+                    pre_img = masks_pred.detach().cpu().numpy()[0, 0]
+                    pre_img = ((pre_img + 1) * (255 / 2)).astype(np.uint8)
+                    cv2.imwrite(self.save_path.joinpath("{:%05d}".format(i)), pre_img)
             pbar.close()
             self.validation(i)
             if self.bad >= 50:
@@ -153,6 +152,7 @@ class TrainMulti(TrainNet):
     def __init__(
         self,
         net,
+        mode,
         epochs,
         batch_size,
         lr,
@@ -213,7 +213,7 @@ class TrainMulti(TrainNet):
             self.load()
 
             pbar = tqdm(total=self.N_train)
-            for i, b in enumerate(batch(train, self.batch_size)):
+            for i, b in enumerate(batch(self.train, self.batch_size)):
                 imgs = np.array([i[0] for i in b])
                 ex1 = np.array([i[1] for i in b])
                 ex2 = np.array([i[2] for i in b])
@@ -230,7 +230,7 @@ class TrainMulti(TrainNet):
                     ex2 = ex2.cuda()
                     ex3 = ex3.cuda()
 
-                pre_ex1, pre_ex2, pre_ex3, res = net(imgs)
+                pre_ex1, pre_ex2, pre_ex3, res = self.net(imgs)
 
                 loss1 = self.criterion(pre_ex1, ex1)
                 loss2 = self.criterion(pre_ex2, ex2)
@@ -265,6 +265,7 @@ class TrainNetTwoPath(TrainNet):
         train_path,
         val_path,
         weight_path,
+        save_path,
     ):
         if isinstance(train_path, list):
             self.ori_path = []
@@ -279,6 +280,8 @@ class TrainNetTwoPath(TrainNet):
         self.val_mask_path = val_path / Path("{}-reverse".format(plot_size))
         self.save_weight_path = weight_path
         self.save_weight_path.parent.mkdir(parents=True, exist_ok=True)
+        self.save_path = save_path
+        self.save_path.parent.mkdir(parents=True, exist_ok=True)
         print(
             "Starting training:\nEpochs: {}\nBatch size: {} \nLearning rate: {}\ngpu:{}\n"
             "plot_size:{}\nmode:{}".format(epochs, batch_size, lr, gpu, plot_size, mode)
@@ -332,31 +335,33 @@ class TrainNetTwoPath(TrainNet):
     #             plt.imshow(true_masks[0,0]),plt.show()
 
 
-if __name__ == "__main__":
-    torch.cuda.set_device(0)
-    mode = "single"
-    plot_size = 12
-    date = datetime.now().date()
-    # train_path = [Path("../images/sequ_cut/sequ9"), Path("../images/sequ_cut/sequ17")]
-    train_path = Path("../images/sequ_cut/sequ16")
-    val_path = Path("../images/sequ_cut/sequ17")
-    save_weight_path = Path("../weight/{}/sequ17/best_{}.pth".format(date, plot_size))
-
-    models = {"single": UNet, "multi": UnetMultiFixedWeight}
-    net = models[mode](n_channels=1, n_classes=1)
-    net.cuda()
-
-    train = TrainNet(
-        net=net,
-        mode=mode,
-        epochs=500,
-        batch_size=9,
-        lr=1e-5,
-        gpu=True,
-        plot_size=plot_size,
-        train_path=train_path,
-        val_path=val_path,
-        weight_path=save_weight_path,
-    )
-
-    train.main()
+# if __name__ == "__main__":
+#     torch.cuda.set_device(0)
+#     mode = "single"
+#     plot_size = 12
+#     date = datetime.now().date()
+#     # train_path = [Path("../images/sequ_cut/sequ9"), Path("../images/sequ_cut/sequ17")]
+#     train_path = Path("../images/sequ_cut/sequ16")
+#     val_path = Path("../images/sequ_cut/sequ17")
+#     save_weight_path = Path("../weight/{}/sequ17/best_{}.pth".format(date, plot_size))
+#     save_path = Path("./confirm")
+#
+#     models = {"single": UNet, "multi": UnetMultiFixedWeight}
+#     net = models[mode](n_channels=1, n_classes=1)
+#     net.cuda()
+#
+#     train = TrainNet(
+#         net=net,
+#         mode=mode,
+#         epochs=500,
+#         batch_size=9,
+#         lr=1e-5,
+#         gpu=True,
+#         plot_size=plot_size,
+#         train_path=train_path,
+#         val_path=val_path,
+#         weight_path=save_weight_path,
+#         save_path=save_path,
+#     )
+#
+#     train.main()
