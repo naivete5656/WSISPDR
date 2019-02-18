@@ -75,7 +75,7 @@ def like_map_gen_handmade(plot_size, height=1040, width=1392):
     # number of cell
     annotations = np.array(annotations)
     # 1013 - number of frame
-    for i in range(0, 100):
+    for i in range(25, 100):
         # likelihood map of one input
         result = np.zeros((height, width))
         frame_per_annotations = annotations[annotations[:, 0] == i]
@@ -149,7 +149,7 @@ def cut_image(plot_size='6', sequence=18, size=320, override=100, norm_value=255
 
 
 if __name__ == '__main__':
-    like_map_gen(Path, 20)
+    # like_map_gen(Path, 20)
     # challenge_gt_gen(3)
     # like_map_gen_handmade(3, height=520, width=696)
     # like_map_gen_handmade(6, height=520, width=696)
@@ -159,7 +159,7 @@ if __name__ == '__main__':
     # like_map_gen_handmade(3)
     # like_map_gen_handmade(6)
     # like_map_gen_handmade(9)
-    # like_map_gen_handmade(20)
+    like_map_gen_handmade(20)
 
     # load_and_concatenate()
     # cut_image(plot_size='3')

@@ -1,9 +1,9 @@
+
 from tqdm import tqdm
 from torch import optim
-from .eval import *
+from .detection_eval import *
 import os
 import sys
-
 path = os.path.join(os.path.dirname(__file__), "../")
 sys.path.append(path)
 
@@ -73,26 +73,36 @@ class TrainNet:
         plt.plot(x, self.evals)
         plt.show()
 
-    def validation(self, total_epoch):
-        print("Epoch finished ! Loss: {}".format(self.epoch_loss / total_epoch))
-        self.losses.append(self.epoch_loss / total_epoch)
-        if 1:
-            fmeasure, val_loss = eval_net(self.net, self.val, "single", gpu=self.gpu)
-        print("f-measure: {}".format(fmeasure))
-        print("val_loss: {}".format(val_loss))
-        try:
-            if max(self.evals) < fmeasure:
-                torch.save(self.net.state_dict(), str(self.save_weight_path))
-                self.bad = 0
-            elif max(self.val_losses) > val_loss:
-                pass
-            else:
-                self.bad += 1
-        except ValueError:
-            torch.save(self.net.state_dict(), str(self.save_weight_path))
-        self.evals.append(fmeasure)
-        self.val_losses.append(val_loss)
+    def validation(self, number_of_train_data):
+        print(
+            "Epoch finished ! Loss: {}".format(self.epoch_loss / number_of_train_data)
+        )
+        loss = self.epoch_loss / number_of_train_data
+        self.losses.append(loss)
 
+        if loss < 0.01:
+            fmeasure, val_loss = eval_net(self.net, self.val, "single", gpu=self.gpu)
+            print("f-measure: {}".format(fmeasure))
+            print("val_loss: {}".format(val_loss))
+            try:
+                if max(self.evals) < fmeasure:
+                    torch.save(self.net.state_dict(), str(self.save_weight_path))
+                    self.bad = 0
+                elif max(self.val_losses) > val_loss:
+                    pass
+                else:
+                    self.bad += 1
+            except ValueError:
+                torch.save(self.net.state_dict(), str(self.save_weight_path))
+            self.evals.append(fmeasure)
+            self.val_losses.append(val_loss)
+        else:
+            print("loss is too large. Continue train")
+            val_loss = eval_net(
+                self.net, self.val, "single", gpu=self.gpu, only_loss=True
+            )
+            self.evals.append(0)
+            self.val_losses.append(val_loss)
         print("bad = {}".format(self.bad))
 
     def load(self):
@@ -323,16 +333,14 @@ class TrainNetTwoPath(TrainNet):
 
 
 if __name__ == "__main__":
-    torch.cuda.set_device(1)
+    torch.cuda.set_device(0)
     mode = "single"
     plot_size = 12
     date = datetime.now().date()
     # train_path = [Path("../images/sequ_cut/sequ9"), Path("../images/sequ_cut/sequ17")]
-    train_path = Path("../images/sequ_cut/sequ17")
-    val_path = Path("../images/sequ_cut/sequ16")
-    save_weight_path = Path(
-        "../weight/{}/sequ17/best_{}.pth".format(date, plot_size)
-    )
+    train_path = Path("../images/sequ_cut/sequ16")
+    val_path = Path("../images/sequ_cut/sequ17")
+    save_weight_path = Path("../weight/{}/sequ17/best_{}.pth".format(date, plot_size))
 
     models = {"single": UNet, "multi": UnetMultiFixedWeight}
     net = models[mode](n_channels=1, n_classes=1)
@@ -342,7 +350,7 @@ if __name__ == "__main__":
         net=net,
         mode=mode,
         epochs=500,
-        batch_size=19,
+        batch_size=9,
         lr=1e-5,
         gpu=True,
         plot_size=plot_size,

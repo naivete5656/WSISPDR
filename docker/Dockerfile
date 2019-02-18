@@ -16,21 +16,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN pip --no-cache-dir install \
 	torch torchvision \
 	pydensecrf \
-        opencv-python \
-        imageio \
-        scikit-image \ 
-        keras \
-        gputil \
-        hyperdash \
-        scipy \
-        tqdm \
-        jupyter_contrib_nbextensions \
-        jupyter_nbextensions_configurator\
-        pydot \
-        staintools==0.1.1\
-        pulp \
-        tqdm \
-        skimage
+    opencv-python \
+    imageio \
+    scikit-image \
+    keras \
+    gputil \
+    hyperdash \
+    scipy \
+    tqdm \
+    jupyter_contrib_nbextensions \
+    jupyter_nbextensions_configurator\
+    pydot \
+    staintools==0.1.1\
+    pulp \
+    tqdm
 
 
 
