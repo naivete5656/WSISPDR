@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-class TrainNet:
+class _TrainBase:
     def __init__(
         self,
         net,
@@ -25,12 +25,17 @@ class TrainNet:
         train_path,
         val_path,
         weight_path,
-        save_path=None,
+        save_path,
     ):
-        self.net = net
-        self.mode = mode
-        self.ori_img_path = train_path / Path("ori")
-        self.mask_path = train_path / Path("{}".format(plot_size))
+        if isinstance(train_path, list):
+            self.ori_path = []
+            self.mask_path = []
+            for path in train_path:
+                self.ori_path.append(path.joinpath("ori"))
+                self.mask_path.append(path.joinpath("{}".format(plot_size)))
+        else:
+            self.ori_path = train_path / Path("ori")
+            self.mask_path = train_path / Path("{}".format(plot_size))
         self.val_path = val_path / Path("ori")
         self.val_mask_path = val_path / Path("{}".format(plot_size))
         self.save_weight_path = weight_path
@@ -41,11 +46,12 @@ class TrainNet:
             "Starting training:\nEpochs: {}\nBatch size: {} \nLearning rate: {}\ngpu:{}\n"
             "plot_size:{}\nmode:{}".format(epochs, batch_size, lr, gpu, plot_size, mode)
         )
+        self.net = net
 
         self.train = None
         self.val = None
 
-        self.N_train = len(list(self.ori_img_path.glob("*.tif")))
+        self.N_train = None
         self.optimizer = optim.Adam(net.parameters(), lr=lr)
         self.epochs = epochs
         self.batch_size = batch_size
@@ -71,7 +77,6 @@ class TrainNet:
         print(
             "Epoch finished ! Loss: {}".format(self.epoch_loss / number_of_train_data)
         )
-        self.epoch_loss = 0
         loss = self.epoch_loss / number_of_train_data
         self.losses.append(loss)
 
@@ -99,56 +104,10 @@ class TrainNet:
             self.evals.append(0)
             self.val_losses.append(val_loss)
         print("bad = {}".format(self.bad))
-
-    def load(self):
-        self.net.train()
-        # reset the generators
-        self.train = get_imgs_and_masks(self.ori_img_path, self.mask_path)
-        self.val = get_imgs_and_masks(self.val_path, self.val_mask_path)
-
-    def main(self):
-        for epoch in range(self.epochs):
-            print("Starting epoch {}/{}.".format(epoch + 1, self.epochs))
-            self.load()
-
-            pbar = tqdm(total=self.N_train)
-            for i, b in enumerate(batch(self.train, self.batch_size)):
-                imgs = np.array([i[0] for i in b])
-                true_masks = np.array([i[1] for i in b])
-
-                imgs = torch.from_numpy(imgs)
-                true_masks = torch.from_numpy(true_masks)
-
-                if self.gpu:
-                    imgs = imgs.cuda()
-                    true_masks = true_masks.cuda()
-
-                masks_pred = self.net(imgs)
-
-                masks_probs_flat = masks_pred.view(-1)
-                true_masks_flat = true_masks.view(-1)
-
-                loss = self.criterion(masks_probs_flat, true_masks_flat)
-                self.epoch_loss += loss.item()
-
-                self.optimizer.zero_grad()
-                loss.backward()
-                self.optimizer.step()
-
-                pbar.update(self.batch_size)
-                if i == 500:
-                    pre_img = masks_pred.detach().cpu().numpy()[0, 0]
-                    pre_img = ((pre_img + 1) * (255 / 2)).astype(np.uint8)
-                    cv2.imwrite(self.save_path.joinpath("{:%05d}".format(i)), pre_img)
-            pbar.close()
-            self.validation(i)
-            if self.bad >= 50:
-                print("stop running")
-                break
-        self.show_graph()
+        self.epoch_loss = 0
 
 
-class TrainMulti(TrainNet):
+class TrainMulti(_TrainBase):
     def __init__(
         self,
         net,
@@ -252,57 +211,7 @@ class TrainMulti(TrainNet):
         self.show_graph()
 
 
-class TrainNetTwoPath(TrainNet):
-    def __init__(
-        self,
-        net,
-        mode,
-        epochs,
-        batch_size,
-        lr,
-        gpu,
-        plot_size,
-        train_path,
-        val_path,
-        weight_path,
-        save_path,
-    ):
-        if isinstance(train_path, list):
-            self.ori_path = []
-            self.mask_path = []
-            for path in train_path:
-                self.ori_path.append(path.joinpath("ori"))
-                self.mask_path.append(path.joinpath("{}-reverse".format(plot_size)))
-        else:
-            self.ori_path = train_path / Path("ori")
-            self.mask_path = train_path / Path("{}".format(plot_size))
-        self.val_path = val_path / Path("ori")
-        self.val_mask_path = val_path / Path("{}-reverse".format(plot_size))
-        self.save_weight_path = weight_path
-        self.save_weight_path.parent.mkdir(parents=True, exist_ok=True)
-        self.save_path = save_path
-        self.save_path.parent.mkdir(parents=True, exist_ok=True)
-        print(
-            "Starting training:\nEpochs: {}\nBatch size: {} \nLearning rate: {}\ngpu:{}\n"
-            "plot_size:{}\nmode:{}".format(epochs, batch_size, lr, gpu, plot_size, mode)
-        )
-        self.net = net
-
-        self.train = None
-        self.val = None
-
-        self.N_train = None
-        self.optimizer = optim.Adam(net.parameters(), lr=lr)
-        self.epochs = epochs
-        self.batch_size = batch_size
-        self.gpu = gpu
-        self.plot_size = plot_size
-        self.criterion = nn.MSELoss()
-        self.losses = []
-        self.val_losses = []
-        self.evals = []
-        self.epoch_loss = 0
-        self.bad = 0
+class TrainNet(_TrainBase):
 
     def load(self):
         self.net.train()
@@ -320,19 +229,49 @@ class TrainNetTwoPath(TrainNet):
             self.train = get_imgs_and_masks2(ori_paths, mask_paths)
         else:
             self.train = get_imgs_and_masks(self.ori_path, self.mask_path)
+            self.N_train = len(list(self.ori_path.glob("*.tif")))
         self.val = get_imgs_and_masks(self.val_path, self.val_mask_path)
 
-    # def main(self):
-    #     for epoch in range(self.epochs):
-    #         print("Starting epoch {}/{}.".format(epoch + 1, self.epochs))
-    #         self.load()
-    #
-    #         pbar = tqdm(total=self.N_train)
-    #         for i, b in enumerate(batch(self.train, self.batch_size)):
-    #             imgs = np.array([i[0] for i in b])
-    #             true_masks = np.array([i[1] for i in b])
-    #             plt.imshow(imgs[0,0]),plt.show()
-    #             plt.imshow(true_masks[0,0]),plt.show()
+    def main(self):
+        for epoch in range(self.epochs):
+            print("Starting epoch {}/{}.".format(epoch + 1, self.epochs))
+            self.load()
+
+            pbar = tqdm(total=self.N_train)
+            for i, b in enumerate(batch(self.train, self.batch_size)):
+                imgs = np.array([i[0] for i in b])
+                true_masks = np.array([i[1] for i in b])
+
+                imgs = torch.from_numpy(imgs)
+                true_masks = torch.from_numpy(true_masks)
+
+                if self.gpu:
+                    imgs = imgs.cuda()
+                    true_masks = true_masks.cuda()
+
+                masks_pred = self.net(imgs)
+
+                masks_probs_flat = masks_pred.view(-1)
+                true_masks_flat = true_masks.view(-1)
+
+                loss = self.criterion(masks_probs_flat, true_masks_flat)
+                self.epoch_loss += loss.item()
+
+                self.optimizer.zero_grad()
+                loss.backward()
+                self.optimizer.step()
+
+                pbar.update(self.batch_size)
+                if i == 500:
+                    pre_img = masks_pred.detach().cpu().numpy()[0, 0]
+                    pre_img = ((pre_img + 1) * (255 / 2)).astype(np.uint8)
+                    cv2.imwrite(self.save_path.joinpath("{:%05d}".format(i)), pre_img)
+            pbar.close()
+            self.validation(i)
+            if self.bad >= 50:
+                print("stop running")
+                break
+        self.show_graph()
 
 
 # if __name__ == "__main__":

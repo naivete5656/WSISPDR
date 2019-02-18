@@ -39,10 +39,12 @@ def eval_net(
         pre_img = mask_pred.detach().cpu().numpy()[0, 0]
         pre_img = ((pre_img + 1) * (255 / 2)).astype(np.uint8)
         if i == 1500:
-            plt.subplot(121)
+            plt.subplot(131)
             plt.imshow(pre_img)
-            plt.subplot(122)
+            plt.subplot(132)
             plt.imshow(b[0][0])
+            plt.subplot(133)
+            plt.imshow(b[1][0])
             plt.show()
         loss = criterion(mask_pred, gt)
         losses += loss.item()

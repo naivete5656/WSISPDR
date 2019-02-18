@@ -1,1 +1,1 @@
-from .train import TrainNetTwoPath, TrainNet
+from .train import TrainNet
