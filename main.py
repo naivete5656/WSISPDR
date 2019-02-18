@@ -7,7 +7,7 @@ from networks import UNet, UnetMultiFixedWeight
 
 torch.cuda.set_device(1)
 mode = "single"
-key = 1
+key = 2
 plot_size = 12
 date = datetime.now().date()
 # train_path = [Path("./images/sequ_cut/sequ9"), Path("./images/sequ_cut/sequ17")]
