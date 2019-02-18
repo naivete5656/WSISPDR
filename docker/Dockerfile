@@ -29,7 +29,8 @@ RUN pip --no-cache-dir install \
         pydot \
         staintools==0.1.1\
         pulp \
-        tqdm
+        tqdm \
+        skimage
 
 
 

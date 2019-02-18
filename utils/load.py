@@ -11,6 +11,12 @@ def to_cropped_imgs(ids, dir_img):
         yield cv2.imread(str(dir_img / id.name))[:, :, :1].astype(np.float32)
 
 
+def to_cropped_imgs2(dir_imgs):
+    """From a list of tuples, returns the correct cropped img"""
+    for dir_img in dir_imgs:
+        yield cv2.imread(str(dir_img))[:, :, :1].astype(np.float32)
+
+
 def hwc_to_chw(img):
     return np.transpose(img, axes=[2, 0, 1])
 
@@ -54,6 +60,21 @@ def get_imgs_and_masks(dir_img, dir_mask):
     imgs_switched = map(hwc_to_chw, imgs)
     imgs_normalized = map(normalize, imgs_switched)
     masks = to_cropped_imgs(paths, dir_mask)
+    masks_switched = map(hwc_to_chw, masks)
+    masks_normalized = map(normalize, masks_switched)
+    return zip(imgs_normalized, masks_normalized)
+
+
+def get_imgs_and_masks2(ori_paths, mask_paths):
+    index = list(range(ori_paths.shape[0]))
+    random.shuffle(index)
+    imgs = ori_paths[index]
+    masks = mask_paths[index]
+    imgs = to_cropped_imgs2(imgs)
+    masks = to_cropped_imgs2(masks)
+    # need to transform from HWC to CHW
+    imgs_switched = map(hwc_to_chw, imgs)
+    imgs_normalized = map(normalize, imgs_switched)
     masks_switched = map(hwc_to_chw, masks)
     masks_normalized = map(normalize, masks_switched)
     return zip(imgs_normalized, masks_normalized)
