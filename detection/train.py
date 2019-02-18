@@ -1,71 +1,62 @@
 from tqdm import tqdm
 from torch import optim
 from .detection_eval import *
-import os
-import sys
-
-path = os.path.join(os.path.dirname(__file__), "../")
-sys.path.append(path)
-
-from networks import *
 from utils import (
     get_imgs_and_masks,
     get_imgs_and_masks2,
     batch,
-    get_imgs_internal,
     get_imgs_multi,
 )
 from pathlib import Path
 import matplotlib.pyplot as plt
-from datetime import datetime
 import numpy as np
 
 
 class TrainNet:
-    # def __init__(
-    #     self,
-    #     net,
-    #     mode,
-    #     epochs,
-    #     batch_size,
-    #     lr,
-    #     gpu,
-    #     plot_size,
-    #     train_path,
-    #     val_path,
-    #     weight_path,
-    #     save_path,
-    # ):
-    #     self.net = net
-    #     self.mode = mode
-    #     self.ori_img_path = train_path / Path("ori")
-    #     self.mask_path = train_path / Path("{}".format(plot_size))
-    #     self.val_path = val_path / Path("ori")
-    #     self.val_mask_path = val_path / Path("{}".format(plot_size))
-    #     self.save_weight_path = weight_path
-    #     self.save_weight_path.parent.mkdir(parents=True, exist_ok=True)
-    #     self.save_path = save_path
-    #     self.save_path.parent.mkdir(parents=True, exist_ok=True)
-    #     print(
-    #         "Starting training:\nEpochs: {}\nBatch size: {} \nLearning rate: {}\ngpu:{}\n"
-    #         "plot_size:{}\nmode:{}".format(epochs, batch_size, lr, gpu, plot_size, mode)
-    #     )
-    #
-    #     self.train = None
-    #     self.val = None
-    #
-    #     self.N_train = len(list(self.ori_img_path.glob("*.tif")))
-    #     self.optimizer = optim.Adam(net.parameters(), lr=lr)
-    #     self.epochs = epochs
-    #     self.batch_size = batch_size
-    #     self.gpu = gpu
-    #     self.plot_size = plot_size
-    #     self.criterion = nn.MSELoss()
-    #     self.losses = []
-    #     self.val_losses = []
-    #     self.evals = []
-    #     self.epoch_loss = 0
-    #     self.bad = 0
+    def __init__(
+        self,
+        net,
+        mode,
+        epochs,
+        batch_size,
+        lr,
+        gpu,
+        plot_size,
+        train_path,
+        val_path,
+        weight_path,
+        save_path=None,
+    ):
+        self.net = net
+        self.mode = mode
+        self.ori_img_path = train_path / Path("ori")
+        self.mask_path = train_path / Path("{}".format(plot_size))
+        self.val_path = val_path / Path("ori")
+        self.val_mask_path = val_path / Path("{}".format(plot_size))
+        self.save_weight_path = weight_path
+        self.save_weight_path.parent.mkdir(parents=True, exist_ok=True)
+        self.save_path = save_path
+        self.save_path.parent.mkdir(parents=True, exist_ok=True)
+        print(
+            "Starting training:\nEpochs: {}\nBatch size: {} \nLearning rate: {}\ngpu:{}\n"
+            "plot_size:{}\nmode:{}".format(epochs, batch_size, lr, gpu, plot_size, mode)
+        )
+
+        self.train = None
+        self.val = None
+
+        self.N_train = len(list(self.ori_img_path.glob("*.tif")))
+        self.optimizer = optim.Adam(net.parameters(), lr=lr)
+        self.epochs = epochs
+        self.batch_size = batch_size
+        self.gpu = gpu
+        self.plot_size = plot_size
+        self.criterion = nn.MSELoss()
+        self.losses = []
+        self.val_losses = []
+        self.evals = []
+        self.epoch_loss = 0
+        self.bad = 0
 
     def show_graph(self):
         print("f-measure={}".format(max(self.evals)))
@@ -80,6 +71,7 @@ class TrainNet:
         print(
             "Epoch finished ! Loss: {}".format(self.epoch_loss / number_of_train_data)
         )
+        self.epoch_loss = 0
         loss = self.epoch_loss / number_of_train_data
         self.losses.append(loss)
 
@@ -160,6 +152,7 @@ class TrainMulti(TrainNet):
     def __init__(
         self,
         net,
+        mode,
         epochs,
         batch_size,
         lr,
