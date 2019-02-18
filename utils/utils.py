@@ -1,4 +1,3 @@
-
 from skimage import measure
 from PIL import Image, ImageDraw
 import json
@@ -61,7 +60,7 @@ def original_add_pred():
         img = cv2.addWeighted(original, 0.8, mask_color, 0.2, 1)
         plt.imshow(img), plt.show()
 
-        cv2.imwrite(f"out{i:05d}.png", img)
+        cv2.imwrite("out{:05d}.png".format(i), img)
 
 
 def make_ground_truth(file_path, save_path):
@@ -95,10 +94,15 @@ def plot_3d(img):
     ax.set_title("Surface Plot")
     fig.show()
 
+
 def gaus_filter(img, kernel_size, sigma):
     pad_size = int(kernel_size - 1 / 2)
-    img_t = np.pad(img, (pad_size, pad_size), 'constant')  # zero padding(これしないと正規化後、画像端付近の尤度だけ明るくなる)
-    img_t = cv2.GaussianBlur(img_t, ksize=(kernel_size, kernel_size), sigmaX=sigma)  # filter gaussian(適宜パラメータ調整)
+    img_t = np.pad(
+        img, (pad_size, pad_size), "constant"
+    )  # zero padding(これしないと正規化後、画像端付近の尤度だけ明るくなる)
+    img_t = cv2.GaussianBlur(
+        img_t, ksize=(kernel_size, kernel_size), sigmaX=sigma
+    )  # filter gaussian(適宜パラメータ調整)
     img_t = img_t[pad_size:-pad_size, pad_size:-pad_size]  # remove padding
     return img_t
 

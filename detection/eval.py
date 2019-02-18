@@ -16,7 +16,7 @@ def eval_net(
     dataset,
     mode,
     save_path=None,
-    gpu=False,
+    gpu=True,
     debug=False,
     dist_peak=2,
     peak_thresh=100,

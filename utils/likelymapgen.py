@@ -22,10 +22,10 @@ def gaus_filter(img, kernel_size, sigma):
 
 
 def like_map_gen(save_path, plot_size):
-    save_path = Path('../image/GT_9/%d' % plot_size)
+    save_path = Path('/home/kazuya/weakly_supervised_instance_segmentation/images/sequence/sequ9/%d' % plot_size)
     save_path.mkdir(parents=True, exist_ok=True)
     # load xml file
-    tree = ET.parse('../unet/090303_exp1_F0009_GT_full.xml')
+    tree = ET.parse('./090303_exp1_F0009_GT_full.xml')
     # tree = ET.parse('./unet/sequence18.xml')
     root = tree.getroot()
 
@@ -35,7 +35,7 @@ def like_map_gen(save_path, plot_size):
     black = np.zeros((1040, 1392))
 
     # 1013 - number of frame
-    for i in range(543, 780):
+    for i in range(0, 780):
         # likelihood map of one input
         result = black.copy()
         result_big = black.copy()
@@ -61,12 +61,12 @@ def like_map_gen(save_path, plot_size):
 
 
 def like_map_gen_handmade(plot_size, height=1040, width=1392):
-    save_path = Path('/home/kazuya/weakly_supervised_instance_segmentation/images/gt2/%d' % plot_size)
+    save_path = Path('/home/kazuya/weakly_supervised_instance_segmentation/images/sequence/sequ17/%d' % plot_size)
     save_path.mkdir(parents=True, exist_ok=True)
     # load xml file
     # tree = ET.parse('./unet/090303_exp1_F0009_GT_full.xml')
     # tree = ET.parse('challenge01.xml')
-    tree = ET.parse('../text/sequence2.xml')
+    tree = ET.parse('/home/kazuya/ctk/sequence17.xml')
     root = tree.getroot()
     annotations = []
     for i in root.findall(".//s"):
@@ -75,14 +75,14 @@ def like_map_gen_handmade(plot_size, height=1040, width=1392):
     # number of cell
     annotations = np.array(annotations)
     # 1013 - number of frame
-    for i in range(600, 700):
+    for i in range(0, 100):
         # likelihood map of one input
         result = np.zeros((height, width))
         frame_per_annotations = annotations[annotations[:, 0] == i]
         for annotation in frame_per_annotations:
             img_t = np.zeros((height, width))  # likelihood map of one cell
             img_t[annotation[2]][annotation[1]] = 255  # plot a white dot
-            img_t = gaus_filter(img_t, 101, plot_size)
+            img_t = gaus_filter(img_t, 301, plot_size)
             result = np.maximum(result, img_t)  # compare result with gaussian_img
         #  normalization
         result = 255 * result / result.max()
@@ -149,7 +149,7 @@ def cut_image(plot_size='6', sequence=18, size=320, override=100, norm_value=255
 
 
 if __name__ == '__main__':
-    # like_map_gen(Path, 40)
+    like_map_gen(Path, 20)
     # challenge_gt_gen(3)
     # like_map_gen_handmade(3, height=520, width=696)
     # like_map_gen_handmade(6, height=520, width=696)
@@ -157,9 +157,9 @@ if __name__ == '__main__':
     # like_map_gen_handmade(12, height=520, width=696)
     # like_map_gen_handmade(20, height=520, width=696)
     # like_map_gen_handmade(3)
-    like_map_gen_handmade(6)
-    like_map_gen_handmade(9)
-    like_map_gen_handmade(12)
+    # like_map_gen_handmade(6)
+    # like_map_gen_handmade(9)
+    # like_map_gen_handmade(20)
 
     # load_and_concatenate()
     # cut_image(plot_size='3')

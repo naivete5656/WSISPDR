@@ -1,6 +1,6 @@
 from tqdm import tqdm
 from torch import optim
-from eval import *
+from .eval import *
 import os
 import sys
 
@@ -8,7 +8,13 @@ path = os.path.join(os.path.dirname(__file__), "../")
 sys.path.append(path)
 
 from networks import *
-from utils import get_imgs_and_masks, batch, get_imgs_internal, get_imgs_multi
+from utils import (
+    get_imgs_and_masks,
+    get_imgs_and_masks2,
+    batch,
+    get_imgs_internal,
+    get_imgs_multi,
+)
 from pathlib import Path
 import matplotlib.pyplot as plt
 from datetime import datetime
@@ -17,17 +23,17 @@ import numpy as np
 
 class TrainNet:
     def __init__(
-            self,
-            net,
-            mode,
-            epochs,
-            batch_size,
-            lr,
-            gpu,
-            plot_size,
-            train_path,
-            val_path,
-            weight_path,
+        self,
+        net,
+        mode,
+        epochs,
+        batch_size,
+        lr,
+        gpu,
+        plot_size,
+        train_path,
+        val_path,
+        weight_path,
     ):
         self.net = net
         self.mode = mode
@@ -135,16 +141,16 @@ class TrainNet:
 
 class TrainMulti(TrainNet):
     def __init__(
-            self,
-            net,
-            epochs,
-            batch_size,
-            lr,
-            gpu,
-            plot_size,
-            train_path,
-            val_path,
-            weight_path,
+        self,
+        net,
+        epochs,
+        batch_size,
+        lr,
+        gpu,
+        plot_size,
+        train_path,
+        val_path,
+        weight_path,
     ):
         super().__init__(
             net,
@@ -236,14 +242,97 @@ class TrainMulti(TrainNet):
         self.show_graph()
 
 
+class TrainNetTwoPath(TrainNet):
+    def __init__(
+        self,
+        net,
+        mode,
+        epochs,
+        batch_size,
+        lr,
+        gpu,
+        plot_size,
+        train_path,
+        val_path,
+        weight_path,
+    ):
+        if isinstance(train_path, list):
+            self.ori_path = []
+            self.mask_path = []
+            for path in train_path:
+                self.ori_path.append(path.joinpath("ori"))
+                self.mask_path.append(path.joinpath("{}-reverse".format(plot_size)))
+        else:
+            self.ori_path = train_path / Path("ori")
+            self.mask_path = train_path / Path("{}".format(plot_size))
+        self.val_path = val_path / Path("ori")
+        self.val_mask_path = val_path / Path("{}-reverse".format(plot_size))
+        self.save_weight_path = weight_path
+        self.save_weight_path.parent.mkdir(parents=True, exist_ok=True)
+        print(
+            "Starting training:\nEpochs: {}\nBatch size: {} \nLearning rate: {}\ngpu:{}\n"
+            "plot_size:{}\nmode:{}".format(epochs, batch_size, lr, gpu, plot_size, mode)
+        )
+        self.net = net
+
+        self.train = None
+        self.val = None
+
+        self.N_train = None
+        self.optimizer = optim.Adam(net.parameters(), lr=lr)
+        self.epochs = epochs
+        self.batch_size = batch_size
+        self.gpu = gpu
+        self.plot_size = plot_size
+        self.criterion = nn.MSELoss()
+        self.losses = []
+        self.val_losses = []
+        self.evals = []
+        self.epoch_loss = 0
+        self.bad = 0
+
+    def load(self):
+        self.net.train()
+        # reset the generators
+        if isinstance(self.ori_path, list):
+            ori_paths = []
+            mask_paths = []
+            for paths in zip(self.ori_path, self.mask_path):
+                ori_paths.extend(sorted(list(paths[0].glob("*.tif"))))
+                mask_paths.extend(sorted(list(paths[1].glob("*.tif"))))
+            assert len(ori_paths) == len(mask_paths), "path のデータ数が正しくない"
+            ori_paths = np.array(ori_paths)
+            mask_paths = np.array(mask_paths)
+            self.N_train = len(ori_paths)
+            self.train = get_imgs_and_masks2(ori_paths, mask_paths)
+        else:
+            self.train = get_imgs_and_masks(self.ori_path, self.mask_path)
+        self.val = get_imgs_and_masks(self.val_path, self.val_mask_path)
+
+    # def main(self):
+    #     for epoch in range(self.epochs):
+    #         print("Starting epoch {}/{}.".format(epoch + 1, self.epochs))
+    #         self.load()
+    #
+    #         pbar = tqdm(total=self.N_train)
+    #         for i, b in enumerate(batch(self.train, self.batch_size)):
+    #             imgs = np.array([i[0] for i in b])
+    #             true_masks = np.array([i[1] for i in b])
+    #             plt.imshow(imgs[0,0]),plt.show()
+    #             plt.imshow(true_masks[0,0]),plt.show()
+
+
 if __name__ == "__main__":
     torch.cuda.set_device(1)
     mode = "single"
     plot_size = 12
     date = datetime.now().date()
-    train_path = [Path("../images/sequ_cut/sequ9"), Path("../images/sequ_cut/sequ17")]
-    val_path = Path("../images/challenge_cut/val_center")
-    save_weight_path = Path("../weight/{}/challenge/best_{}.pth".format(date, plot_size))
+    # train_path = [Path("../images/sequ_cut/sequ9"), Path("../images/sequ_cut/sequ17")]
+    train_path = Path("../images/sequ_cut/sequ17")
+    val_path = Path("../images/sequ_cut/sequ16")
+    save_weight_path = Path(
+        "../weight/{}/sequ17/best_{}.pth".format(date, plot_size)
+    )
 
     models = {"single": UNet, "multi": UnetMultiFixedWeight}
     net = models[mode](n_channels=1, n_classes=1)
@@ -253,7 +342,7 @@ if __name__ == "__main__":
         net=net,
         mode=mode,
         epochs=500,
-        batch_size=10,
+        batch_size=19,
         lr=1e-5,
         gpu=True,
         plot_size=plot_size,
