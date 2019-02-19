@@ -71,9 +71,9 @@ class Outconv(nn.Module):
     def __init__(self, in_ch, out_ch):
         super(Outconv, self).__init__()
         self.conv = nn.Conv2d(in_ch, out_ch, 1)
-        self.sigmoid = nn.Sigmoid()
+        self.tanh = nn.Tanh()
 
     def forward(self, x):
         x = self.conv(x)
-        x = self.sigmoid(x)
+        x = self.tanh(x)
         return x

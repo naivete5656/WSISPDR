@@ -7,12 +7,12 @@ import numpy as np
 def cut_image(plot_size="6", sequence=18, size=320, override=100, norm_value=255):
     paths = sorted(
         Path(
-            "/home/kazuya/weakly_supervised_instance_segmentation/images/review/sparce"
-        ).glob("*.png")
+            "/home/kazuya/gaussian_fitting/output/test{}".format(sequence)
+        ).glob("*.tif")
     )
     i = 0
     savepath = Path(
-        "/home/kazuya/weakly_supervised_instance_segmentation/images/review/sparce-cut"
+        "/home/kazuya/weakly_supervised_instance_segmentation/images/sequ_cut/sequ{}/gaus".format(sequence)
     )
     savepath.mkdir(parents=True, exist_ok=True)
     for path in paths:
@@ -45,4 +45,5 @@ def cut_image(plot_size="6", sequence=18, size=320, override=100, norm_value=255
 
 
 if __name__ == "__main__":
-    cut_image()
+    cut_image(sequence=18)
+    # cut_image(sequence=9)

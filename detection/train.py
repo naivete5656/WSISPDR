@@ -41,7 +41,7 @@ class _TrainBase:
         self.save_weight_path = weight_path
         self.save_weight_path.parent.mkdir(parents=True, exist_ok=True)
         self.save_path = save_path
-        self.save_path.parent.mkdir(parents=True, exist_ok=True)
+        self.save_path.mkdir(parents=True, exist_ok=True)
         print(
             "Starting training:\nEpochs: {}\nBatch size: {} \nLearning rate: {}\ngpu:{}\n"
             "plot_size:{}\nmode:{}".format(epochs, batch_size, lr, gpu, plot_size, mode)
@@ -80,7 +80,7 @@ class _TrainBase:
         loss = self.epoch_loss / number_of_train_data
         self.losses.append(loss)
 
-        if loss < 0.01:
+        if loss < 0.5:
             fmeasure, val_loss = eval_net(self.net, self.val, "single", gpu=self.gpu)
             print("f-measure: {}".format(fmeasure))
             print("val_loss: {}".format(val_loss))
@@ -265,7 +265,7 @@ class TrainNet(_TrainBase):
                 if i == 500:
                     pre_img = masks_pred.detach().cpu().numpy()[0, 0]
                     pre_img = ((pre_img + 1) * (255 / 2)).astype(np.uint8)
-                    cv2.imwrite(self.save_path.joinpath("{:%05d}".format(i)), pre_img)
+                    cv2.imwrite(str(self.save_path.joinpath("{:05d}.tif".format(epoch))), pre_img)
             pbar.close()
             self.validation(i)
             if self.bad >= 50:
