@@ -1,5 +1,5 @@
-from call_backprop import BackProp
-from gradcam import TopDownAfterReLu, TopDownBackprop
+from .call_backprop import BackProp
+from .gradcam import TopDownAfterReLu, TopDownBackprop
 import torch
 import numpy as np
 from PIL import Image

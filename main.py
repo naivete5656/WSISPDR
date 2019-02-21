@@ -1,38 +1,26 @@
-import torch
-from datetime import datetime
+
 from pathlib import Path
-from detection import TrainNet
-from networks import UNet, UnetMultiFixedWeight
+from unet_grad_cam import *
+from datetime import datetime
+import torch
 
 
-torch.cuda.set_device(0)
-mode = "single"
-# plot_size = 'gaus'
-plot_size = 3
-date = datetime.now().date()
-# train_path = [Path("./images/sequ_cut/sequ9"), Path("./images/sequ_cut/sequ17")]
-train_path = Path("./images/sequ_cut/sequ17")
-val_path = Path("./images/sequ_cut/sequ18")
-# val_path = Path("./images/sequence/sequ16")
-save_weight_path = Path("./weights/{}/normchange/best_{}.pth".format(date, plot_size))
-save_path = Path("./confirm")
+if __name__ == "__main__":
+    gpu = True
+    plot_size = 12
+    radius = 1
+    date = datetime.now().date()
+    key = 1
 
-models = {"single": UNet, "multi": UnetMultiFixedWeight}
-net = models[mode](n_channels=1, n_classes=1)
-net.cuda()
+    input_path = sorted(Path("./images/sequ_cut/sequ18/ori").glob("*.tif"))
+    output_path = Path(f"./outputs/gradcam/{date}/test")
+    weight_path = f"./weights/reverse/best_{plot_size}.pth"
 
-train = TrainNet(
-    net=net,
-    mode=mode,
-    epochs=500,
-    batch_size=9,
-    lr=1e-5,
-    gpu=True,
-    plot_size=plot_size,
-    train_path=train_path,
-    val_path=val_path,
-    weight_path=save_weight_path,
-    save_path=save_path,
-)
-
-train.main()
+    torch.cuda.set_device(0)
+    call_method = {
+        0: TopDown,
+        1: BackpropAll,
+        2: BackPropBackGround,
+    }
+    bp = call_method[key](input_path, output_path, weight_path)
+    bp.main()

@@ -1,8 +1,12 @@
-from utils import *
 from pathlib import Path
 from datetime import datetime
 from PIL import Image
 import cv2
+import torch
+import sys
+sys.path.append(Path.cwd().parent)
+from utils import *
+from networks import *
 
 
 class Predict:
@@ -138,21 +142,20 @@ class PredictFmeasure(Predict):
 
 
 if __name__ == "__main__":
-    from unet import *
-
+    torch.cuda.set_device(0)
     date = datetime.now().date()
     gpu = True
-    plot_size = 6
+    plot_size = 12
     key = 1
-    models = {1: UNet, 2: UNetCascade, 3: UNetInternalCascade, 4: UnetMultiFixedWeight}
+    models = {1: UNet, 4: UnetMultiFixedWeight}
 
-    weight_path = f"../weights/MSELoss/best_{plot_size}.pth"
+    weight_path = f"../weights/normchange/best_{plot_size}.pth"
     root_path = Path("../images/sequ_cut/sequ18")
     save_path = Path("./output/{}/test2/{}".format(date, plot_size))
 
     net = models[key](n_channels=1, n_classes=1)
     net.cuda()
-    net.load_state_dict(torch.load(weight_path, map_location={"cuda:2": "cuda:1"}))
+    net.load_state_dict(torch.load(weight_path, map_location={"cuda:3": "cuda:1"}))
 
     pred = PredictFmeasure(
         net=net,

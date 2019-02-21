@@ -4,12 +4,9 @@ from PIL import Image
 import numpy as np
 import cv2
 from utils import local_maxima, gaus_filter
-from gradcam import Test3, Test2, Test
+from .gradcam import Test3, Test2, Test
 import matplotlib.pyplot as plt
 import sys
-
-path = Path.cwd().parent
-sys.path.append(path)
 from networks import UNet
 
 
@@ -43,7 +40,7 @@ class BackProp(object):
 
     def coloring(self, gbs):
         # coloring
-        r, g, b = np.loadtxt("../utils/color.csv", delimiter=",")
+        r, g, b = np.loadtxt("./utils/color.csv", delimiter=",")
         gbs_coloring = []
         for peak_i, gb in enumerate(gbs):
             gb = gb * 255
@@ -130,7 +127,7 @@ class BackPropBackGround(BackProp):
         likely_map = np.max(gauses, axis=0)
         region[likely_map < 0.05] = 0
 
-        r, g, b = np.loadtxt("../utils/color.csv", delimiter=",")
+        r, g, b = np.loadtxt("./utils/color.csv", delimiter=",")
 
         # mask gen
         mask = np.zeros((320, 320, 3))
@@ -177,7 +174,7 @@ class BackPropBackGround(BackProp):
 
             # for i, gb in enumerate(gbs):
                 # cv2.imwrite(str(save_path.joinpath("{:04d}.tif".format(i))), gb)
-            cv2.imwrite(str(save_path.parent.joinpath("backward.tif")), gbs.max(axis=0))
+            cv2.imwrite(str(self.save_path.parent.joinpath("backward.tif")), gbs.max(axis=0))
 
     def main(self):
         for img_i, path in enumerate(self.input_path):

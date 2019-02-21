@@ -262,7 +262,7 @@ class TrainNet(_TrainBase):
                 self.optimizer.step()
 
                 pbar.update(self.batch_size)
-                if i == 500:
+                if i == 5:
                     pre_img = masks_pred.detach().cpu().numpy()[0, 0]
                     pre_img = ((pre_img + 1) * (255 / 2)).astype(np.uint8)
                     cv2.imwrite(str(self.save_path.joinpath("{:05d}.tif".format(epoch))), pre_img)
