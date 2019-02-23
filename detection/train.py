@@ -74,10 +74,11 @@ class _TrainBase:
         plt.show()
 
     def validation(self, number_of_train_data):
-        print(
-            "Epoch finished ! Loss: {}".format(self.epoch_loss / number_of_train_data)
-        )
         loss = self.epoch_loss / number_of_train_data
+        print(
+            "Epoch finished ! Loss: {}".format(loss)
+        )
+
         self.losses.append(loss)
 
         if loss < 0.5:

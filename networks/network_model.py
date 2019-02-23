@@ -5,7 +5,7 @@ import torch
 
 
 class UNet(nn.Module):
-    def __init__(self, n_channels, n_classes):
+    def __init__(self, n_channels, n_classes, sig):
         super(UNet, self).__init__()
         self.inc = Inconv(n_channels, 64)
         self.down1 = Down(64, 128)
@@ -16,7 +16,7 @@ class UNet(nn.Module):
         self.up2 = Up(512, 128)
         self.up3 = Up(256, 64)
         self.up4 = Up(128, 64)
-        self.outc = Outconv(64, n_classes)
+        self.outc = Outconv(64, n_classes, sig)
 
     def forward(self, x):
         x1 = self.inc(x)
@@ -39,7 +39,7 @@ class UNetMultiTask(UNet):
         self.up2_boundary = Up(512, 128)
         self.up3_boundary = Up(256, 64)
         self.up4_boundary = Up(128, 64)
-        self.outc_boundary = Outconv(64, n_classes)
+        self.outc_boundary = Outconv(64, n_classes, sig=True)
 
     def forward(self, x):
         x1 = self.inc(x)
