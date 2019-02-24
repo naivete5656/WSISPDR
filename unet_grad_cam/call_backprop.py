@@ -21,7 +21,7 @@ class BackProp(object):
         # network load
         self.net = UNet(n_channels=1, n_classes=1, sig=sig)
         self.net.load_state_dict(
-            torch.load(weight_path, map_location={"cuda:3": "cuda:0"})
+            torch.load(weight_path, map_location={"cuda:2": "cuda:0"})
         )
         self.net.eval()
         if self.gpu:
@@ -169,18 +169,18 @@ class BackPropBackGround(BackProp):
                 )
                 gbs.append(result)
 
-            # gbs_coloring = self.coloring(gbs)
+            gbs_coloring = self.coloring(gbs)
 
             # mask gen
-            # gbs_coloring = np.array(gbs_coloring)
-            # index = np.argmax(gbs, axis=0)
-            # masks = np.zeros((320, 320, 3))
-            # for x in range(1, index.max() + 1):
-            #     # mask = np.zeros((320, 320, 3))
-            #     # mask[index == x, :] = gbs_coloring[x][index == x, :]
-            #     masks[index == x, :] = gbs_coloring[x][index == x, :]
-            #
-            # cv2.imwrite("instance_backprop.png", masks)
+            gbs_coloring = np.array(gbs_coloring)
+            index = np.argmax(gbs, axis=0)
+            masks = np.zeros((320, 320, 3))
+            for x in range(1, index.max() + 1):
+                # mask = np.zeros((320, 320, 3))
+                # mask[index == x, :] = gbs_coloring[x][index == x, :]
+                masks[index == x, :] = gbs_coloring[x][index == x, :]
+
+            cv2.imwrite("instance_backprop.png", masks)
 
             gbs = np.array(gbs)
             gbs = (gbs / gbs.max() * 255).astype(np.uint8)

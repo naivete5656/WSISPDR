@@ -7,14 +7,14 @@ import torch
 
 if __name__ == "__main__":
     gpu = True
-    plot_size ='gaus'
+    plot_size = 9
     radius = 1
     date = datetime.now().date()
-    key = 2
+    key = 0
 
     input_path = sorted(Path("./images/sequ_cut/sequ18/ori").glob("*.tif"))
-    output_path = Path(f"./outputs/gradcam/{date}/gaus/color")
-    weight_path = f"./weights/server_weights/gaus/best_{plot_size}.pth"
+    output_path = Path(f"./outputs/gradcam/{date}/norm9-top-down")
+    weight_path = f"./weights/server_weights/normchange/best_{plot_size}.pth"
 
     torch.cuda.set_device(0)
     call_method = {

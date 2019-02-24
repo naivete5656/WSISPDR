@@ -26,6 +26,7 @@ class _TrainBase:
         val_path,
         weight_path,
         save_path,
+        norm,
     ):
         if isinstance(train_path, list):
             self.ori_path = []
@@ -63,6 +64,7 @@ class _TrainBase:
         self.evals = []
         self.epoch_loss = 0
         self.bad = 0
+        self.norm = norm
 
     def show_graph(self):
         print("f-measure={}".format(max(self.evals)))
@@ -73,7 +75,7 @@ class _TrainBase:
         plt.plot(x, self.evals)
         plt.show()
 
-    def validation(self, number_of_train_data):
+    def validation(self, number_of_train_data, epoch):
         loss = self.epoch_loss / number_of_train_data
         print(
             "Epoch finished ! Loss: {}".format(loss)
@@ -82,6 +84,7 @@ class _TrainBase:
         self.losses.append(loss)
 
         if loss < 0.5:
+            torch.save(self.net.state_dict(), str(self.save_weight_path.joinpath('{}'.format(epoch))))
             fmeasure, val_loss = eval_net(self.net, self.val, "single", gpu=self.gpu)
             print("f-measure: {}".format(fmeasure))
             print("val_loss: {}".format(val_loss))
@@ -227,11 +230,11 @@ class TrainNet(_TrainBase):
             ori_paths = np.array(ori_paths)
             mask_paths = np.array(mask_paths)
             self.N_train = len(ori_paths)
-            self.train = get_imgs_and_masks2(ori_paths, mask_paths)
+            self.train = get_imgs_and_masks2(ori_paths, mask_paths, norm=self.norm)
         else:
-            self.train = get_imgs_and_masks(self.ori_path, self.mask_path)
+            self.train = get_imgs_and_masks(self.ori_path, self.mask_path, norm=self.norm)
             self.N_train = len(list(self.ori_path.glob("*.tif")))
-        self.val = get_imgs_and_masks(self.val_path, self.val_mask_path)
+        self.val = get_imgs_and_masks(self.val_path, self.val_mask_path, norm=self.norm)
 
     def main(self):
         for epoch in range(self.epochs):
@@ -268,7 +271,7 @@ class TrainNet(_TrainBase):
                     pre_img = ((pre_img + 1) * (255 / 2)).astype(np.uint8)
                     cv2.imwrite(str(self.save_path.joinpath("{:05d}.tif".format(epoch))), pre_img)
             pbar.close()
-            self.validation(i)
+            self.validation(i, epoch)
             if self.bad >= 50:
                 print("stop running")
                 break

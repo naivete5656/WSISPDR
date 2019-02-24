@@ -9,16 +9,17 @@ torch.cuda.set_device(1)
 mode = "single"
 # plot_size = 'gaus'
 plot_size = 3
+norm = True
 date = datetime.now().date()
 # train_path = [Path("./images/sequ_cut/sequ9"), Path("./images/sequ_cut/sequ17")]
-train_path = Path("./images/sequ_cut/sequ17")
+train_path = Path("./images/test_cut")
 val_path = Path("./images/sequ_cut/sequ18")
 # val_path = Path("./images/sequence/sequ16")
 save_weight_path = Path("./weights/{}/normchange/best_{}.pth".format(date, plot_size))
 save_path = Path("./confirm")
 
 models = {"single": UNet, "multi": UnetMultiFixedWeight}
-net = models[mode](n_channels=1, n_classes=1)
+net = models[mode](n_channels=1, n_classes=1, sig=norm)
 net.cuda()
 
 train = TrainNet(
@@ -33,6 +34,7 @@ train = TrainNet(
     val_path=val_path,
     weight_path=save_weight_path,
     save_path=save_path,
+    norm=norm,
 )
 
 train.main()

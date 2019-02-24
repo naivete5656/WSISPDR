@@ -56,21 +56,25 @@ def local_maxima(img, threshold=100, dist=2):
     return data
 
 
-def get_imgs_and_masks(dir_img, dir_mask):
+def get_imgs_and_masks(dir_img, dir_mask, norm):
     """Return all the couples (img, mask)"""
     paths = list(dir_img.glob("*.tif"))
     random.shuffle(list(paths))
     imgs = to_cropped_imgs(paths, dir_img)
     # need to transform from HWC to CHW
     imgs_switched = map(hwc_to_chw, imgs)
-    imgs_normalized = map(normalize, imgs_switched)
     masks = to_cropped_imgs(paths, dir_mask)
     masks_switched = map(hwc_to_chw, masks)
-    masks_normalized = map(normalize, masks_switched)
+    if norm:
+        imgs_normalized = map(normalize, imgs_switched)
+        masks_normalized = map(normalize, masks_switched)
+    else:
+        imgs_normalized = map(normalize2, imgs_switched)
+        masks_normalized = map(normalize2, masks_switched)
     return zip(imgs_normalized, masks_normalized)
 
 
-def get_imgs_and_masks2(ori_paths, mask_paths):
+def get_imgs_and_masks2(ori_paths, mask_paths, norm):
     index = list(range(ori_paths.shape[0]))
     random.shuffle(index)
     imgs = ori_paths[index]
@@ -79,9 +83,13 @@ def get_imgs_and_masks2(ori_paths, mask_paths):
     masks = to_cropped_imgs2(masks)
     # need to transform from HWC to CHW
     imgs_switched = map(hwc_to_chw, imgs)
-    imgs_normalized = map(normalize, imgs_switched)
     masks_switched = map(hwc_to_chw, masks)
-    masks_normalized = map(normalize, masks_switched)
+    if norm:
+        imgs_normalized = map(normalize2, imgs_switched)
+        masks_normalized = map(normalize2, masks_switched)
+    else:
+        imgs_normalized = map(normalize, imgs_switched)
+        masks_normalized = map(normalize, masks_switched)
     return zip(imgs_normalized, masks_normalized)
 
 
