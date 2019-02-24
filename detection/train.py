@@ -41,6 +41,7 @@ class _TrainBase:
         self.val_mask_path = val_path / Path("{}".format(plot_size))
         self.save_weight_path = weight_path
         self.save_weight_path.parent.mkdir(parents=True, exist_ok=True)
+        self.save_weight_path.parent.joinpath('epoch_weight').mkdir(parents=True, exist_ok=True)
         self.save_path = save_path
         self.save_path.mkdir(parents=True, exist_ok=True)
         print(
@@ -76,23 +77,25 @@ class _TrainBase:
         plt.show()
 
     def validation(self, number_of_train_data, epoch):
-        loss = self.epoch_loss / number_of_train_data
+        loss = self.epoch_loss / (number_of_train_data + 1)
         print(
             "Epoch finished ! Loss: {}".format(loss)
         )
 
         self.losses.append(loss)
 
-        if loss < 0.5:
-            torch.save(self.net.state_dict(), str(self.save_weight_path.joinpath('{}'.format(epoch))))
-            fmeasure, val_loss = eval_net(self.net, self.val, "single", gpu=self.gpu)
+        if loss < 0.1:
+            torch.save(self.net.state_dict(), str(self.save_weight_path.parent.joinpath('epoch_weight/{:05d}.pth'.format(epoch))))
+            fmeasure, val_loss = eval_net(self.net, self.val, "single", norm=self.norm, gpu=self.gpu)
             print("f-measure: {}".format(fmeasure))
             print("val_loss: {}".format(val_loss))
             try:
                 if max(self.evals) < fmeasure:
+                    print('< f measure')
                     torch.save(self.net.state_dict(), str(self.save_weight_path))
                     self.bad = 0
-                elif max(self.val_losses) > val_loss:
+                elif min(self.val_losses) > val_loss:
+                    print('pass')
                     pass
                 else:
                     self.bad += 1
@@ -103,7 +106,7 @@ class _TrainBase:
         else:
             print("loss is too large. Continue train")
             val_loss = eval_net(
-                self.net, self.val, "single", gpu=self.gpu, only_loss=True
+                self.net, self.val, "single", gpu=self.gpu, only_loss=True, norm=self.norm
             )
             self.evals.append(0)
             self.val_losses.append(val_loss)
@@ -268,7 +271,10 @@ class TrainNet(_TrainBase):
                 pbar.update(self.batch_size)
                 if i == 5:
                     pre_img = masks_pred.detach().cpu().numpy()[0, 0]
-                    pre_img = ((pre_img + 1) * (255 / 2)).astype(np.uint8)
+                    if self.norm:
+                        pre_img = (pre_img / 255).astype(np.uint8)
+                    else:
+                        pre_img = ((pre_img + 1) * (255 / 2)).astype(np.uint8)
                     cv2.imwrite(str(self.save_path.joinpath("{:05d}.tif".format(epoch))), pre_img)
             pbar.close()
             self.validation(i, epoch)
@@ -276,35 +282,3 @@ class TrainNet(_TrainBase):
                 print("stop running")
                 break
         self.show_graph()
-
-
-# if __name__ == "__main__":
-#     torch.cuda.set_device(0)
-#     mode = "single"
-#     plot_size = 12
-#     date = datetime.now().date()
-#     # train_path = [Path("../images/sequ_cut/sequ9"), Path("../images/sequ_cut/sequ17")]
-#     train_path = Path("../images/sequ_cut/sequ16")
-#     val_path = Path("../images/sequ_cut/sequ17")
-#     save_weight_path = Path("../weight/{}/sequ17/best_{}.pth".format(date, plot_size))
-#     save_path = Path("./confirm")
-#
-#     models = {"single": UNet, "multi": UnetMultiFixedWeight}
-#     net = models[mode](n_channels=1, n_classes=1)
-#     net.cuda()
-#
-#     train = TrainNet(
-#         net=net,
-#         mode=mode,
-#         epochs=500,
-#         batch_size=9,
-#         lr=1e-5,
-#         gpu=True,
-#         plot_size=plot_size,
-#         train_path=train_path,
-#         val_path=val_path,
-#         weight_path=save_weight_path,
-#         save_path=save_path,
-#     )
-#
-#     train.main()

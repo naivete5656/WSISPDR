@@ -8,6 +8,7 @@ def eval_net(
     net,
     dataset,
     mode,
+    norm,
     save_path=None,
     gpu=True,
     debug=False,
@@ -37,15 +38,10 @@ def eval_net(
             else:
                 _, _, _, mask_pred = net(img)
         pre_img = mask_pred.detach().cpu().numpy()[0, 0]
-        pre_img = ((pre_img + 1) * (255 / 2)).astype(np.uint8)
-        # if i == 1500:
-        #     plt.subplot(131)
-        #     plt.imshow(pre_img)
-        #     plt.subplot(132)
-        #     plt.imshow(b[0][0])
-        #     plt.subplot(133)
-        #     plt.imshow(b[1][0])
-        #     plt.show()
+        if norm:
+            pre_img = pre_img * 255
+        else:
+            pre_img = ((pre_img + 1) * (255 / 2)).astype(np.uint8)
         loss = criterion(mask_pred, gt)
         losses += loss.item()
         if not only_loss:

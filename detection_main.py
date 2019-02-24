@@ -7,15 +7,12 @@ from networks import UNet, UnetMultiFixedWeight
 
 torch.cuda.set_device(1)
 mode = "single"
-# plot_size = 'gaus'
 plot_size = 3
 norm = True
 date = datetime.now().date()
-# train_path = [Path("./images/sequ_cut/sequ9"), Path("./images/sequ_cut/sequ17")]
-train_path = Path("./images/test_cut")
-val_path = Path("./images/sequ_cut/sequ18")
-# val_path = Path("./images/sequence/sequ16")
-save_weight_path = Path("./weights/{}/normchange/best_{}.pth".format(date, plot_size))
+train_path = [Path("./images/sequ_cut/sequ9"), Path("./images/sequ_cut/sequ17")]
+val_path = Path("./images/sequ_cut/sequ16")
+save_weight_path = Path("./weights/{}/MSELoss/best_{}.pth".format(date, plot_size))
 save_path = Path("./confirm")
 
 models = {"single": UNet, "multi": UnetMultiFixedWeight}
@@ -26,7 +23,7 @@ train = TrainNet(
     net=net,
     mode=mode,
     epochs=500,
-    batch_size=9,
+    batch_size=1,
     lr=1e-5,
     gpu=True,
     plot_size=plot_size,
