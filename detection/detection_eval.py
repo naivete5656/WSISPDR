@@ -45,8 +45,10 @@ def eval_net(
         loss = criterion(mask_pred, gt)
         losses += loss.item()
         if not only_loss:
-
-            gt = target_peaks_gen((true_mask[0] * 255).astype(np.uint8))
+            if norm:
+                gt = target_peaks_gen((true_mask[0] * 255).astype(np.uint8))
+            else:
+                gt = target_peaks_gen(((true_mask[0] + 1) * (255 / 2)).astype(np.uint8))
             res = local_maxima(pre_img, peak_thresh, dist_peak)
             associate_id = optimum(gt, res, dist_threshold)
 

@@ -127,7 +127,7 @@ class TrainNet:
             if max(self.evals) < val_dice:
                 torch.save(self.net.state_dict(), str(self.save_weight_path))
                 bad = 0
-            elif max(self.val_losses) > val_loss:
+            elif min(self.val_losses) > val_loss:
                 pass
             else:
                 bad += 1

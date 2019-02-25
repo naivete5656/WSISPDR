@@ -9,7 +9,7 @@ from scipy.io import savemat
 import matplotlib.pyplot as plt
 import sys
 from networks import UNet
-
+from encoder import Encoder
 
 class BackProp(object):
     def __init__(self, input_path, output_path, weight_path, gpu=True, sig=True):
@@ -19,9 +19,9 @@ class BackProp(object):
 
         self.gpu = gpu
         # network load
-        self.net = UNet(n_channels=1, n_classes=1, sig=sig)
+        self.net = Encoder(n_channels=1, n_classes=1)
         self.net.load_state_dict(
-            torch.load(weight_path, map_location={"cuda:2": "cuda:0"})
+            torch.load(weight_path, map_location={"cuda:3": "cuda:0"})
         )
         self.net.eval()
         if self.gpu:
@@ -35,9 +35,9 @@ class BackProp(object):
             img = img.cuda()
         pre_img = self.net(img)
         pre_img = pre_img.detach().cpu().numpy()[0, 0]
-        pre_img = (pre_img + 1) / 2
         if save_path is not None:
-            cv2.imwrite(str(save_path), (pre_img * 255).astype(np.uint8))
+            pre_img2 = (pre_img + 1) / 2
+            # cv2.imwrite(str(save_path), (pre_img2 * 255).astype(np.uint8))
         return pre_img
 
     def coloring(self, gbs):
@@ -45,7 +45,7 @@ class BackProp(object):
         r, g, b = np.loadtxt("./utils/color.csv", delimiter=",")
         gbs_coloring = []
         for peak_i, gb in enumerate(gbs):
-            gb = gb * 255
+            gb = gb/gb.max() * 255
             gb = gb.clip(0, 255).astype(np.uint8)
             result = np.ones((self.shape[0], self.shape[1], 3))
             result = gb[..., np.newaxis] * result
@@ -54,9 +54,9 @@ class BackProp(object):
             result[..., 1][result[..., 1] != 0] = g[peak_i] * gb[gb != 0]
             result[..., 2][result[..., 2] != 0] = b[peak_i] * gb[gb != 0]
             gbs_coloring.append(result)
-            cv2.imwrite(
-                str(self.save_path.joinpath("{:04d}.png".format(peak_i))), result
-            )
+            # cv2.imwrite(
+            #     str(self.save_path.joinpath("{:04d}.png".format(peak_i))), result
+            # )
         return gbs_coloring
 
     def main(self):
@@ -73,6 +73,7 @@ class BackProp(object):
             img = (img.astype(np.float32) / (255 / 2) - 1).reshape(
                 (1, 1, img.shape[0], img.shape[1])
             )
+
             img = torch.from_numpy(img)
 
             pre_img = self.unet_pred(
@@ -86,7 +87,7 @@ class BackProp(object):
 
 
 class BackpropAll(BackProp):
-    def __init__(self, input_path, output_path, weight_path, gpu=True, radius=1):
+    def __init__(self, input_path, output_path, weight_path, gpu=True, radius=1, sig=True):
         super().__init__(input_path, output_path, weight_path, gpu, sig=True)
 
         self.back_model = Test2(self.net)
@@ -102,6 +103,7 @@ class BackpropAll(BackProp):
         mask_bkg[pre_img < 0.1] = 1
 
         result_fore = self.back_model(img, mask.astype(np.float32)).copy()
+        # result_fore = result_fore / result_fore.max()
         return result_fore
 
     def save_img(self, result, i):
@@ -112,8 +114,10 @@ class BackpropAll(BackProp):
 
 
 class BackPropBackGround(BackProp):
-    def __init__(self, input_path, output_path, weight_path, gpu=True, radius=1):
-        super().__init__(input_path, output_path, weight_path, gpu, sig=False)
+    def __init__(
+        self, input_path, output_path, weight_path, gpu=True, radius=1, sig=True
+    ):
+        super().__init__(input_path, output_path, weight_path, gpu, sig=sig)
         self.output_path_each = None
         self.back_model = Test2(self.net)
 
@@ -123,7 +127,8 @@ class BackPropBackGround(BackProp):
         self.save_path.mkdir(parents=True, exist_ok=True)
 
         # peak
-        peaks = local_maxima((pre_img * 255).astype(np.uint8), 125, 2).astype(np.int)
+        pre_img2 = (pre_img + 1) / 2
+        peaks = local_maxima((pre_img2 * 255).astype(np.uint8), 125, 2).astype(np.int)
         gauses = []
         try:
             for peak in peaks:
@@ -132,7 +137,7 @@ class BackPropBackGround(BackProp):
                 gauses.append(gaus_filter(temp, 401, 12))
             region = np.argmax(gauses, axis=0) + 1
             likely_map = np.max(gauses, axis=0)
-            region[likely_map < 0.05] = 0
+            region[pre_img < 0] = 0
 
             r, g, b = np.loadtxt("./utils/color.csv", delimiter=",")
         except ValueError:
@@ -146,7 +151,7 @@ class BackPropBackGround(BackProp):
             mask[region == i, 0] = r[peak_i] * 255
             mask[region == i, 1] = g[peak_i] * 255
             mask[region == i, 2] = b[peak_i] * 255
-        cv2.imwrite("mask.png", mask)
+        # cv2.imwrite("mask.png", mask)
 
         gbs = []
         # each propagate
@@ -160,13 +165,13 @@ class BackPropBackGround(BackProp):
                 result = self.back_model(img, mask.astype(np.float32)).copy()
 
                 result = result.clip(0, 255)
-                savemat(
-                    str(self.save_path.joinpath("{:04d}.mat".format(i))),
-                    {"image": result, "mask": mask},
-                )
-                cv2.imwrite(
-                    str(self.save_path.joinpath("{:04d}.png".format(i))), result
-                )
+                # savemat(
+                #     str(self.save_path.joinpath("{:04d}.mat".format(i))),
+                #     {"image": result, "mask": mask},
+                # )
+                # cv2.imwrite(
+                #     str(self.save_path.joinpath("{:04d}.png".format(i))), result
+                # )
                 gbs.append(result)
 
             gbs_coloring = self.coloring(gbs)
@@ -180,7 +185,7 @@ class BackPropBackGround(BackProp):
                 # mask[index == x, :] = gbs_coloring[x][index == x, :]
                 masks[index == x, :] = gbs_coloring[x][index == x, :]
 
-            cv2.imwrite("instance_backprop.png", masks)
+            cv2.imwrite(str(self.save_path.parent.joinpath("instance_backprop.png")), masks)
 
             gbs = np.array(gbs)
             gbs = (gbs / gbs.max() * 255).astype(np.uint8)
