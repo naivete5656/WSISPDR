@@ -162,16 +162,38 @@ class EvaluationMethods:
             f.write(text)
 
     def update_evaluation(self, pred, target, evaluations):
-        plt.imshow(pred),plt.show()
-        plt.imshow(target),plt.show()
-        detection_tp, detection_fn, detection_fp = self.f_measure(pred, target)
+
+        bou_list = []
+        max_bou = target.shape[0]
+        bou_list.extend(target[0,:])
+        bou_list.extend(target[max_bou - 1,:])
+        bou_list.extend(target[:,max_bou - 1])
+        bou_list.extend(target[:,0])
+        np.unique(bou_list)
+        for x in bou_list:
+            target[target == x] = 0
+
+        bou_list = []
+        max_bou = pred.shape[0]
+        bou_list.extend(pred[0, :])
+        bou_list.extend(pred[max_bou - 1, :])
+        bou_list.extend(pred[:, max_bou - 1])
+        bou_list.extend(pred[:, 0])
+        np.unique(bou_list)
+        for x in bou_list:
+            pred[pred == x] = 0
+
+        #plt.imshow(pred), plt.show()
+        #plt.imshow(target), plt.show()
+
+        #detection_tp, detection_fn, detection_fp = self.f_measure(pred, target)
         seg_tp, seg_fn, seg_fp = self.segmentation_eval(pred, target)
         instance_tp, instance_fn, instance_fp = self.instance_eval(pred, target)
         evaluations.append(
             [
-                detection_tp,
-                detection_fn,
-                detection_fp,
+                1,
+                1,
+                1,
                 seg_tp,
                 seg_fn,
                 seg_fp,
@@ -180,7 +202,17 @@ class EvaluationMethods:
                 instance_fp,
             ]
         )
-        print(instance_tp/(instance_tp+instance_fp+instance_fn))
+
+        try:
+            temp = instance_tp/(instance_tp+instance_fp+instance_fn)
+            print(instance_tp/(instance_tp+instance_fp+instance_fn))
+            if temp < 0.2:
+                plt.imshow(pred), plt.show()
+                plt.imshow(target), plt.show()
+
+        except ZeroDivisionError:
+            print('non')
+
         return evaluations
 
 
@@ -188,8 +220,8 @@ class UseMethods(EvaluationMethods):
     def evaluation_all(self):
         evaluations = []
         for path in zip(self.pred_paths, self.target_path):
-            # pred = cv2.imread(str(path[0]), 0)
-            pred = np.load(path[0]).astype(np.int)
+            pred = cv2.imread(str(path[0]), 0)
+            #pred = np.load(path[0]).astype(np.int)
             target = cv2.imread(str(path[1]), 0)
             evaluations = self.update_evaluation(pred, target, evaluations)
         self.review(evaluations)
@@ -333,16 +365,16 @@ class LinearReview(UseMethods):
 
 if __name__ == "__main__":
     date = datetime.now().date()
-    target_path = Path("./images/review/target")
-    pred_path = Path("./images/review/test")
-    save_path = Path(f"./outputs/txt_result/graphcut")
+    target_path = Path("./images/review/target-cut")
+    pred_path = Path("./outputs/labelresults")
+    save_path = Path(f"./outputs/txt_result/final")
 
     evaluation = UseMethods(pred_path, target_path, save_path=save_path)
 
     # evaluation.noize_off(pred_path)
 
-    pred_path = pred_path.joinpath("sophisticated_pred")
-    evaluation.pred_paths = sorted(pred_path.glob("*.npy"))
+    #pred_path = pred_path.joinpath("sophisticated_pred")
+    # evaluation.pred_paths = sorted(pred_path.glob("*.npy"))
     evaluation.evaluation_all()
     # evaluation.evaluation_iou()
     #

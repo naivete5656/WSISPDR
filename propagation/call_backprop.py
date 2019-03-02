@@ -3,13 +3,13 @@ import torch
 from PIL import Image
 import numpy as np
 import cv2
-from utils import local_maxima, gaus_filter
-from .gradcam import Test3, Test2, Test
+from gradcam import Test3, Test2, Test
 from scipy.io import savemat
 import matplotlib.pyplot as plt
 import sys
 from networks import UNet
-from encoder import Encoder
+from utils import local_maxima, gaus_filter
+
 
 class BackProp(object):
     def __init__(self, input_path, output_path, weight_path, gpu=True, sig=True):
@@ -19,7 +19,7 @@ class BackProp(object):
 
         self.gpu = gpu
         # network load
-        self.net = Encoder(n_channels=1, n_classes=1)
+        self.net = UNet(n_channels=1, n_classes=1, sig=sig)
         self.net.load_state_dict(
             torch.load(weight_path, map_location={"cuda:3": "cuda:0"})
         )
@@ -28,6 +28,7 @@ class BackProp(object):
             self.net.cuda()
 
         self.shape = None
+        self.norm = sig
 
     def unet_pred(self, img, save_path=None):
         # throw unet
@@ -36,13 +37,14 @@ class BackProp(object):
         pre_img = self.net(img)
         pre_img = pre_img.detach().cpu().numpy()[0, 0]
         if save_path is not None:
-            pre_img2 = (pre_img + 1) / 2
-            # cv2.imwrite(str(save_path), (pre_img2 * 255).astype(np.uint8))
+            if not self.norm:
+                pre_img = (pre_img + 1) / 2
+            cv2.imwrite(str(save_path), (pre_img * 255).astype(np.uint8))
         return pre_img
 
     def coloring(self, gbs):
         # coloring
-        r, g, b = np.loadtxt("./utils/color.csv", delimiter=",")
+        r, g, b = np.loadtxt("../utils/color.csv", delimiter=",")
         gbs_coloring = []
         for peak_i, gb in enumerate(gbs):
             gb = gb/gb.max() * 255
@@ -67,12 +69,14 @@ class BackProp(object):
             # load image
             img = np.array(Image.open(path))
             self.shape = img.shape
-            # img = (img.astype(np.float32) / 255).reshape(
-            #     (1, 1, img.shape[0], img.shape[1])
-            # )
-            img = (img.astype(np.float32) / (255 / 2) - 1).reshape(
-                (1, 1, img.shape[0], img.shape[1])
-            )
+            if self.norm:
+                img = (img.astype(np.float32) / 255).reshape(
+                    (1, 1, img.shape[0], img.shape[1])
+                )
+            else:
+                img = (img.astype(np.float32) / (255 / 2) - 1).reshape(
+                    (1, 1, img.shape[0], img.shape[1])
+                )
 
             img = torch.from_numpy(img)
 
@@ -127,8 +131,9 @@ class BackPropBackGround(BackProp):
         self.save_path.mkdir(parents=True, exist_ok=True)
 
         # peak
-        pre_img2 = (pre_img + 1) / 2
-        peaks = local_maxima((pre_img2 * 255).astype(np.uint8), 125, 2).astype(np.int)
+        if not self.norm:
+            pre_img = (pre_img + 1) / 2
+        peaks = local_maxima((pre_img * 255).astype(np.uint8), 125, 2).astype(np.int)
         gauses = []
         try:
             for peak in peaks:
@@ -139,7 +144,7 @@ class BackPropBackGround(BackProp):
             likely_map = np.max(gauses, axis=0)
             region[pre_img < 0] = 0
 
-            r, g, b = np.loadtxt("./utils/color.csv", delimiter=",")
+            r, g, b = np.loadtxt("../utils/color.csv", delimiter=",")
         except ValueError:
             region = np.zeros(self.shape, dtype=np.uint8)
             likely_map = np.zeros(self.shape)
@@ -165,13 +170,14 @@ class BackPropBackGround(BackProp):
                 result = self.back_model(img, mask.astype(np.float32)).copy()
 
                 result = result.clip(0, 255)
-                # savemat(
-                #     str(self.save_path.joinpath("{:04d}.mat".format(i))),
-                #     {"image": result, "mask": mask},
-                # )
-                # cv2.imwrite(
-                #     str(self.save_path.joinpath("{:04d}.png".format(i))), result
-                # )
+
+                savemat(
+                    str(self.save_path.joinpath("{:04d}.mat".format(i))),
+                    {"image": result, "mask": mask},
+                )
+                cv2.imwrite(
+                    str(self.save_path.joinpath("{:04d}.png".format(i))), result
+                )
                 gbs.append(result)
 
             gbs_coloring = self.coloring(gbs)
@@ -204,12 +210,14 @@ class BackPropBackGround(BackProp):
             img = np.array(Image.open(path))
             cv2.imwrite(str(self.output_path_each.joinpath("original.tif")), img)
             self.shape = img.shape
-            # img = (img.astype(np.float32) / 255).reshape(
-            #     (1, 1, img.shape[0], img.shape[1])
-            # )
-            img = (img.astype(np.float32) / (255 / 2) - 1).reshape(
-                (1, 1, img.shape[0], img.shape[1])
-            )
+            if self.norm:
+                img = (img.astype(np.float32) / 255).reshape(
+                    (1, 1, img.shape[0], img.shape[1])
+                )
+            else:
+                img = (img.astype(np.float32) / (255 / 2) - 1).reshape(
+                    (1, 1, img.shape[0], img.shape[1])
+                )
             img = torch.from_numpy(img)
 
             pre_img = self.unet_pred(

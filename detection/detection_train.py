@@ -1,6 +1,6 @@
 from tqdm import tqdm
 from torch import optim
-from .detection_eval import *
+from detection_eval import *
 from utils import (
     get_imgs_and_masks,
     get_imgs_and_masks2,
@@ -25,8 +25,8 @@ class _TrainBase:
         train_path,
         val_path,
         weight_path,
-        save_path,
-        norm,
+        save_path=None,
+        norm=None,
     ):
         if isinstance(train_path, list):
             self.ori_path = []

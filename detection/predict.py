@@ -4,6 +4,7 @@ from PIL import Image
 import cv2
 import torch
 import sys
+
 sys.path.append(Path.cwd().parent)
 from utils import *
 from networks import *
@@ -26,16 +27,25 @@ class Predict:
         self.norm_value = norm_value
 
     def pred(self, ori):
-        img = (ori.astype(np.float32) / self.norm_value).reshape(
-            (1, ori.shape[0], ori.shape[1])
-        )
+        if self.norm:
+            img = (ori.astype(np.float32) / self.norm_value).reshape(
+                (1, ori.shape[0], ori.shape[1])
+            )
+        else:
+            img = (ori.astype(np.float32) / (self.norm_value / 2) - 1).reshape(
+                (1, ori.shape[0], ori.shape[1])
+            )
         with torch.no_grad():
             img = torch.from_numpy(img).unsqueeze(0)
             if self.gpu:
                 img = img.cuda()
             mask_pred = self.net(img)
         pre_img = mask_pred.detach().cpu().numpy()[0, 0]
-        return (pre_img * 255).astype(np.uint8)
+        if self.norm:
+            pre_img = (pre_img * 255).astype(np.uint8)
+        else:
+            pre_img = ((pre_img + 1) * 255 / 2).astype(np.uint8)
+        return pre_img
 
     def main(self):
         self.net.eval()
@@ -61,8 +71,9 @@ class PredictFmeasure(Predict):
         dist_peak=10,
         dist_threshold=20,
         norm_value=255,
+        norm=True,
     ):
-        super().__init__(net, gpu, root_path, save_path, norm_value=255)
+        super().__init__(net, gpu, root_path, save_path, norm_value=norm_value)
         # self.ori_path = root_path
         self.ori_path = root_path / Path("ori")
         self.gt_path = root_path / Path("{}".format(plot_size))
@@ -81,6 +92,7 @@ class PredictFmeasure(Predict):
         self.tps = 0
         self.fps = 0
         self.fns = 0
+        self.norm = norm
 
     def cal_tp_fp_fn(self, ori, gt_img, pre_img, i):
         gt = target_peaks_gen((gt_img).astype(np.uint8))
@@ -137,23 +149,27 @@ class PredictFmeasure(Predict):
             f_measure = (2 * recall * precision) / (recall + precision)
 
         print(precision, recall, f_measure)
-        with self.save_txt_path.open(mode="w") as f:
-            f.write("%f,%f,%f" % (precision, recall, f_measure))
+        with self.save_txt_path.open(mode="a") as f:
+            f.write("%f,%f,%f\n" % (precision, recall, f_measure))
 
 
 if __name__ == "__main__":
-    torch.cuda.set_device(0)
+    torch.cuda.set_device(1)
+
     date = datetime.now().date()
     gpu = True
+    norm = True
     plot_size = 12
     key = 1
+
     models = {1: UNet, 4: UnetMultiFixedWeight}
+    weight_path = (
+        f"../weights/server_weights/MSELoss/{plot_size}/epoch_weight/{13:05d}.pth"
+    )
+    root_path = Path("../images/C2C12P7/sequ_cut/0318/sequ18")
+    save_path = Path("../outputs/sequ18_cut/{}".format(date, plot_size))
 
-    weight_path = f"../weights/normchange/best_{plot_size}.pth"
-    root_path = Path("../images/sequ_cut/sequ18")
-    save_path = Path("./output/{}/test2/{}".format(date, plot_size))
-
-    net = models[key](n_channels=1, n_classes=1)
+    net = models[key](n_channels=1, n_classes=1, sig=norm)
     net.cuda()
     net.load_state_dict(torch.load(weight_path, map_location={"cuda:3": "cuda:1"}))
 
@@ -166,7 +182,12 @@ if __name__ == "__main__":
         peak_thresh=125,
         dist_peak=2,
         dist_threshold=20,
-        norm_value=4096,
+        norm_value=255,
+        norm=norm,
     )
 
     pred.main()
+
+    import gc
+    gc.collect()
+

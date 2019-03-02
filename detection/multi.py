@@ -1,4 +1,4 @@
-from .train import _TrainBase
+from .detection_train import _TrainBase
 import torch
 from tqdm import tqdm
 from utils import *

@@ -2,6 +2,9 @@ import torch
 from torch.autograd import Function
 import torch.nn as nn
 import torch.nn.functional as F
+import matplotlib.pyplot as plt
+import numpy as np
+from datetime import datetime
 
 
 class GuidedBackpropReLU(Function):
@@ -14,13 +17,32 @@ class GuidedBackpropReLU(Function):
         return output
 
     def backward(self, grad_output):
-        # import pdb
-        #
-        # pdb.set_trace()
+        imgs = []
+        #grads = grad_output.detach().cpu().data.numpy()
+        #if grads.max() != 0:
+        #    for img in grads[0]:
+        #        img = img/img.max()
+        #        imgs.append(img)
+        #    imgs = np.array(imgs)
+        #    np.save(f'../back/{datetime.now().microsecond}.npy', imgs)
 
         input, output = self.saved_tensors
 
         positive_mask_1 = (input > 0).type_as(grad_output)
+
+        #
+        # import pdb
+        #
+        # pdb.set_trace()
+        #grads = positive_mask_1.detach().cpu().data.numpy()
+        #imgs = []
+        #if grads.max() != 0:
+        #    for img in grads[0]:
+        #        img = img/img.max()
+        ##        imgs.append(img)
+        #    imgs = np.array(imgs)
+        #    np.save(f'../back/relu-{datetime.now().microsecond}.npy', imgs)
+
         positive_mask_2 = (grad_output > 0).type_as(grad_output)
         grad_input = torch.addcmul(
             torch.zeros(input.size()).type_as(input),
