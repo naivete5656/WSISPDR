@@ -167,7 +167,7 @@ if __name__ == "__main__":
         f"../weights/server_weights/MSELoss/{plot_size}/epoch_weight/{13:05d}.pth"
     )
     root_path = Path("../images/C2C12P7/sequ_cut/0318/sequ18")
-    save_path = Path("../outputs/sequ18_cut/{}".format(date, plot_size))
+    save_path = Path("../outputs/sequ18_cut/2019-03-02".format(plot_size))
 
     net = models[key](n_channels=1, n_classes=1, sig=norm)
     net.cuda()
