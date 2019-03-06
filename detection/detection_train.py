@@ -1,6 +1,6 @@
 from tqdm import tqdm
 from torch import optim
-from detection_eval import *
+from .detection_eval import *
 from utils import (
     get_imgs_and_masks,
     get_imgs_and_masks2,
@@ -23,10 +23,10 @@ class _TrainBase:
         gpu,
         plot_size,
         train_path,
-        val_path,
         weight_path,
         save_path=None,
         norm=None,
+        val_path=None,
     ):
         if isinstance(train_path, list):
             self.ori_path = []
@@ -37,8 +37,12 @@ class _TrainBase:
         else:
             self.ori_path = train_path / Path("ori")
             self.mask_path = train_path / Path("{}".format(plot_size))
-        self.val_path = val_path / Path("ori")
-        self.val_mask_path = val_path / Path("{}".format(plot_size))
+        if val_path is not None:
+            self.val_path = val_path / Path("ori")
+            self.val_mask_path = val_path / Path("{}".format(plot_size))
+        else:
+            self.val_path = None
+            self.val_mask_path = None
         self.save_weight_path = weight_path
         self.save_weight_path.parent.mkdir(parents=True, exist_ok=True)
         self.save_weight_path.parent.joinpath('epoch_weight').mkdir(parents=True, exist_ok=True)
@@ -133,7 +137,11 @@ class TrainNet(_TrainBase):
         else:
             self.train = get_imgs_and_masks(self.ori_path, self.mask_path, norm=self.norm)
             self.N_train = len(list(self.ori_path.glob("*.tif")))
-        self.val = get_imgs_and_masks(self.val_path, self.val_mask_path, norm=self.norm)
+        if self.val_path is not None:
+            self.val = get_imgs_and_masks(self.val_path, self.val_mask_path, norm=self.norm)
+
+    def loss_calculate(self, masks_probs_flat, true_masks_flat):
+        return self.criterion(masks_probs_flat, true_masks_flat)
 
     def main(self):
         for epoch in range(self.epochs):
@@ -157,7 +165,7 @@ class TrainNet(_TrainBase):
                 masks_probs_flat = masks_pred.view(-1)
                 true_masks_flat = true_masks.view(-1)
 
-                loss = self.criterion(masks_probs_flat, true_masks_flat)
+                loss = self.loss_calculate(masks_probs_flat, true_masks_flat)
                 self.epoch_loss += loss.item()
 
                 self.optimizer.zero_grad()
@@ -173,7 +181,8 @@ class TrainNet(_TrainBase):
                         pre_img = ((pre_img + 1) * (255 / 2)).astype(np.uint8)
                     cv2.imwrite(str(self.save_path.joinpath("{:05d}.tif".format(epoch))), pre_img)
             pbar.close()
-            self.validation(i, epoch)
+            if self.val_path is not None:
+                self.validation(i, epoch)
             if self.bad >= 50:
                 print("stop running")
                 break

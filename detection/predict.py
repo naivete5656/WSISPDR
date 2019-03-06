@@ -1,11 +1,9 @@
 from pathlib import Path
 from datetime import datetime
 from PIL import Image
-import cv2
 import torch
-import sys
-
-sys.path.append(Path.cwd().parent)
+import os
+os.chdir(Path.cwd().parent)
 from utils import *
 from networks import *
 
@@ -114,9 +112,9 @@ class PredictFmeasure(Predict):
             overdetection_id,
             path=str(self.save_error_path / Path("%05d.tif" % i)),
         )
-        cv2.imwrite(str(self.save_pred_path / Path("%05d.tif" % i)), pre_img)
-        cv2.imwrite(str(self.save_ori_path / Path("%05d.tif" % i)), ori)
-        cv2.imwrite(str(self.save_gt_path / Path("%05d.tif" % i)), gt_img)
+        cv2.imwrite(str(self.save_pred_path / Path("%05d.tif" % (i))), pre_img)
+        cv2.imwrite(str(self.save_ori_path / Path("%05d.tif" % (i))), ori)
+        cv2.imwrite(str(self.save_gt_path / Path("%05d.tif" % (i))), gt_img)
 
         tp = associate_id.shape[0]
         fn = gt_final.shape[0] - associate_id.shape[0]
@@ -135,6 +133,8 @@ class PredictFmeasure(Predict):
         """Evaluation without the densecrf with the dice coefficient"""
 
         for i, b in enumerate(z):
+            import gc
+            gc.collect()
             ori = np.array(Image.open(b[0]))
             gt_img = np.array(Image.open(b[1]))
 
@@ -164,10 +164,10 @@ if __name__ == "__main__":
 
     models = {1: UNet, 4: UnetMultiFixedWeight}
     weight_path = (
-        f"../weights/server_weights/MSELoss/{plot_size}/epoch_weight/{13:05d}.pth"
+        "./weights/server_weights/MSELoss/{}/epoch_weight/{:05d}.pth".format(plot_size,13)
     )
-    root_path = Path("../images/C2C12P7/sequ_cut/0318/sequ18")
-    save_path = Path("../outputs/sequ18_cut/2019-03-02".format(plot_size))
+    root_path = Path("./images/C2C12P7/sequ_cut/0318/sequ16")
+    save_path = Path("./outputs/sequ16_cut".format(plot_size))
 
     net = models[key](n_channels=1, n_classes=1, sig=norm)
     net.cuda()

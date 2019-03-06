@@ -1,10 +1,11 @@
 from pathlib import Path
 from datetime import datetime
 import torch
-import sys
 
-from call_backprop  import BackPropBackGround, BackpropAll
-from top_down_call import TopDown
+import os
+os.chdir(Path.cwd().parent)
+
+from propagation import BackPropBackGround, BackpropAll, TopDown
 
 
 if __name__ == "__main__":
@@ -15,10 +16,10 @@ if __name__ == "__main__":
     date = datetime.now().date()
     key = 2
 
-    input_path = sorted(Path("../images/C2C12P7/sequ_cut/0303/sequ9/ori").glob("*.tif"))
-    output_path = Path(f"../outputs/gradcam/{date}/sequ09")
-    # weight_path = f"../weights/server_weights/encoder_sigmoid/best_{plot_size}.pth"
-    weight_path = f"../weights/server_weights/MSELoss/{plot_size}/epoch_weight/00015.pth"
+    input_path = sorted(Path("./images/C2C12P7/sequ_cut/0303/sequ9/ori").glob("*.tif"))
+    output_path = Path(f"./outputs/gradcam/{date}/sequ09")
+    # weight_path = f"./weights/server_weights/encoder_sigmoid/best_{plot_size}.pth"
+    weight_path = f"./weights/server_weights/MSELoss/{plot_size}/epoch_weight/00015.pth"
 
     torch.cuda.set_device(1)
     call_method = {0: TopDown, 1: BackpropAll, 2: BackPropBackGround}

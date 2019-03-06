@@ -3,10 +3,10 @@ import torch
 from PIL import Image
 import numpy as np
 import cv2
-from gradcam import Test3, Test2, Test
+from .gradcam import Test3, Test2, Test
 from scipy.io import savemat
 import matplotlib.pyplot as plt
-import sys
+
 from networks import UNet
 from utils import local_maxima, gaus_filter
 

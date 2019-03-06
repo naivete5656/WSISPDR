@@ -9,6 +9,7 @@ class SignMseLoss(nn.Module):
 
     def forward(self, input, target):
         target[target < 0.5] = 0
+        input[target < 0.5] = 0
         return ((input - target) ** 2).sum() / input.data.nelement()
 
 
@@ -29,9 +30,13 @@ if __name__ == '__main__':
     loss = a(x, y)
     print('a=')
     print(loss)
-    b = nn.MSELoss()
-    # loss_mse = b(x, y)
+    b = MseLoss()
+
+    x = torch.Tensor([1, 0.8, 0.1])
+    y = torch.Tensor([1, 1, 0])
+    loss_mse = b(x, y)
     # print('b=')
+    # print()
     # print(loss_mse)
-    #loss.backward()
-    print(loss)
+    # loss.backward()
+    print(loss_mse)

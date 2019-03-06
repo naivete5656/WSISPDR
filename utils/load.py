@@ -21,12 +21,12 @@ def hwc_to_chw(img):
     return np.transpose(img, axes=[2, 0, 1])
 
 
-def normalize(x):
+def normalize2(x):
     x = x / (255 / 2) - 1
     return x
 
 
-def normalize2(x):
+def normalize(x):
     return x / 255
 
 
