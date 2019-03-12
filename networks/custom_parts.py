@@ -18,3 +18,32 @@ class UpIncBoundary(Up):
         x = self.conv(x)
         x = torch.cat([x, x3], dim=1)
         return x
+
+
+class DoubleDilatedConv(nn.Module):
+    """(conv => BN => ReLU) * 2"""
+
+    def __init__(self, in_ch, out_ch):
+        super().__init__()
+        self.conv = nn.Sequential(
+            nn.Conv2d(in_ch, out_ch, 3, padding=2, dilation=2),
+            nn.BatchNorm2d(out_ch),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(out_ch, out_ch, 3, padding=2, dilation=2),
+            nn.BatchNorm2d(out_ch),
+            nn.ReLU(inplace=True),
+        )
+
+    def forward(self, x):
+        x = self.conv(x)
+        return x
+
+
+class Dilatedc(nn.Module):
+    def __init__(self, in_ch, out_ch):
+        super().__init__()
+        self.conv = DoubleDilatedConv(in_ch, out_ch)
+
+    def forward(self, x):
+        x = self.conv(x)
+        return x

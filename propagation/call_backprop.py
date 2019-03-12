@@ -44,10 +44,10 @@ class BackProp(object):
 
     def coloring(self, gbs):
         # coloring
-        r, g, b = np.loadtxt("../utils/color.csv", delimiter=",")
+        r, g, b = np.loadtxt("./utils/color.csv", delimiter=",")
         gbs_coloring = []
         for peak_i, gb in enumerate(gbs):
-            gb = gb/gb.max() * 255
+            gb = gb / gb.max() * 255
             gb = gb.clip(0, 255).astype(np.uint8)
             result = np.ones((self.shape[0], self.shape[1], 3))
             result = gb[..., np.newaxis] * result
@@ -91,7 +91,9 @@ class BackProp(object):
 
 
 class BackpropAll(BackProp):
-    def __init__(self, input_path, output_path, weight_path, gpu=True, radius=1, sig=True):
+    def __init__(
+        self, input_path, output_path, weight_path, gpu=True, radius=1, sig=True
+    ):
         super().__init__(input_path, output_path, weight_path, gpu, sig=True)
 
         self.back_model = Test2(self.net)
@@ -144,7 +146,7 @@ class BackPropBackGround(BackProp):
             likely_map = np.max(gauses, axis=0)
             region[pre_img < 0] = 0
 
-            r, g, b = np.loadtxt("../utils/color.csv", delimiter=",")
+            r, g, b = np.loadtxt("./utils/color.csv", delimiter=",")
         except ValueError:
             region = np.zeros(self.shape, dtype=np.uint8)
             likely_map = np.zeros(self.shape)
@@ -164,7 +166,8 @@ class BackPropBackGround(BackProp):
         with open(file_path, mode="w") as f:
             f.write("ID,x,y\n")
             for i in range(region.max() + 1):
-                f.write(f"{i},{peaks[i, 0]},{peaks[i ,1]}\n")
+                # f.write(f"{i},{peaks[i, 0]},{peaks[i ,1]}\n")
+                f.write("{},{},{}\n".format(i, peaks[i, 0], peaks[i, 1]))
                 mask = np.zeros(self.shape)
                 mask[region == i] = likely_map[region == i]
                 result = self.back_model(img, mask.astype(np.float32)).copy()
@@ -191,7 +194,9 @@ class BackPropBackGround(BackProp):
                 # mask[index == x, :] = gbs_coloring[x][index == x, :]
                 masks[index == x, :] = gbs_coloring[x][index == x, :]
 
-            cv2.imwrite(str(self.save_path.parent.joinpath("instance_backprop.png")), masks)
+            cv2.imwrite(
+                str(self.save_path.parent.joinpath("instance_backprop.png")), masks
+            )
 
             gbs = np.array(gbs)
             gbs = (gbs / gbs.max() * 255).astype(np.uint8)

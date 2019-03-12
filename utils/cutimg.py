@@ -7,13 +7,18 @@ import numpy as np
 def cut_image(plot_size="6", sequence=18, size=320, override=100, norm_value=255):
     paths = sorted(
         Path(
-            "/home/kazuya/gaussian_fitting/output/test{}".format(sequence)
+            "/home/kazuya/main/dataset/dataset/elmer_set/heavy{}/{}".format(
+                sequence, plot_size
+            )
         ).glob("*.tif")
     )
-    i = 0
+
     savepath = Path(
-        "/home/kazuya/weakly_supervised_instance_segmentation/images/sequ_cut/sequ{}/gaus".format(sequence)
+        "/home/kazuya/main/dataset/elmer_cut/heavy{}/{}".format(
+            sequence, plot_size
+        )
     )
+    i = 0
     savepath.mkdir(parents=True, exist_ok=True)
     for path in paths:
         img = np.array(Image.open(path)).astype(np.float32)
@@ -45,5 +50,11 @@ def cut_image(plot_size="6", sequence=18, size=320, override=100, norm_value=255
 
 
 if __name__ == "__main__":
-    cut_image(sequence=18)
+    for i in range(1, 6):
+        cut_image(sequence=i, plot_size=3)
+        cut_image(sequence=i, plot_size=6)
+        cut_image(sequence=i, plot_size=9)
+        cut_image(sequence=i, plot_size=12)
+
+        cut_image(sequence=i, plot_size="ori")
     # cut_image(sequence=9)

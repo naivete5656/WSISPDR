@@ -2,10 +2,17 @@ from pathlib import Path
 from datetime import datetime
 from PIL import Image
 import torch
-import os
-os.chdir(Path.cwd().parent)
-from utils import *
-from networks import *
+import numpy as np
+from pathlib import Path
+import cv2
+
+if __name__ == "__main__":
+    import os
+
+    os.chdir(Path.cwd().parent)
+
+from utils import local_maxima, show_res, optimum, target_peaks_gen, remove_outside_plot
+from networks import UNet, UNetMultiTask, DilatedUNet, UnetMultiFixedWeight
 
 
 class Predict:
@@ -134,6 +141,7 @@ class PredictFmeasure(Predict):
 
         for i, b in enumerate(z):
             import gc
+
             gc.collect()
             ori = np.array(Image.open(b[0]))
             gt_img = np.array(Image.open(b[1]))
@@ -153,6 +161,36 @@ class PredictFmeasure(Predict):
             f.write("%f,%f,%f\n" % (precision, recall, f_measure))
 
 
+class PredSecond(PredictFmeasure):
+    def __init__(
+            self,
+            net,
+            gpu,
+            root_path,
+            save_path,
+            plot_size,
+            peak_thresh=100,
+            dist_peak=10,
+            dist_threshold=20,
+            norm_value=255,
+            norm=True,
+    ):
+        super().__init__(
+            net,
+            gpu,
+            root_path,
+            save_path,
+            plot_size,
+            peak_thresh=100,
+            dist_peak=10,
+            dist_threshold=20,
+            norm_value=255,
+            norm=True,
+        )
+        self.ori_path = root_path / Path("pred")
+        self.gt_path = root_path / Path("gt")
+
+
 if __name__ == "__main__":
     torch.cuda.set_device(1)
 
@@ -163,31 +201,34 @@ if __name__ == "__main__":
     key = 1
 
     models = {1: UNet, 4: UnetMultiFixedWeight}
-    weight_path = (
-        "./weights/server_weights/MSELoss/{}/epoch_weight/{:05d}.pth".format(plot_size,13)
-    )
-    root_path = Path("./images/C2C12P7/sequ_cut/0318/sequ16")
-    save_path = Path("./outputs/sequ16_cut".format(plot_size))
+    # weight_path = "./weights/server_weights/MSELoss/{}/epoch_weight/{:05d}.pth".format(
+    #     plot_size, 13
+    # )
+    for i in range(6, 500):
+        weight_path = "./weights/second_net/{}/epoch_weight/{:05d}.pth".format(plot_size, i)
+        # root_path = Path("./images/C2C12P7/sequ_cut/0318/sequ18")
+        root_path = Path("./outputs/detection/test18/single/test18/12/")
+        save_path = Path("./outputs/second/sequ18_cut".format(plot_size))
 
-    net = models[key](n_channels=1, n_classes=1, sig=norm)
-    net.cuda()
-    net.load_state_dict(torch.load(weight_path, map_location={"cuda:3": "cuda:1"}))
+        net = models[key](n_channels=1, n_classes=1, sig=norm)
+        net.cuda()
+        net.load_state_dict(torch.load(weight_path, map_location={"cuda:3": "cuda:1"}))
 
-    pred = PredictFmeasure(
-        net=net,
-        gpu=gpu,
-        root_path=root_path,
-        save_path=save_path,
-        plot_size=plot_size,
-        peak_thresh=125,
-        dist_peak=2,
-        dist_threshold=20,
-        norm_value=255,
-        norm=norm,
-    )
+        pred = PredSecond(
+            net=net,
+            gpu=gpu,
+            root_path=root_path,
+            save_path=save_path,
+            plot_size=plot_size,
+            peak_thresh=125,
+            dist_peak=2,
+            dist_threshold=20,
+            norm_value=255,
+            norm=norm,
+        )
 
-    pred.main()
+        pred.main()
 
-    import gc
-    gc.collect()
+        import gc
 
+        gc.collect()

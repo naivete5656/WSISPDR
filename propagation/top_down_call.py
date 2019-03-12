@@ -35,11 +35,14 @@ class TopDownBefore(BackProp):
             prms = prms / prms.max() * 255
             for i, prm in enumerate(prms):
                 cv2.imwrite(
-                    str(each_back.joinpath(f"{i:05d}.tif")), prm.astype(np.uint8)
+                    str(each_back.joinpath("{:05d}.tif".format(i))),
+                    prm.astype(np.uint8),
                 )
             prm = np.max(prms, axis=0)
             plt.imshow(prm), plt.show()
-            cv2.imwrite(str(all_back.joinpath(f"{i:05d}.tif")), prm.astype(np.uint8))
+            cv2.imwrite(
+                str(all_back.joinpath("{:05d}.tif".format(i))), prm.astype(np.uint8)
+            )
 
 
 class TopDown(BackProp):
@@ -97,4 +100,6 @@ class TopDown(BackProp):
 
             prm = np.max(prms, axis=0)
             plt.imshow(prms_coloring), plt.show()
-            cv2.imwrite(str(all_back.joinpath(f"{img_i:05d}.tif")), prm.astype(np.uint8))
+            cv2.imwrite(
+                str(all_back.joinpath("{:05d}.tif".format(img_i))), prm.astype(np.uint8)
+            )

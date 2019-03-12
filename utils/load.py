@@ -85,11 +85,11 @@ def get_imgs_and_masks2(ori_paths, mask_paths, norm):
     imgs_switched = map(hwc_to_chw, imgs)
     masks_switched = map(hwc_to_chw, masks)
     if norm:
-        imgs_normalized = map(normalize2, imgs_switched)
-        masks_normalized = map(normalize2, masks_switched)
-    else:
         imgs_normalized = map(normalize, imgs_switched)
         masks_normalized = map(normalize, masks_switched)
+    else:
+        imgs_normalized = map(normalize2, imgs_switched)
+        masks_normalized = map(normalize2, masks_switched)
     return zip(imgs_normalized, masks_normalized)
 
 

@@ -1,7 +1,9 @@
 import torch
 import torch.nn as nn
+from pathlib import Path
 import matplotlib.pyplot as plt
-from utils import *
+from utils import target_peaks_gen, remove_outside_plot, optimum, local_maxima, show_res
+import numpy as np
 
 
 def eval_net(

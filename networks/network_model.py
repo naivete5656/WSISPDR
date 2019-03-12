@@ -87,3 +87,6 @@ class UNetMultiTask2(UNet):
         x = self.outc(x)
 
         return x, x_boundary
+
+
+

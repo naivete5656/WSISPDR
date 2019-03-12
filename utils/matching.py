@@ -106,6 +106,7 @@ def show_res(img, gt, res, no_detected_id, over_detection_id, path=None):
     plt.legend(bbox_to_anchor=(0, 1.05), loc="upper left", fontsize=4, ncol=4)
     # plt.show()
     plt.savefig(path)
+    plt.close()
 
 
 def local_maxim(img, threshold, dist):

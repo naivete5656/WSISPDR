@@ -24,6 +24,8 @@ class EvaluationMethods:
         save_path.mkdir(parents=True, exist_ok=True)
         self.calculate = None
         self.mode = None
+        self.iou_list = []
+        self.dice_list = []
 
     def save_result(self, mode, result):
         save_path = self.save_path / Path(self.mode + f"{mode}.txt")
@@ -51,7 +53,8 @@ class EvaluationMethods:
             # create mask
             target_mask = np.zeros(target.shape)
             target_mask[target == target_label] = 1
-
+            pred_2 = pred_mask
+            target_2 = target_mask
             pred_mask = pred_mask.flatten()
             target_mask = target_mask.flatten()
 
@@ -61,15 +64,12 @@ class EvaluationMethods:
             tps += tp
             fns += fn
             fps += fp
-            # print(tps/(tps+fns+fps))
-            # target_mask = np.zeros(target.shape)
-            # target_mask[target == target_label] = 1
-            # plt.imshow(target_mask),plt.show()
-            # pred_mask = np.zeros(pred.shape)
-            # pred_mask[pred == max_label] = 1
-            # plt.imshow(pred_mask), plt.show()
-            # print(target_label)
-        return tps, fns, fps
+
+            iou = (tp / (tp + fp + fn))
+            self.iou_list.append(iou)
+
+            dice = (2 * tp) / (2 * tp + fn + fp)
+            self.dice_list.append(dice)
 
     def segmentation_eval(self, pred, target):
         pred_mask = np.zeros(pred.shape)
@@ -147,17 +147,13 @@ class EvaluationMethods:
         iou = tps_fns_fps[3] / (tps_fns_fps[3] + tps_fns_fps[4] + tps_fns_fps[5])
 
         # instance segmentation
-        instance_dice = (
-            2 * tps_fns_fps[6] / (2 * tps_fns_fps[6] + tps_fns_fps[7] + tps_fns_fps[8])
-        )
-        instance_iou = tps_fns_fps[6] / (
-            tps_fns_fps[6] + tps_fns_fps[7] + tps_fns_fps[8]
-        )
-
+        instance_dice = np.nanmean(np.array(self.dice_list))
+        instance_iou = np.nanmean(np.array(self.iou_list))
         text = f"detection\n precision:{detection_precision}\nrecall:{detection_recall}\nf-measure:{detection_f_measure}\
                                     \nsegmentation\ndice:{dice}\niou:{iou}\n\
                                     \ninstance-segmentation\ninstance_iou:{instance_iou}\ninstance-dice:{instance_dice}\n"
         print(text)
+        plt.hist(self.iou_list)
         with open(self.save_path.joinpath(f"result.txt"), mode="w") as f:
             f.write(text)
 
@@ -188,7 +184,7 @@ class EvaluationMethods:
 
         #detection_tp, detection_fn, detection_fp = self.f_measure(pred, target)
         seg_tp, seg_fn, seg_fp = self.segmentation_eval(pred, target)
-        instance_tp, instance_fn, instance_fp = self.instance_eval(pred, target)
+        self.instance_eval(pred, target)
         evaluations.append(
             [
                 1,
@@ -197,21 +193,8 @@ class EvaluationMethods:
                 seg_tp,
                 seg_fn,
                 seg_fp,
-                instance_tp,
-                instance_fn,
-                instance_fp,
             ]
         )
-
-        try:
-            temp = instance_tp/(instance_tp+instance_fp+instance_fn)
-            print(instance_tp/(instance_tp+instance_fp+instance_fn))
-            if temp < 0.2:
-                plt.imshow(pred), plt.show()
-                plt.imshow(target), plt.show()
-
-        except ZeroDivisionError:
-            print('non')
 
         return evaluations
 

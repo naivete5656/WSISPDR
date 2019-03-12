@@ -11,7 +11,7 @@ from networks import UNet, UnetMultiFixedWeight
 torch.cuda.set_device(1)
 mode = "single"
 plot_size = 12
-norm = False
+norm = True
 date = datetime.now().date()
 # train_path = [Path("./images/sequ_cut/sequ9"), Path("./images/sequ_cut/sequ17")]
 train_path = Path('/home/kazuya/main/weakly_supervised_instance_segmentation/outputs/sequ18_cut/2019-03-02/pred')

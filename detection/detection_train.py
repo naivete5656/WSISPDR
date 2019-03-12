@@ -1,15 +1,11 @@
 from tqdm import tqdm
 from torch import optim
 from .detection_eval import *
-from utils import (
-    get_imgs_and_masks,
-    get_imgs_and_masks2,
-    batch,
-    get_imgs_multi,
-)
+from utils import get_imgs_and_masks, get_imgs_and_masks2, batch, get_imgs_multi
 from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
+import cv2
 
 
 class _TrainBase:
@@ -27,6 +23,7 @@ class _TrainBase:
         save_path=None,
         norm=None,
         val_path=None,
+        pre_trained_path=None,
     ):
         if isinstance(train_path, list):
             self.ori_path = []
@@ -45,13 +42,16 @@ class _TrainBase:
             self.val_mask_path = None
         self.save_weight_path = weight_path
         self.save_weight_path.parent.mkdir(parents=True, exist_ok=True)
-        self.save_weight_path.parent.joinpath('epoch_weight').mkdir(parents=True, exist_ok=True)
+        self.save_weight_path.parent.joinpath("epoch_weight").mkdir(
+            parents=True, exist_ok=True
+        )
         self.save_path = save_path
         self.save_path.mkdir(parents=True, exist_ok=True)
         print(
             "Starting training:\nEpochs: {}\nBatch size: {} \nLearning rate: {}\ngpu:{}\n"
             "plot_size:{}\nmode:{}".format(epochs, batch_size, lr, gpu, plot_size, mode)
         )
+
         self.net = net
 
         self.train = None
@@ -82,24 +82,23 @@ class _TrainBase:
 
     def validation(self, number_of_train_data, epoch):
         loss = self.epoch_loss / (number_of_train_data + 1)
-        print(
-            "Epoch finished ! Loss: {}".format(loss)
-        )
+        print("Epoch finished ! Loss: {}".format(loss))
 
         self.losses.append(loss)
 
         if loss < 0.01:
-            torch.save(self.net.state_dict(), str(self.save_weight_path.parent.joinpath('epoch_weight/{:05d}.pth'.format(epoch))))
-            fmeasure, val_loss = eval_net(self.net, self.val, "single", norm=self.norm, gpu=self.gpu)
+            fmeasure, val_loss = eval_net(
+                self.net, self.val, "single", norm=self.norm, gpu=self.gpu
+            )
             print("f-measure: {}".format(fmeasure))
             print("val_loss: {}".format(val_loss))
             try:
                 if max(self.evals) < fmeasure:
-                    print('< f measure')
+                    print("< f measure")
                     torch.save(self.net.state_dict(), str(self.save_weight_path))
                     self.bad = 0
                 elif min(self.val_losses) > val_loss:
-                    print('pass')
+                    print("pass")
                     pass
                 else:
                     self.bad += 1
@@ -110,7 +109,12 @@ class _TrainBase:
         else:
             print("loss is too large. Continue train")
             val_loss = eval_net(
-                self.net, self.val, "single", gpu=self.gpu, only_loss=True, norm=self.norm
+                self.net,
+                self.val,
+                "single",
+                gpu=self.gpu,
+                only_loss=True,
+                norm=self.norm,
             )
             self.evals.append(0)
             self.val_losses.append(val_loss)
@@ -119,7 +123,6 @@ class _TrainBase:
 
 
 class TrainNet(_TrainBase):
-
     def load(self):
         self.net.train()
         # reset the generators
@@ -135,10 +138,14 @@ class TrainNet(_TrainBase):
             self.N_train = len(ori_paths)
             self.train = get_imgs_and_masks2(ori_paths, mask_paths, norm=self.norm)
         else:
-            self.train = get_imgs_and_masks(self.ori_path, self.mask_path, norm=self.norm)
+            self.train = get_imgs_and_masks(
+                self.ori_path, self.mask_path, norm=self.norm
+            )
             self.N_train = len(list(self.ori_path.glob("*.tif")))
         if self.val_path is not None:
-            self.val = get_imgs_and_masks(self.val_path, self.val_mask_path, norm=self.norm)
+            self.val = get_imgs_and_masks(
+                self.val_path, self.val_mask_path, norm=self.norm
+            )
 
     def loss_calculate(self, masks_probs_flat, true_masks_flat):
         return self.criterion(masks_probs_flat, true_masks_flat)
@@ -162,6 +169,12 @@ class TrainNet(_TrainBase):
 
                 masks_pred = self.net(imgs)
 
+                inputs = np.sign(imgs.min().detach().cpu().numpy())
+                if inputs == 0:
+                    inputs = 1
+                outputs = np.sign(masks_pred.min().detach().cpu().numpy())
+                assert inputs == outputs, print('mis normalizing')
+
                 masks_probs_flat = masks_pred.view(-1)
                 true_masks_flat = true_masks.view(-1)
 
@@ -179,10 +192,23 @@ class TrainNet(_TrainBase):
                         pre_img = (pre_img * 255).astype(np.uint8)
                     else:
                         pre_img = ((pre_img + 1) * (255 / 2)).astype(np.uint8)
-                    cv2.imwrite(str(self.save_path.joinpath("{:05d}.tif".format(epoch))), pre_img)
+                    cv2.imwrite(
+                        str(self.save_path.joinpath("{:05d}.tif".format(epoch))),
+                        pre_img,
+                    )
             pbar.close()
             if self.val_path is not None:
                 self.validation(i, epoch)
+            else:
+                torch.save(
+                    self.net.state_dict(),
+                    str(
+                        self.save_weight_path.parent.joinpath(
+                            "epoch_weight/{:05d}.pth".format(epoch)
+                        )
+                    ),
+                )
+
             if self.bad >= 50:
                 print("stop running")
                 break
