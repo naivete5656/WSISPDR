@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6e56797c-7ef8-4fa1-a274-fdcf870ea749" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/detection/detection_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/detection/detection_train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/detection/predict.py" beforeDir="false" afterPath="$PROJECT_DIR$/detection/predict.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/propagation/call_backprop.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/call_backprop.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/propagation/gradcam/guided_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/gradcam/guided_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/propagation/propagation_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/propagation_main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,7 +29,7 @@
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$predict.coverage" NAME="predict Coverage Results" MODIFIED="1552363432757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/detection" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$second_detection_step.coverage" NAME="second_detection_step Coverage Results" MODIFIED="1551872610570" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/detection" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$cutimg.coverage" NAME="cutimg Coverage Results" MODIFIED="1552035981096" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
-    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$propagation.coverage" NAME="propagation Coverage Results" MODIFIED="1552531660668" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/propagation" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$propagation.coverage" NAME="propagation Coverage Results" MODIFIED="1552534401198" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/propagation" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$matching.coverage" NAME="matching Coverage Results" MODIFIED="1548995489733" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$train.coverage" NAME="train Coverage Results" MODIFIED="1550716377238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/detection" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$detection_main.coverage" NAME="detection_main Coverage Results" MODIFIED="1552360288988" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/detection" />
@@ -42,36 +41,36 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/detection/detection_main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="800">
-              <caret line="42" column="4" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="11" />
-              <folding>
-                <element signature="e#0#12#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/detection/second_detection_step.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="13" column="11" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
-              <folding>
-                <element signature="e#0#12#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/propagation/propagation_main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="25" selection-start-line="25" selection-end-line="25" />
+            <state relative-caret-position="480">
+              <caret line="24" selection-start-line="24" selection-end-line="24" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/propagation/call_backprop.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="445">
+              <caret line="125" selection-start-line="125" selection-end-line="125" />
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/networks/network_model.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="140">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -80,19 +79,19 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$USER_HOME$/miniconda3/envs/now_end/lib/python3.6/codecs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
+            <state relative-caret-position="445">
               <caret line="310" selection-start-line="310" selection-end-line="310" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/propagation/call_backprop.py">
+        <entry file="file://$PROJECT_DIR$/networks/network_parts.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4440">
-              <caret line="232" selection-start-line="232" selection-end-line="232" />
+            <state relative-caret-position="156">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
               <folding>
-                <element signature="e#0#24#0" expanded="true" />
+                <element signature="e#32#44#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -101,55 +100,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/propagation/gradcam/guided_model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1720">
-              <caret line="90" selection-start-line="90" selection-end-line="90" />
+            <state relative-caret-position="624">
+              <caret line="159" column="25" selection-start-line="159" selection-start-column="25" selection-end-line="159" selection-end-column="25" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="39" column="46" selection-start-line="39" selection-start-column="46" selection-end-line="39" selection-end-column="46" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/detection/detection_train.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3760">
-              <caret line="195" column="26" selection-start-line="195" selection-start-column="26" selection-end-line="195" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/propagation/top_down_call.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1920">
-              <caret line="102" column="24" selection-start-line="102" selection-start-column="24" selection-end-line="102" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/load.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="580">
-              <caret line="33" column="7" selection-start-line="32" selection-end-line="42" selection-end-column="15" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -182,7 +136,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/unet_grad_cam/gradcam/gaidedbackprop.py" />
         <option value="$PROJECT_DIR$/unet_grad_cam/gradcam/top_down_backpropagation.py" />
         <option value="$PROJECT_DIR$/unet_grad_cam/gradcam/__init__.py" />
         <option value="$PROJECT_DIR$/unet_grad_cam/gradcam/guided_parts.py" />
@@ -232,14 +185,14 @@
         <option value="$PROJECT_DIR$/detection/predict.py" />
         <option value="$PROJECT_DIR$/detection/detection_train.py" />
         <option value="$PROJECT_DIR$/propagation/call_backprop.py" />
+        <option value="$PROJECT_DIR$/propagation/gradcam/guided_model.py" />
         <option value="$PROJECT_DIR$/propagation/propagation_main.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="67" />
-    <option name="y" value="312" />
-    <option name="width" value="1853" />
+    <option name="x" value="1689" />
+    <option name="width" value="1003" />
     <option name="height" value="1053" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -274,7 +227,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../test" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
@@ -474,12 +427,12 @@
       <workItem from="1552313670984" duration="914000" />
       <workItem from="1552353453546" duration="10393000" />
       <workItem from="1552530982660" duration="713000" />
-      <workItem from="1552532147290" duration="52000" />
+      <workItem from="1552532147290" duration="1631000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="354617000" />
+    <option name="totallyTimeSpent" value="356196000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -491,22 +444,22 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="67" y="312" width="1853" height="1053" extended-state="6" />
+    <frame x="1987" y="0" width="1013" height="1920" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25373963" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="1" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="2" weight="0.29844558" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32969433" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49806094" weight="0.19742008" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49916896" weight="0.43073472" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49806094" weight="0.19629838" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49916896" weight="0.22097589" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32969433" />
       <window_info anchor="bottom" id="Docker" order="7" weight="0.32969433" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info active="true" anchor="bottom" id="Event Log" order="10" sideWeight="0.5015538" side_tool="true" visible="true" weight="0.62227076" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5015538" side_tool="true" weight="0.62227076" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49844623" weight="0.12445415" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32969433" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -541,6 +494,12 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/unet_grad_cam" />
+      <path value="$PROJECT_DIR$/unet_pytorch" />
+    </ignored-roots>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -674,6 +633,21 @@
           <url>file://$PROJECT_DIR$/propagation/call_backprop.py</url>
           <line>172</line>
           <option name="timeStamp" value="428" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/propagation/call_backprop.py</url>
+          <line>30</line>
+          <option name="timeStamp" value="430" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/propagation/propagation_main.py</url>
+          <line>25</line>
+          <option name="timeStamp" value="432" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/propagation/propagation_main.py</url>
+          <line>24</line>
+          <option name="timeStamp" value="433" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -912,16 +886,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/networks/network_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/matching.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="824">
@@ -938,16 +902,6 @@
           <caret line="31" column="17" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/network_parts.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1220">
-          <caret line="61" column="11" selection-start-line="61" selection-start-column="11" selection-end-line="61" selection-end-column="11" />
-          <folding>
-            <element signature="e#32#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -974,38 +928,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/detection/second_detection_step.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
+        <state relative-caret-position="260">
           <caret line="13" column="11" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/propagation_main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/call_backprop.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4440">
-          <caret line="232" selection-start-line="232" selection-end-line="232" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/gradcam/guided_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1720">
-          <caret line="90" selection-start-line="90" selection-end-line="90" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>
@@ -1014,7 +938,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
+        <state relative-caret-position="780">
           <caret line="39" column="46" selection-start-line="39" selection-start-column="46" selection-end-line="39" selection-end-column="46" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
@@ -1024,7 +948,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/detection/detection_train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3760">
+        <state relative-caret-position="824">
           <caret line="195" column="26" selection-start-line="195" selection-start-column="26" selection-end-line="195" selection-end-column="26" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
@@ -1034,14 +958,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/propagation/top_down_call.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1920">
+        <state relative-caret-position="824">
           <caret line="102" column="24" selection-start-line="102" selection-start-column="24" selection-end-line="102" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/utils/load.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="580">
+        <state relative-caret-position="660">
           <caret line="33" column="7" selection-start-line="32" selection-end-line="42" selection-end-column="15" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
@@ -1049,9 +973,59 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/gradcam/guided_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="624">
+          <caret line="159" column="25" selection-start-line="159" selection-start-column="25" selection-end-line="159" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/networks/network_parts.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="e#32#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/networks/network_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/call_backprop.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="445">
+          <caret line="125" selection-start-line="125" selection-end-line="125" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/propagation_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$USER_HOME$/miniconda3/envs/now_end/lib/python3.6/codecs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
+        <state relative-caret-position="445">
           <caret line="310" selection-start-line="310" selection-end-line="310" />
         </state>
       </provider>

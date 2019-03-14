@@ -21,7 +21,7 @@ class BackProp(object):
         # network load
         self.net = UNet(n_channels=1, n_classes=1, sig=sig)
         self.net.load_state_dict(
-            torch.load(weight_path, map_location={"cuda:2": "cuda:0"})
+            torch.load(weight_path, map_location={"cuda:3": "cuda:0"})
         )
         self.net.eval()
         if self.gpu:
