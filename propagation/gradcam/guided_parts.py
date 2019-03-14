@@ -17,32 +17,12 @@ class GuidedBackpropReLU(Function):
         return output
 
     def backward(self, grad_output):
-        imgs = []
-        #grads = grad_output.detach().cpu().data.numpy()
-        #if grads.max() != 0:
-        #    for img in grads[0]:
-        #        img = img/img.max()
-        #        imgs.append(img)
-        #    imgs = np.array(imgs)
-        #    np.save(f'../back/{datetime.now().microsecond}.npy', imgs)
 
         input, output = self.saved_tensors
 
+        grad_input = None
+
         positive_mask_1 = (input > 0).type_as(grad_output)
-
-        #
-        # import pdb
-        #
-        # pdb.set_trace()
-        #grads = positive_mask_1.detach().cpu().data.numpy()
-        #imgs = []
-        #if grads.max() != 0:
-        #    for img in grads[0]:
-        #        img = img/img.max()
-        ##        imgs.append(img)
-        #    imgs = np.array(imgs)
-        #    np.save(f'../back/relu-{datetime.now().microsecond}.npy', imgs)
-
         positive_mask_2 = (grad_output > 0).type_as(grad_output)
         grad_input = torch.addcmul(
             torch.zeros(input.size()).type_as(input),
@@ -67,7 +47,7 @@ class GuidedBackpropReLU2(Function):
 
     @staticmethod
     def backward(ctx, grad_output):
-        input, output = ctx.saved_tensors
+        input, output = ctx.saved_variables
 
         positive_mask_1 = (input > 0).type_as(grad_output)
         positive_mask_2 = (grad_output > 0).type_as(grad_output)

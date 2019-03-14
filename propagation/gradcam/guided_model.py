@@ -157,7 +157,7 @@ class Test3(nn.Module):
         else:
             one_hot = torch.sum(one_hot * output)
 
-        one_hot.backward()
+        one_hot.backward(retain_graph=True)
 
         output = input.grad.detach().cpu().data.numpy()
         output = output[0, 0, :, :]

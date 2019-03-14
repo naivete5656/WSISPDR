@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:latest-gpu-py3
+FROM pytorch/pytorch:0.4_cuda9_cudnn7
 LABEL maintainer="nishimura"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \

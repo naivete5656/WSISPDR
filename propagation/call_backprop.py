@@ -3,7 +3,7 @@ import torch
 from PIL import Image
 import numpy as np
 import cv2
-from .gradcam import Test3, Test2, Test
+from .gradcam import Test3, Test2, Test, GuidedBackpropReLUModel
 from scipy.io import savemat
 import matplotlib.pyplot as plt
 
@@ -63,10 +63,6 @@ class BackProp(object):
 
     def main(self):
         for img_i, path in enumerate(self.input_path):
-            # self.temp_path = self.text_output.joinpath("{:05d}.txt".format(img_i))
-            # with open(self.temp_path, mode="w") as f:
-            #     f.write("ID,x,y\n")
-            # load image
             img = np.array(Image.open(path))
             self.shape = img.shape
             if self.norm:
@@ -79,13 +75,8 @@ class BackProp(object):
                 )
 
             img = torch.from_numpy(img)
-
-            pre_img = self.unet_pred(
-                img, self.likelymap_savepath.joinpath(f"{img_i:05d}.tif")
-            )
-
             img.requires_grad = True
-            gbs = self.calculate(img, pre_img)
+            gbs = self.calculate(img)
 
             self.save_img(gbs, img_i)
 
@@ -100,16 +91,11 @@ class BackpropAll(BackProp):
         self.likelymap_savepath = output_path.parent.joinpath("likelymap")
         self.likelymap_savepath.mkdir(parents=True, exist_ok=True)
 
-    def calculate(self, img, pre_img):
+    def calculate(self, img):
 
-        mask = np.zeros(pre_img.shape)
-        mask[pre_img > 0.1] = 1
+        mask = np.ones((320,320))
 
-        mask_bkg = np.zeros(pre_img.shape)
-        mask_bkg[pre_img < 0.1] = 1
-
-        result_fore = self.back_model(img, mask.astype(np.float32)).copy()
-        # result_fore = result_fore / result_fore.max()
+        result_fore = self.back_model(img, mask.astype(np.float32))
         return result_fore
 
     def save_img(self, result, i):
@@ -170,7 +156,7 @@ class BackPropBackGround(BackProp):
                 f.write("{},{},{}\n".format(i, peaks[i, 0], peaks[i, 1]))
                 mask = np.zeros(self.shape)
                 mask[region == i] = likely_map[region == i]
-                result = self.back_model(img, mask.astype(np.float32)).copy()
+                result = self.back_model(img, mask.astype(np.float32))
 
                 result = result.clip(0, 255)
 
