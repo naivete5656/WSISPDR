@@ -14,11 +14,11 @@ if __name__ == "__main__":
     date = datetime.now().date()
     key = 2
 
-    input_path = sorted(Path("./images/C2C12P7/sequ_cut/0303/sequ9/ori").glob("*.tif"))
-    output_path = Path("/home/kazuya/file_server2/outputs/gradcam/sequ9/{}".format(date,plot_size))
+    input_path = sorted(Path("/home/kazuya/file_server2/images/elmer_cut/heavy5/ori").glob("*.tif"))
+    output_path = Path("/home/kazuya/file_server2/outputs/gradcam/heavy/{}".format(date, plot_size))
     # weight_path = f"./weights/server_weights/encoder_sigmoid/best_{plot_size}.pth"
     weight_path = (
-        "./weights/MSELoss/best_{}.pth".format(plot_size)
+        "/home/kazuya/file_server2/weights/2019-03-12/challenge/{}/best.pth".format(plot_size)
     )
 
     call_method = {0: TopDown, 1: BackpropAll, 2: BackPropBackGround}

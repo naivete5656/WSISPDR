@@ -208,7 +208,7 @@ if __name__ == "__main__":
         weight_path = "./weights/second_net/{}/epoch_weight/{:05d}.pth".format(plot_size, i)
         # root_path = Path("./images/C2C12P7/sequ_cut/0318/sequ18")
         root_path = Path("./outputs/detection/test18/single/test18/12/")
-        save_path = Path("./outputs/second/sequ18_cut".format(plot_size))
+        save_path = Path("/home/kazuya/file_server2/all_output/second")
 
         net = models[key](n_channels=1, n_classes=1, sig=norm)
         net.cuda()

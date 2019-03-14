@@ -169,11 +169,11 @@ class TrainNet(_TrainBase):
 
                 masks_pred = self.net(imgs)
 
-                inputs = np.sign(imgs.min().detach().cpu().numpy())
-                if inputs == 0:
-                    inputs = 1
-                outputs = np.sign(masks_pred.min().detach().cpu().numpy())
-                assert inputs == outputs, print('mis normalizing')
+                # inputs = np.sign(imgs.min().detach().cpu().numpy())
+                # if inputs == 0:
+                #     inputs = 1
+                # outputs = np.sign(masks_pred.min().detach().cpu().numpy())
+                # assert inputs == outputs, print('mis normalizing')
 
                 masks_probs_flat = masks_pred.view(-1)
                 true_masks_flat = true_masks.view(-1)
