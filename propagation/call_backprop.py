@@ -90,7 +90,7 @@ class BackpropAll(BackProp):
 
     def calculate(self, img):
 
-        mask = np.ones((320,320))
+        mask = np.ones((img.shape[2],img.shape[3]))
 
         result_fore = self.back_model(img, mask.astype(np.float32))
         return result_fore
@@ -135,7 +135,7 @@ class BackPropBackGround(BackProp):
             likely_map = np.zeros(self.shape)
 
         # mask gen
-        mask = np.zeros((320, 320, 3))
+        mask = np.zeros((img.shape[2],img.shape[3], 3))
         for i in range(1, region.max() + 1):
             peak_i = i % 20
             mask[region == i, 0] = r[peak_i] * 255
@@ -171,7 +171,7 @@ class BackPropBackGround(BackProp):
             # mask gen
             gbs_coloring = np.array(gbs_coloring)
             index = np.argmax(gbs, axis=0)
-            masks = np.zeros((320, 320, 3))
+            masks = np.zeros((img.shape[2],img.shape[3], 3))
             for x in range(1, index.max() + 1):
                 # mask = np.zeros((320, 320, 3))
                 # mask[index == x, :] = gbs_coloring[x][index == x, :]
@@ -260,7 +260,7 @@ class BackPropBacks(BackProp):
         # mask gen
         gbs_coloring = np.array(gbs_coloring)
         index = np.argmax(gbs, axis=0)
-        masks = np.zeros((320, 320, 3))
+        masks = np.zeros((img.shape[2],img.shape[3], 3))
         for x in range(1, index.max() + 1):
             masks[index == x, :] = gbs_coloring[x][index == x, :]
 
