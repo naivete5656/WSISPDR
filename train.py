@@ -5,7 +5,7 @@ import torch
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 from utils import *
-from networks import UNetMultiTask
+from networks import UNetMultiTask2, BoundaryEnhancedCrossEntropyLoss
 from eval import eval_net
 from pathlib import Path
 
@@ -34,6 +34,7 @@ class TrainNet:
         self.gpu = gpu
         self.plot_size = plot_size
         self.criterion = nn.BCELoss()
+        self.criterion2 = BoundaryEnhancedCrossEntropyLoss()
         self.val_losses = []
         self.evals = []
         print(
@@ -83,7 +84,7 @@ class TrainNet:
 
                 boundary_probs_flat = boundary_pred.view(-1)
                 true_boundary_flat = true_boundaries.view(-1)
-                loss2 = self.criterion(boundary_probs_flat, true_boundary_flat)
+                loss2 = self.criterion2(masks_probs_flat, boundary_probs_flat, true_boundary_flat)
 
                 loss = loss1 + loss2
 
@@ -149,7 +150,7 @@ if __name__ == "__main__":
     # val_path = Path("./images/val")
     save_weight_path = Path("./weights/{}/multi_task/best.pth".format(date))
 
-    network = UNetMultiTask(n_channels=1, n_classes=1)
+    network = UNetMultiTask2(n_channels=1, n_classes=1)
     network.cuda()
 
     train = TrainNet(

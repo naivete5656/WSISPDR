@@ -85,6 +85,15 @@ class _TrainBase:
         print("Epoch finished ! Loss: {}".format(loss))
 
         self.losses.append(loss)
+        if epoch % 10 == 0:
+            torch.save(
+                self.net.state_dict(),
+                str(
+                    self.save_weight_path.parent.joinpath(
+                        "epoch_weight/{:05d}.pth".format(epoch)
+                    )
+                ),
+            )
 
         if loss < 0.01:
             fmeasure, val_loss = eval_net(
@@ -93,15 +102,18 @@ class _TrainBase:
             print("f-measure: {}".format(fmeasure))
             print("val_loss: {}".format(val_loss))
             try:
-                if max(self.evals) < fmeasure:
-                    print("< f measure")
+                update_or_not = max(self.evals) < fmeasure
+                if update_or_not:
+                    print("update best")
+                    print("{}".format(update_or_not))
                     torch.save(self.net.state_dict(), str(self.save_weight_path))
                     self.bad = 0
                 elif min(self.val_losses) > val_loss:
-                    print("pass")
+                    print("stay")
                     pass
                 else:
                     self.bad += 1
+                    print("bad ++")
             except ValueError:
                 torch.save(self.net.state_dict(), str(self.save_weight_path))
             self.evals.append(fmeasure)

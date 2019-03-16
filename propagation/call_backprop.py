@@ -12,17 +12,14 @@ from utils import local_maxima, gaus_filter
 
 
 class BackProp(object):
-    def __init__(self, input_path, output_path, weight_path, gpu=True, sig=True):
+    def __init__(self, input_path, output_path, net, gpu=True, sig=True):
         self.input_path = input_path
         self.output_path = output_path
         output_path.mkdir(parents=True, exist_ok=True)
 
         self.gpu = gpu
         # network load
-        self.net = UNet(n_channels=1, n_classes=1, sig=sig)
-        self.net.load_state_dict(
-            torch.load(weight_path, map_location={"cuda:3": "cuda:0"})
-        )
+        self.net = net
         self.net.eval()
         if self.gpu:
             self.net.cuda()
@@ -83,9 +80,9 @@ class BackProp(object):
 
 class BackpropAll(BackProp):
     def __init__(
-        self, input_path, output_path, weight_path, gpu=True, radius=1, sig=True
+        self, input_path, output_path, net, gpu=True, radius=1, sig=True
     ):
-        super().__init__(input_path, output_path, weight_path, gpu, sig=True)
+        super().__init__(input_path, output_path, net, gpu, sig=True)
 
         self.back_model = Test2(self.net)
         self.likelymap_savepath = output_path.parent.joinpath("likelymap")
@@ -217,3 +214,81 @@ class BackPropBackGround(BackProp):
 
             img.requires_grad = True
             self.calculate(img, pre_img)
+
+
+class BackPropBacks(BackProp):
+
+    def __init__(
+        self, input_path, output_path, weight_path, gpu=True, radius=1, sig=True
+    ):
+        super().__init__(input_path, output_path, weight_path, gpu, sig=sig)
+        self.output_path_each = None
+        self.back_model = Test2(self.net)
+
+    def calculate(self, img, pre_img, img_i):
+
+        # peak
+        if not self.norm:
+            pre_img = (pre_img + 1) / 2
+        peaks = local_maxima((pre_img * 255).astype(np.uint8), 125, 2).astype(np.int)
+        gauses = []
+        try:
+            for peak in peaks:
+                temp = np.zeros(self.shape)
+                temp[peak[1], peak[0]] = 255
+                gauses.append(gaus_filter(temp, 401, 12))
+            region = np.argmax(gauses, axis=0) + 1
+            likely_map = np.max(gauses, axis=0)
+            region[pre_img < 0] = 0
+        except ValueError:
+            region = np.zeros(self.shape, dtype=np.uint8)
+            likely_map = np.zeros(self.shape)
+
+        gbs = []
+        # each propagate
+        peaks = np.insert(peaks, 0, [0, 0], axis=0)
+        for i in range(region.max() + 1):
+            mask = np.zeros(self.shape)
+            mask[region == i] = likely_map[region == i]
+            result = self.back_model(img, mask.astype(np.float32))
+
+            result = result.clip(0, 255)
+            gbs.append(result)
+
+        gbs_coloring = self.coloring(gbs)
+
+        # mask gen
+        gbs_coloring = np.array(gbs_coloring)
+        index = np.argmax(gbs, axis=0)
+        masks = np.zeros((320, 320, 3))
+        for x in range(1, index.max() + 1):
+            masks[index == x, :] = gbs_coloring[x][index == x, :]
+
+        cv2.imwrite(
+            str(self.output_path.joinpath(f"instance/{img_i:05d}.png")), masks
+        )
+
+    def main(self):
+        self.output_path.joinpath('ori').mkdir(parents=True, exist_ok=True)
+        self.output_path.joinpath('detection').mkdir(parents=True, exist_ok=True)
+        self.output_path.joinpath('instance').mkdir(parents=True, exist_ok=True)
+        for img_i, path in enumerate(self.input_path):
+            img = np.array(Image.open(path))
+            cv2.imwrite(str(self.output_path.joinpath(f"ori/{img_i:05d}.tif")), img)
+            self.shape = img.shape
+            if self.norm:
+                img = (img.astype(np.float32) / 255).reshape(
+                    (1, 1, img.shape[0], img.shape[1])
+                )
+            else:
+                img = (img.astype(np.float32) / (255 / 2) - 1).reshape(
+                    (1, 1, img.shape[0], img.shape[1])
+                )
+            img = torch.from_numpy(img)
+
+            pre_img = self.unet_pred(
+                img, self.output_path.joinpath(f"detection/{img_i:05d}.tif")
+            )
+
+            img.requires_grad = True
+            self.calculate(img, pre_img, img_i)

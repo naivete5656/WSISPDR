@@ -34,7 +34,7 @@ class UNet(nn.Module):
 
 class UNetMultiTask(UNet):
     def __init__(self, n_channels, n_classes):
-        super(UNetMultiTask, self).__init__(n_channels, n_classes)
+        super(UNetMultiTask, self).__init__(n_channels, n_classes, sig=True)
         self.up1_boundary = Up(1024, 256)
         self.up2_boundary = Up(512, 128)
         self.up3_boundary = Up(256, 64)
@@ -62,12 +62,12 @@ class UNetMultiTask(UNet):
 
 class UNetMultiTask2(UNet):
     def __init__(self, n_channels, n_classes):
-        super(UNetMultiTask, self).__init__(n_channels, n_classes)
+        super().__init__(n_channels, n_classes, sig=True)
         self.up1_boundary = UpIncBoundary(512, 512, 256)
         self.up2_boundary = UpIncBoundary(512, 256, 128)
         self.up3_boundary = UpIncBoundary(256, 128, 64)
         self.up4_boundary = UpIncBoundary(128, 64, 64)
-        self.outc_boundary = Outconv(64, n_classes)
+        self.outc_boundary = Outconv(64, n_classes, sig=True)
 
     def forward(self, x):
         x1 = self.inc(x)

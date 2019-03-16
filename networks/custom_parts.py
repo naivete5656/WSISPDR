@@ -47,3 +47,23 @@ class Dilatedc(nn.Module):
     def forward(self, x):
         x = self.conv(x)
         return x
+
+
+class DilatedDown(nn.Module):
+    def __init__(self, in_ch, out_ch):
+        super().__init__()
+        self.mpconv = nn.Sequential(nn.MaxPool2d(2), DoubleDilatedConv(in_ch, out_ch))
+
+    def forward(self, x):
+        x = self.mpconv(x)
+        return x
+
+class MergeConv(nn.Module):
+    def __init__(self, in_ch, out_ch):
+        super().__init__()
+        self.conv = DoubleConv(in_ch, out_ch)
+
+    def forward(self, x, y):
+        x = torch.cat([x, y], dim=1)
+        x = self.conv(x)
+        return x

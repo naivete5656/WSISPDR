@@ -6,7 +6,7 @@ from networks.unet_parts_plus import *
 import torch.nn as nn
 import torch
 from .network_model import UNet
-from networks.custom_parts import Dilatedc
+from networks.custom_parts import Dilatedc, DilatedDown, MergeConv
 
 
 class UNetPlus(UNet):
@@ -164,32 +164,32 @@ class UNetInternalCascade(UNet):
 #         return x, x_9
 #
 #
-class UNetCascade(UNet):
-    def __init__(self, n_channels, n_classes):
-        super(UNetCascade, self).__init__(n_channels, n_classes)
-        self.inc_9 = Inconv(n_channels, 64)
-        self.down1_9 = Down(64, 128)
-        self.down2_9 = Down(128, 256)
-        self.down3_9 = Down(256, 512)
-        self.down4_9 = Down(512, 512)
-        self.up1_9 = Up(1024, 256)
-        self.up2_9 = Up(512, 128)
-        self.up3_9 = Up(256, 64)
-        self.up4_9 = Up(128, 64)
-        self.outc_9 = Outconv9(128, n_classes)
-
-    def forward(self, input1, input2):
-        x1 = self.inc(input1)
-        x2 = self.down1(x1)
-        x3 = self.down2(x2)
-        x4 = self.down3(x3)
-        x5 = self.down4(x4)
-        x = self.up1(x5, x4)
-        x = self.up2(x, x3)
-        x = self.up3(x, x2)
-        x = self.up4(x, x1)
-        x = self.outc_9(x, input2)
-        return x
+# class UNetCascade(UNet):
+#     def __init__(self, n_channels, n_classes):
+#         super(UNetCascade, self).__init__(n_channels, n_classes)
+#         self.inc_9 = Inconv(n_channels, 64)
+#         self.down1_9 = Down(64, 128)
+#         self.down2_9 = Down(128, 256)
+#         self.down3_9 = Down(256, 512)
+#         self.down4_9 = Down(512, 512)
+#         self.up1_9 = Up(1024, 256)
+#         self.up2_9 = Up(512, 128)
+#         self.up3_9 = Up(256, 64)
+#         self.up4_9 = Up(128, 64)
+#         self.outc_9 = Outconv9(128, n_classes)
+#
+#     def forward(self, input1, input2):
+#         x1 = self.inc(input1)
+#         x2 = self.down1(x1)
+#         x3 = self.down2(x2)
+#         x4 = self.down3(x3)
+#         x5 = self.down4(x4)
+#         x = self.up1(x5, x4)
+#         x = self.up2(x, x3)
+#         x = self.up3(x, x2)
+#         x = self.up4(x, x1)
+#         x = self.outc_9(x, input2)
+#         return x
 
 
 class UnetMultiFixedWeight(nn.Module):
@@ -231,3 +231,35 @@ class DilatedUNet(UNet):
     def __init__(self, n_channels, n_classes, sig):
         super().__init__(n_channels, n_classes, sig)
         self.inc = Dilatedc(n_channels, 64)
+
+
+class DilatedUNet2(UNet):
+    def __init__(self, n_channels, n_classes, sig):
+        super().__init__(n_channels, n_classes, sig)
+        self.inc = Dilatedc(n_channels, 64)
+        self.down1 = DilatedDown(64, 128)
+
+
+class MargeNet(nn.Module):
+    def __init__(self, n_channels, n_classes, sig, net):
+        super().__init__()
+        self.net = net
+        self.inc2 = Dilatedc(n_channels, 64)
+        self.merge = MergeConv(128, 64)
+        for param in self.net.parameters():
+            param.requires_grad = False
+
+    def forward(self, x, y):
+        x1 = self.net.inc(x)
+        y = self.inc2(y)
+        x1 = self.merge(x1, y)
+        x2 = self.net.down1(x1)
+        x3 = self.net.down2(x2)
+        x4 = self.net.down3(x3)
+        x5 = self.net.down4(x4)
+        x = self.net.up1(x5, x4)
+        x = self.net.up2(x, x3)
+        x = self.net.up3(x, x2)
+        x = self.net.up4(x, x1)
+        x = self.net.outc(x)
+        return x
