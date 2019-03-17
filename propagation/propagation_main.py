@@ -13,14 +13,14 @@ if __name__ == "__main__":
     plot_size = 9
     radius = 1
     date = datetime.now().date()
-    key = 0
+    key = 3
 
     cross = 0
     dataset = 'GBM'
     dirs = sorted(Path("/home/kazuya/file_server2/images/{}_cut/".format(dataset)).iterdir())
 
     input_path = dirs.pop(cross).joinpath('ori').glob('*.tif')
-    output_path = Path("/home/kazuya/file_server2/all_outputs/gradcm/{}".format(dataset))
+    output_path = Path("/home/kazuya/file_server2/all_outputs/guided_only/{}".format(dataset))
     weight_path = "/home/kazuya/file_server2/weights/{}/{}/best_{}.pth".format(dataset, cross, plot_size)
     net = UNet(n_channels=1, n_classes=1, sig=norm)
     net.load_state_dict(

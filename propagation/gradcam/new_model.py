@@ -45,9 +45,10 @@ class GuidedModel(nn.Sequential):
 
         pre_img = class_response_maps.detach().cpu().numpy()[0, 0]
         self.shape = pre_img.shape
-        cv2.imwrite(
-            str(root_path.joinpath("detection.tif")), (pre_img * 255).astype(np.uint8)
-        )
+        if peak is None:
+            cv2.imwrite(
+                str(root_path.joinpath("detection.tif")), (pre_img * 255).astype(np.uint8)
+            )
         # peak
         peaks = local_maxima((pre_img * 255).astype(np.uint8), 50, 2).astype(np.int)
 
@@ -69,13 +70,39 @@ class GuidedModel(nn.Sequential):
         gbs = []
         # each propagate
         peaks = np.insert(peaks, 0, [0, 0], axis=0)
-        with open(root_path.joinpath("peaks.txt"), mode="w") as f:
-            f.write("ID,x,y\n")
+        if peak is None:
+            with open(root_path.joinpath("peaks.txt"), mode="w") as f:
+                f.write("ID,x,y\n")
+                for i in range(region.max() + 1):
+                    if img.grad is not None:
+                        img.grad.zero_()
+                    # f.write(f"{i},{peaks[i, 0]},{peaks[i ,1]}\n")
+                    f.write("{},{},{}\n".format(i, peaks[i, 0], peaks[i, 1]))
+                    mask = np.zeros(self.shape, dtype=np.float32)
+                    mask[region == i] = 1
+                    mask = mask.reshape([1, 1, self.shape[0], self.shape[1]])
+                    mask = torch.from_numpy(mask)
+                    mask = mask.cuda()
+
+                    class_response_maps.backward(mask, retain_graph=True)
+                    result = img.grad.detach().sum(1).clone().clamp(min=0).cpu().numpy()
+
+                    save_path = root_path.joinpath('each_peak')
+                    save_path.mkdir(parents=True, exist_ok=True)
+                    savemat(
+                        str(save_path.joinpath("{:04d}.mat".format(i))),
+                        {"image": result[0], "mask": mask},
+                    )
+                    cv2.imwrite(
+                        str(save_path.joinpath("{:04d}.png".format(i))),
+                        (result[0] * 255).astype(np.uint8),
+                    )
+                    gbs.append(result[0])
+
+        else:
             for i in range(region.max() + 1):
                 if img.grad is not None:
                     img.grad.zero_()
-                # f.write(f"{i},{peaks[i, 0]},{peaks[i ,1]}\n")
-                f.write("{},{},{}\n".format(i, peaks[i, 0], peaks[i, 1]))
                 mask = np.zeros(self.shape, dtype=np.float32)
                 mask[region == i] = 1
                 mask = mask.reshape([1, 1, self.shape[0], self.shape[1]])
@@ -84,18 +111,8 @@ class GuidedModel(nn.Sequential):
 
                 class_response_maps.backward(mask, retain_graph=True)
                 result = img.grad.detach().sum(1).clone().clamp(min=0).cpu().numpy()
-
-                save_path = root_path.joinpath('each_peak')
-                save_path.mkdir(parents=True, exist_ok=True)
-                savemat(
-                    str(save_path.joinpath("{:04d}.mat".format(i))),
-                    {"image": result[0], "mask": mask},
-                )
-                cv2.imwrite(
-                    str(save_path.joinpath("{:04d}.png".format(i))),
-                    (result[0] * 255).astype(np.uint8),
-                )
                 gbs.append(result[0])
+
         return gbs
 
     def train(self, mode=True):

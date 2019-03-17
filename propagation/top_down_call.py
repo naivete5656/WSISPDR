@@ -175,3 +175,63 @@ class GuideCall(BackProp):
                 str(self.output_path_each.joinpath("{:05d}.tif".format(img_i))),
                 prm.astype(np.uint8),
             )
+
+class GuideOnly(GuideCall):
+    def main(self):
+        save_paht = self.output_path.joinpath("instance")
+        save_paht.mkdir(parents=True, exist_ok=True)
+
+        for img_i, path in enumerate(self.input_path):
+
+            # load image
+            img = np.array(Image.open(path))
+            self.shape = img.shape
+            # cv2.imwrite(str(self.output_path.joinpath(f"ori/{img_i:05d}.tif")), img)
+
+            img = (img.astype(np.float32) / 255).reshape(
+                (1, 1, img.shape[0], img.shape[1])
+            )
+            img = torch.from_numpy(img)
+
+            # throw unet
+            if self.gpu:
+                img = img.cuda()
+
+            module = self.back_model
+            prms = module(img, self.output_path_each, peak=1)
+
+            prms = np.array(prms)
+
+            r, g, b = np.loadtxt("./utils/color.csv", delimiter=",")
+            prms_coloring = []
+
+            for peak_i, prm in enumerate(prms):
+                prm = prm / prm.max() * 255
+                prm = prm.clip(0, 255).astype(np.uint8)
+                result = np.ones((self.shape[0], self.shape[1], 3))
+                result = prm[..., np.newaxis] * result
+                peak_i = peak_i % 20
+                result[..., 0][result[..., 0] != 0] = r[peak_i] * prm[prm != 0]
+                result[..., 1][result[..., 1] != 0] = g[peak_i] * prm[prm != 0]
+                result[..., 2][result[..., 2] != 0] = b[peak_i] * prm[prm != 0]
+                prms_coloring.append(result)
+
+            prms_coloring = np.array(prms_coloring)
+            # index = np.argmax(prms, axis=0)
+            # mask = np.zeros((self.shape[0], self.shape[1], 3))
+            # for x in range(1, index.max() + 1):
+            #     mask[index == x, :] = prms_coloring[x][index == x, :]
+
+            prms_coloring = np.max(prms_coloring, axis=0)
+
+            prms_coloring = (
+                prms_coloring.astype(np.float) / prms_coloring.max() * 255
+            ).astype(np.uint8)
+
+            prm = np.max(prms, axis=0)
+            prm = prm / prm.max() * 255
+
+            cv2.imwrite(
+                str(save_paht.joinpath(f"{img_i:05d}.tif")),
+                prms_coloring.astype(np.uint8),
+            )
