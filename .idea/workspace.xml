@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6e56797c-7ef8-4fa1-a274-fdcf870ea749" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/propagation/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/propagation/gradcam/new_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/gradcam/new_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/propagation/propagation_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/propagation_main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/propagation/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/propagation/top_down_call.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/top_down_call.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detection/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/detection/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detection/merge_net_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/detection/merge_net_train.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,47 +39,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/propagation/call_backprop.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/detection/merge_net_train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="816">
-              <caret line="218" column="6" selection-start-line="218" selection-start-column="6" selection-end-line="218" selection-end-column="6" />
-              <folding>
-                <element signature="e#0#24#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/propagation/propagation_main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="29" column="79" selection-start-line="29" selection-start-column="79" selection-end-line="29" selection-end-column="79" />
-              <folding>
-                <element signature="e#0#24#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/propagation/gradcam/new_model.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7">
-              <caret line="112" column="84" selection-start-line="112" selection-start-column="84" selection-end-line="112" selection-end-column="84" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/propagation/gradcam/guided_parts.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="624">
-              <caret line="32" column="9" selection-start-line="9" selection-end-line="32" selection-end-column="9" />
+            <state relative-caret-position="2856">
+              <caret line="119" column="18" selection-start-line="84" selection-end-line="120" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -92,34 +52,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/propagation/top_down_call.py">
+        <entry file="file://$PROJECT_DIR$/detection/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="178" column="6" lean-forward="true" selection-start-line="178" selection-start-column="6" selection-end-line="178" selection-end-column="15" />
-              <folding>
-                <element signature="e#0#35#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/miniconda3/envs/pytorch_pre/lib/python3.6/site-packages/torch/nn/modules/module.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11544">
-              <caret line="488" selection-start-line="488" selection-end-line="488" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/propagation/test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="21" column="37" lean-forward="true" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
-              <folding>
-                <element signature="e#0#24#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="24">
+              <caret line="1" column="29" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -127,8 +63,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/propagation/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="24">
-              <caret line="1" column="56" selection-start-line="1" selection-start-column="56" selection-end-line="1" selection-end-column="56" />
+            <state relative-caret-position="48">
+              <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
               <folding>
                 <element signature="e#0#73#0" expanded="true" />
               </folding>
@@ -204,7 +140,6 @@
         <option value="$PROJECT_DIR$/detection/train.py" />
         <option value="$PROJECT_DIR$/detection/custom_loss.py" />
         <option value="$PROJECT_DIR$/detection/train_second.py" />
-        <option value="$PROJECT_DIR$/detection/__init__.py" />
         <option value="$PROJECT_DIR$/utils/matching.py" />
         <option value="$PROJECT_DIR$/review.py" />
         <option value="$PROJECT_DIR$/utils/cutimg.py" />
@@ -218,7 +153,6 @@
         <option value="$PROJECT_DIR$/detection/detection_train.py" />
         <option value="$PROJECT_DIR$/networks/custom_parts.py" />
         <option value="$PROJECT_DIR$/networks/unet_plus.py" />
-        <option value="$PROJECT_DIR$/detection/merge_net_train.py" />
         <option value="$PROJECT_DIR$/networks/custom_loss.py" />
         <option value="$PROJECT_DIR$/networks/__init__.py" />
         <option value="$PROJECT_DIR$/networks/network_model.py" />
@@ -231,12 +165,14 @@
         <option value="$PROJECT_DIR$/propagation/top_down_call.py" />
         <option value="$PROJECT_DIR$/propagation/__init__.py" />
         <option value="$PROJECT_DIR$/propagation/test.py" />
+        <option value="$PROJECT_DIR$/detection/__init__.py" />
+        <option value="$PROJECT_DIR$/detection/merge_net_train.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="67" />
-    <option name="y" value="312" />
+    <option name="y" value="369" />
     <option name="width" value="1853" />
     <option name="height" value="1053" />
   </component>
@@ -257,12 +193,6 @@
               <item name="weakly_supervised_instance_segmentation" type="b2602c69:ProjectViewProjectNode" />
               <item name="weakly_supervised_instance_segmentation" type="462c0819:PsiDirectoryNode" />
               <item name="propagation" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weakly_supervised_instance_segmentation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weakly_supervised_instance_segmentation" type="462c0819:PsiDirectoryNode" />
-              <item name="propagation" type="462c0819:PsiDirectoryNode" />
-              <item name="gradcam" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -480,12 +410,12 @@
       <workItem from="1552540899206" duration="361000" />
       <workItem from="1552544877257" duration="9885000" />
       <workItem from="1552620692910" duration="25779000" />
-      <workItem from="1552815395661" duration="2210000" />
+      <workItem from="1552815395661" duration="3296000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="399743000" />
+    <option name="totallyTimeSpent" value="400829000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -497,14 +427,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="67" y="312" width="1853" height="1053" extended-state="6" />
+    <frame x="67" y="369" width="1853" height="1053" extended-state="6" />
     <layout>
       <window_info id="Structure" order="0" sideWeight="0.50088495" side_tool="true" weight="0.29806095" />
       <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49822694" visible="true" weight="0.17396122" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.49822694" visible="true" weight="0.17396122" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32969433" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6371191" visible="true" weight="0.25436682" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6371191" visible="true" weight="0.55458516" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49750692" weight="0.35152838" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -513,7 +443,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.3628809" side_tool="true" weight="0.37991267" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49844623" weight="0.12445415" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49844623" weight="0.29912663" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.7346683" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -689,17 +619,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/detection/merge_net_train.py</url>
-          <line>121</line>
+          <line>119</line>
           <option name="timeStamp" value="454" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/detection/merge_net_train.py</url>
-          <line>58</line>
+          <line>56</line>
           <option name="timeStamp" value="456" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/detection/merge_net_train.py</url>
-          <line>61</line>
+          <line>59</line>
           <option name="timeStamp" value="457" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -832,13 +762,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/detection/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/matching.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="824">
@@ -924,16 +847,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/detection/multi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="52" column="8" selection-start-line="52" selection-start-column="8" selection-end-line="53" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/detection/detection_train.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1024">
@@ -960,16 +873,6 @@
           <caret line="254" selection-start-line="254" selection-end-line="254" />
           <folding>
             <element signature="e#60#93#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/detection/merge_net_train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="96" column="75" selection-start-line="96" selection-start-column="75" selection-end-line="96" selection-end-column="75" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1154,13 +1057,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/gradcam/new_model.py">
+    <entry file="file://$PROJECT_DIR$/propagation/top_down_call.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7">
-          <caret line="112" column="84" selection-start-line="112" selection-start-column="84" selection-end-line="112" selection-end-column="84" />
+        <state relative-caret-position="288">
+          <caret line="178" column="6" lean-forward="true" selection-start-line="178" selection-start-column="6" selection-end-line="178" selection-end-column="15" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+          <folding>
+            <element signature="e#0#73#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detection/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="1" column="29" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -1174,32 +1094,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/top_down_call.py">
+    <entry file="file://$PROJECT_DIR$/propagation/gradcam/new_model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="178" column="6" lean-forward="true" selection-start-line="178" selection-start-column="6" selection-end-line="178" selection-end-column="15" />
+        <state relative-caret-position="7">
+          <caret line="112" column="84" selection-start-line="112" selection-start-column="84" selection-end-line="112" selection-end-column="84" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="1" column="56" selection-start-line="1" selection-start-column="56" selection-end-line="1" selection-end-column="56" />
-          <folding>
-            <element signature="e#0#73#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/propagation/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="21" column="37" lean-forward="true" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
+        <state relative-caret-position="143">
+          <caret line="30" column="5" lean-forward="true" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detection/multi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="52" column="8" selection-start-line="52" selection-start-column="8" selection-end-line="53" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detection/merge_net_train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2856">
+          <caret line="119" column="18" selection-start-line="84" selection-end-line="120" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>
