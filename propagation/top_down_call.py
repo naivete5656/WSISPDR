@@ -110,7 +110,7 @@ class TopDown(BackProp):
 class GuideCall(BackProp):
     def __init__(self, img_path, output_path, weight_path, gpu=True, radius=1):
         super().__init__(img_path, output_path, weight_path, gpu)
-        self.back_model = GuidedModel2(self.net)
+        self.back_model = GuidedModel(self.net)
         self.back_model.inference()
         self.shape = None
         self.output_path_each = None
@@ -204,7 +204,7 @@ class GuideOnly(GuideCall):
                 img2 = img2.cuda()
 
             module = self.back_model
-            prms = module(img, img2, self.output_path_each, peak=1)
+            prms = module(img, self.output_path_each, peak=1)
 
             prms = np.array(prms)
 
