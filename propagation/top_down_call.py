@@ -1,5 +1,5 @@
 from .call_backprop import BackProp
-from .gradcam import TopDownAfterReLu, TopDownBackprop, GuidedModel
+from .gradcam import TopDownAfterReLu, TopDownBackprop, GuidedModel, GuidedModel2
 import torch
 import numpy as np
 from PIL import Image
@@ -110,14 +110,14 @@ class TopDown(BackProp):
 class GuideCall(BackProp):
     def __init__(self, img_path, output_path, weight_path, gpu=True, radius=1):
         super().__init__(img_path, output_path, weight_path, gpu)
-        self.back_model = GuidedModel(self.net)
+        self.back_model = GuidedModel2(self.net)
         self.back_model.inference()
         self.shape = None
         self.output_path_each = None
 
     def main(self):
         for img_i, path in enumerate(self.input_path):
-            self.output_path_each = self.output_path.joinpath(f"{img_i:05d}")
+            self.output_path_each = self.output_path.joinpath("{:05d}".format(img_i))
             self.output_path_each.mkdir(parents=True, exist_ok=True)
 
             # load image
@@ -185,20 +185,26 @@ class GuideOnly(GuideCall):
 
             # load image
             img = np.array(Image.open(path))
+            img2 = np.array(Image.open(path))
             self.shape = img.shape
             # cv2.imwrite(str(self.output_path.joinpath(f"ori/{img_i:05d}.tif")), img)
 
             img = (img.astype(np.float32) / 255).reshape(
                 (1, 1, img.shape[0], img.shape[1])
             )
+            img2 = (img2.astype(np.float32) / 255).reshape(
+                (1, 1, img2.shape[0], img2.shape[1])
+            )
             img = torch.from_numpy(img)
+            img2 = torch.from_numpy(img2)
 
             # throw unet
             if self.gpu:
                 img = img.cuda()
+                img2 = img2.cuda()
 
             module = self.back_model
-            prms = module(img, self.output_path_each, peak=1)
+            prms = module(img, img2, self.output_path_each, peak=1)
 
             prms = np.array(prms)
 
@@ -232,6 +238,6 @@ class GuideOnly(GuideCall):
             prm = prm / prm.max() * 255
 
             cv2.imwrite(
-                str(save_paht.joinpath(f"{img_i:05d}.tif")),
+                str(save_paht.joinpath("{:05d}.tif".format(img_i))),
                 prms_coloring.astype(np.uint8),
             )

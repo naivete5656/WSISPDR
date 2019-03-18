@@ -2,15 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6e56797c-7ef8-4fa1-a274-fdcf870ea749" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/BESnet/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/detection/merge_main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eval.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BESnet/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/BESnet/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BESnet/predict.py" beforeDir="false" afterPath="$PROJECT_DIR$/BESnet/predict.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BESnet/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/BESnet/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detection/detection_eval.py" beforeDir="false" afterPath="$PROJECT_DIR$/detection/detection_eval.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detection/detection_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/detection/detection_train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detection/merge_net_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/detection/merge_net_train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detection/predict.py" beforeDir="false" afterPath="$PROJECT_DIR$/detection/predict.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphcut/generate_boundary.py" beforeDir="false" afterPath="$PROJECT_DIR$/graphcut/generate_boundary.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networks/custom_parts.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/custom_parts.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/networks/network_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/network_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/networks/network_parts.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/network_parts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/predict.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/propagation/call_backprop.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/call_backprop.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/propagation/gradcam/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/gradcam/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/propagation/gradcam/new_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/gradcam/new_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/propagation/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/propagation/top_down_call.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/top_down_call.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/load.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/load.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,71 +30,77 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1550571285889" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unet_grad_cam" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$custom_loss.coverage" NAME="custom_loss Coverage Results" MODIFIED="1552740842359" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/networks" />
-    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$main.coverage" NAME="main Coverage Results" MODIFIED="1552884678270" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BESnet" />
-    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$generate_boundary.coverage" NAME="generate_boundary Coverage Results" MODIFIED="1552880305079" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/graphcut" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$main.coverage" NAME="main Coverage Results" MODIFIED="1552918289295" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BESnet" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$generate_boundary.coverage" NAME="generate_boundary Coverage Results" MODIFIED="1552885649398" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/graphcut" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$graphcut__1_.coverage" NAME="graphcut (1) Coverage Results" MODIFIED="1548917941935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/graphcut/first_graphcut" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$train__1_.coverage" NAME="train (1) Coverage Results" MODIFIED="1552884075503" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BESnet" />
-    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$predict__1_.coverage" NAME="predict (1) Coverage Results" MODIFIED="1548990712671" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$merge_main.coverage" NAME="merge_main Coverage Results" MODIFIED="1552904433936" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/detection" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$predict__1_.coverage" NAME="predict (1) Coverage Results" MODIFIED="1552919408228" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/detection" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$guided_parts.coverage" NAME="guided_parts Coverage Results" MODIFIED="1551255635042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/propagation/gradcam" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$top_down_backpropagation.coverage" NAME="top_down_backpropagation Coverage Results" MODIFIED="1548927693079" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unet_grad_cam/gradcam" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$detection_main__1_.coverage" NAME="detection_main (1) Coverage Results" MODIFIED="1551246315300" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/detection" />
-    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$predict.coverage" NAME="predict Coverage Results" MODIFIED="1552363432757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/detection" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$predict.coverage" NAME="predict Coverage Results" MODIFIED="1552907976782" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BESnet" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$matching.coverage" NAME="matching Coverage Results" MODIFIED="1548995489733" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$detection_main.coverage" NAME="detection_main Coverage Results" MODIFIED="1552884667412" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/detection" />
-    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$test.coverage" NAME="test Coverage Results" MODIFIED="1552827157011" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/propagation" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$test.coverage" NAME="test Coverage Results" MODIFIED="1552922593879" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/propagation" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$likelymapgen.coverage" NAME="likelymapgen Coverage Results" MODIFIED="1550477077401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$main__2_.coverage" NAME="main (2) Coverage Results" MODIFIED="1551066678904" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$review.coverage" NAME="review Coverage Results" MODIFIED="1552035805580" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$graphcut.coverage" NAME="graphcut Coverage Results" MODIFIED="1548952221628" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/graphcut" />
-    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$merge_net_train.coverage" NAME="merge_net_train Coverage Results" MODIFIED="1552733412734" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/detection" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$merge_net_train.coverage" NAME="merge_net_train Coverage Results" MODIFIED="1552892450521" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/detection" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$second_detection_step.coverage" NAME="second_detection_step Coverage Results" MODIFIED="1551872610570" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/detection" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$cutimg.coverage" NAME="cutimg Coverage Results" MODIFIED="1552035981096" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$propagation.coverage" NAME="propagation Coverage Results" MODIFIED="1552827222927" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/propagation" />
-    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$train.coverage" NAME="train Coverage Results" MODIFIED="1552744004215" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$train.coverage" NAME="train Coverage Results" MODIFIED="1552918239454" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BESnet" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$load.coverage" NAME="load Coverage Results" MODIFIED="1552876098234" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$top_down_call.coverage" NAME="top_down_call Coverage Results" MODIFIED="1552754113244" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/propagation" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$call_backprop.coverage" NAME="call_backprop Coverage Results" MODIFIED="1550913158384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/unet_grad_cam" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/detection/detection_main.py">
+        <entry file="file://$PROJECT_DIR$/detection/predict.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+            <state relative-caret-position="136">
+              <caret line="213" column="83" lean-forward="true" selection-start-line="206" selection-start-column="4" selection-end-line="213" selection-end-column="83" />
               <folding>
-                <element signature="e#0#12#0" expanded="true" />
+                <element signature="e#0#24#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/propagation/test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/BESnet/main.py">
+        <entry file="file://$PROJECT_DIR$/propagation/gradcam/new_model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/detection/merge_net_train.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-line="5" selection-end-column="30" />
-              <folding>
-                <element signature="e#0#12#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/networks/network_model.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="82" column="37" selection-start-line="82" selection-start-column="37" selection-end-line="82" selection-end-column="37" />
+            <state relative-caret-position="368">
+              <caret line="316" column="16" selection-start-line="316" selection-start-column="16" selection-end-line="316" selection-end-column="84" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -95,10 +109,25 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/miniconda3/envs/pytorch_pre/lib/python3.6/site-packages/torch/nn/modules/module.py">
+        <entry file="file://$PROJECT_DIR$/propagation/gradcam/guided_parts.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="488" selection-start-line="488" selection-end-line="488" />
+            <state relative-caret-position="154">
+              <caret line="66" selection-start-line="66" selection-end-line="66" />
+              <folding>
+                <element signature="e#0#12#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/networks/unet_plus.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="321">
+              <caret line="264" selection-start-line="264" selection-end-line="264" />
+              <folding>
+                <element signature="e#60#93#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -106,8 +135,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/networks/network_parts.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="85" column="14" selection-start-line="85" selection-start-column="14" selection-end-line="85" selection-end-column="14" />
+            <state relative-caret-position="154">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
               <folding>
                 <element signature="e#32#44#0" expanded="true" />
               </folding>
@@ -116,12 +145,36 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/networks/custom_parts.py">
+        <entry file="file://$USER_HOME$/miniconda3/envs/pytorch_pre/lib/python3.6/site-packages/torch/nn/modules/container.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-730">
-              <caret line="20" selection-start-line="20" selection-end-line="20" />
+            <state>
+              <caret selection-end-line="6" selection-end-column="12" />
               <folding>
-                <element signature="e#0#21#0" expanded="true" />
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/propagation/top_down_call.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="322">
+              <caret line="206" selection-start-line="206" selection-end-line="206" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/miniconda3/envs/pytorch_pre/lib/python3.6/site-packages/torch/nn/modules/module.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="154">
+              <caret line="508" selection-start-line="508" selection-end-line="508" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -130,7 +183,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/miniconda3/envs/pytorch_pre/lib/python3.6/codecs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
+            <state relative-caret-position="-86">
               <caret line="310" selection-start-line="310" selection-end-line="310" />
             </state>
           </provider>
@@ -152,15 +205,16 @@
       <find>self.u</find>
       <find>weight</find>
       <find>weight_path</find>
-      <find>f&quot;</find>
       <find>f'</find>
       <find>saved_tensors</find>
       <find>saved_variables</find>
       <find>320</find>
       <find>mask</find>
-      <find>backward</find>
       <find>input</find>
       <find>plot_size</find>
+      <find>backward</find>
+      <find>&quot;f</find>
+      <find>f&quot;</find>
     </findStrings>
     <replaceStrings>
       <replace>img</replace>
@@ -172,9 +226,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/utils/color.csv" />
-        <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/main.ipynb" />
         <option value="$PROJECT_DIR$/utils/__init__.py" />
         <option value="$PROJECT_DIR$/docker/Dockerfile" />
         <option value="$PROJECT_DIR$/detection/eval.py" />
@@ -195,34 +246,37 @@
         <option value="$PROJECT_DIR$/utils/matching.py" />
         <option value="$PROJECT_DIR$/review.py" />
         <option value="$PROJECT_DIR$/utils/cutimg.py" />
-        <option value="$PROJECT_DIR$/detection/detection_eval.py" />
         <option value="$PROJECT_DIR$/detection/second_detection_step.py" />
-        <option value="$PROJECT_DIR$/detection/predict.py" />
-        <option value="$PROJECT_DIR$/propagation/gradcam/guided_model.py" />
         <option value="$PROJECT_DIR$/propagation/gradcam/guided_parts.py" />
         <option value="$PROJECT_DIR$/detection/detection_main.py" />
-        <option value="$PROJECT_DIR$/detection/detection_train.py" />
-        <option value="$PROJECT_DIR$/networks/unet_plus.py" />
         <option value="$PROJECT_DIR$/networks/custom_loss.py" />
         <option value="$PROJECT_DIR$/networks/__init__.py" />
         <option value="$PROJECT_DIR$/train.py" />
-        <option value="$PROJECT_DIR$/propagation/call_backprop.py" />
-        <option value="$PROJECT_DIR$/propagation/gradcam/__init__.py" />
         <option value="$PROJECT_DIR$/propagation/propagation_main.py" />
+        <option value="$PROJECT_DIR$/propagation/__init__.py" />
+        <option value="$PROJECT_DIR$/detection/__init__.py" />
+        <option value="$PROJECT_DIR$/networks/custom_parts.py" />
+        <option value="$PROJECT_DIR$/BESnet/__initi__.py" />
+        <option value="$PROJECT_DIR$/graphcut/generate_boundary.py" />
+        <option value="$PROJECT_DIR$/propagation/call_backprop.py" />
+        <option value="$PROJECT_DIR$/propagation/gradcam/guided_model.py" />
+        <option value="$PROJECT_DIR$/detection/detection_eval.py" />
+        <option value="$PROJECT_DIR$/detection/detection_train.py" />
+        <option value="$PROJECT_DIR$/detection/merge_net_train.py" />
+        <option value="$PROJECT_DIR$/detection/merge_main.py" />
+        <option value="$PROJECT_DIR$/networks/network_parts.py" />
+        <option value="$PROJECT_DIR$/BESnet/predict.py" />
+        <option value="$PROJECT_DIR$/networks/network_model.py" />
+        <option value="$PROJECT_DIR$/utils/load.py" />
+        <option value="$PROJECT_DIR$/BESnet/train.py" />
+        <option value="$PROJECT_DIR$/BESnet/main.py" />
+        <option value="$PROJECT_DIR$/networks/unet_plus.py" />
+        <option value="$PROJECT_DIR$/detection/predict.py" />
+        <option value="$PROJECT_DIR$/propagation/gradcam/__init__.py" />
+        <option value="$PROJECT_DIR$/propagation/gradcam/module_custom.py" />
         <option value="$PROJECT_DIR$/propagation/gradcam/new_model.py" />
         <option value="$PROJECT_DIR$/propagation/top_down_call.py" />
-        <option value="$PROJECT_DIR$/propagation/__init__.py" />
         <option value="$PROJECT_DIR$/propagation/test.py" />
-        <option value="$PROJECT_DIR$/detection/__init__.py" />
-        <option value="$PROJECT_DIR$/detection/merge_net_train.py" />
-        <option value="$PROJECT_DIR$/utils/load.py" />
-        <option value="$PROJECT_DIR$/graphcut/generate_boundary.py" />
-        <option value="$PROJECT_DIR$/networks/custom_parts.py" />
-        <option value="$PROJECT_DIR$/networks/network_model.py" />
-        <option value="$PROJECT_DIR$/networks/network_parts.py" />
-        <option value="$PROJECT_DIR$/BESnet/__initi__.py" />
-        <option value="$PROJECT_DIR$/BESnet/main.py" />
-        <option value="$PROJECT_DIR$/BESnet/train.py" />
       </list>
     </option>
   </component>
@@ -258,12 +312,36 @@
             <path>
               <item name="weakly_supervised_instance_segmentation" type="b2602c69:ProjectViewProjectNode" />
               <item name="weakly_supervised_instance_segmentation" type="462c0819:PsiDirectoryNode" />
-              <item name="graphcut" type="462c0819:PsiDirectoryNode" />
+              <item name="propagation" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="weakly_supervised_instance_segmentation" type="b2602c69:ProjectViewProjectNode" />
               <item name="weakly_supervised_instance_segmentation" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
+              <item name="propagation" type="462c0819:PsiDirectoryNode" />
+              <item name="gradcam" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="weakly_supervised_instance_segmentation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="weakly_supervised_instance_segmentation" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="weakly_supervised_instance_segmentation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="weakly_supervised_instance_segmentation" type="462c0819:PsiDirectoryNode" />
+              <item name="weights" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="weakly_supervised_instance_segmentation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="weakly_supervised_instance_segmentation" type="462c0819:PsiDirectoryNode" />
+              <item name="weights" type="462c0819:PsiDirectoryNode" />
+              <item name="2019-03-18" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="weakly_supervised_instance_segmentation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="weakly_supervised_instance_segmentation" type="462c0819:PsiDirectoryNode" />
+              <item name="weights" type="462c0819:PsiDirectoryNode" />
+              <item name="2019-03-18" type="462c0819:PsiDirectoryNode" />
+              <item name="multi_task" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -298,73 +376,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.main">
-    <configuration name="detection_main" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="weakly_supervised_instance_segmentation" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/detection" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/detection/detection_main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="generate_boundary" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="weakly_supervised_instance_segmentation" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/graphcut" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/graphcut/generate_boundary.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="load" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="weakly_supervised_instance_segmentation" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/load.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.test">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="weakly_supervised_instance_segmentation" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -387,7 +399,73 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="train (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="predict (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="weakly_supervised_instance_segmentation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/detection" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/detection/predict.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="predict" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="weakly_supervised_instance_segmentation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/BESnet" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/BESnet/predict.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="weakly_supervised_instance_segmentation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/propagation" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/propagation/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="train" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="weakly_supervised_instance_segmentation" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -411,11 +489,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.predict (1)" />
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.detection_main" />
-        <item itemvalue="Python.train (1)" />
-        <item itemvalue="Python.generate_boundary" />
-        <item itemvalue="Python.load" />
+        <item itemvalue="Python.train" />
+        <item itemvalue="Python.predict" />
       </list>
     </recent_temporary>
   </component>
@@ -481,12 +559,12 @@
       <workItem from="1552540899206" duration="361000" />
       <workItem from="1552544877257" duration="9885000" />
       <workItem from="1552620692910" duration="25779000" />
-      <workItem from="1552815395661" duration="11326000" />
+      <workItem from="1552815395661" duration="36548000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="408859000" />
+    <option name="totallyTimeSpent" value="434081000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -505,22 +583,22 @@
       <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49822694" visible="true" weight="0.17396122" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32969433" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6371191" visible="true" weight="0.55458516" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49750692" weight="0.43013102" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.63626945" weight="0.41375545" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49750692" visible="true" weight="0.4366812" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32969433" />
       <window_info anchor="bottom" id="Docker" order="7" weight="0.32969433" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.3628809" side_tool="true" weight="0.37991267" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.36373058" side_tool="true" weight="0.5832866" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49844623" weight="0.29912663" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.7346683" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info active="true" anchor="right" x="67" y="406" width="1853" height="1016" id="SciView" maximized="true" order="3" type="WINDOWED" visible="true" weight="0.1296399" />
-      <window_info anchor="right" id="Database" order="4" />
+      <window_info active="true" anchor="right" x="1987" y="37" width="1013" height="1883" id="SciView" maximized="true" order="3" type="WINDOWED" visible="true" weight="0.1296399" />
+      <window_info anchor="right" id="Database" order="4" weight="0.32963988" />
     </layout>
     <layout-to-restore>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17950138" />
@@ -650,23 +728,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/detection/predict.py</url>
-          <line>141</line>
-          <option name="timeStamp" value="421" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/detection/predict.py</url>
           <line>190</line>
           <option name="timeStamp" value="422" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/detection/predict.py</url>
-          <line>150</line>
-          <option name="timeStamp" value="423" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/matching.py</url>
-          <line>107</line>
-          <option name="timeStamp" value="425" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/propagation/gradcam/guided_model.py</url>
@@ -690,18 +753,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/detection/merge_net_train.py</url>
-          <line>119</line>
-          <option name="timeStamp" value="454" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/detection/merge_net_train.py</url>
-          <line>56</line>
-          <option name="timeStamp" value="456" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/detection/merge_net_train.py</url>
           <line>59</line>
-          <option name="timeStamp" value="457" />
+          <option name="timeStamp" value="456" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/networks/custom_loss.py</url>
@@ -730,7 +783,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/propagation/gradcam/new_model.py</url>
-          <line>115</line>
+          <line>196</line>
           <option name="timeStamp" value="483" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -740,7 +793,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/propagation/gradcam/new_model.py</url>
-          <line>66</line>
+          <line>147</line>
           <option name="timeStamp" value="489" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -763,6 +816,56 @@
           <line>33</line>
           <option name="timeStamp" value="498" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/detection/merge_net_train.py</url>
+          <line>70</line>
+          <option name="timeStamp" value="514" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/detection/detection_train.py</url>
+          <line>49</line>
+          <option name="timeStamp" value="517" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/detection/detection_train.py</url>
+          <line>43</line>
+          <option name="timeStamp" value="518" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/BESnet/train.py</url>
+          <line>110</line>
+          <option name="timeStamp" value="531" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/detection/predict.py</url>
+          <line>215</line>
+          <option name="timeStamp" value="532" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/propagation/gradcam/new_model.py</url>
+          <line>291</line>
+          <option name="timeStamp" value="537" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/propagation/gradcam/new_model.py</url>
+          <line>122</line>
+          <option name="timeStamp" value="542" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/propagation/top_down_call.py</url>
+          <line>206</line>
+          <option name="timeStamp" value="543" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/propagation/gradcam/new_model.py</url>
+          <line>290</line>
+          <option name="timeStamp" value="545" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/propagation/gradcam/new_model.py</url>
+          <line>315</line>
+          <option name="timeStamp" value="546" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -774,80 +877,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/utils/cutimg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="10" column="35" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/encoder/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/detection/detection_eval.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1154">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/detection/train_second.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="40" selection-start-line="40" selection-end-line="40" />
-          <folding>
-            <element signature="e#1#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/matching.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="824">
-          <caret line="108" selection-start-line="108" selection-end-line="108" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/detection/second_detection_step.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="13" column="11" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/miniconda3/envs/now_end/lib/python3.6/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="310" selection-start-line="310" selection-end-line="310" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/miniconda3/envs/now_end/lib/python3.6/site-packages/torch/nn/modules/container.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="90" selection-start-line="90" selection-end-line="90" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/miniconda3/envs/now_end/lib/python3.6/site-packages/torch/autograd/function.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="235">
@@ -879,50 +908,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/detection/predict.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1656">
-          <caret line="66" column="31" lean-forward="true" selection-start-line="66" selection-start-column="31" selection-end-line="66" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/detection/detection_train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1024">
-          <caret line="156" selection-start-line="156" selection-end-line="156" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/unet_plus.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1442">
-          <caret line="254" selection-start-line="254" selection-end-line="254" />
-          <folding>
-            <element signature="e#60#93#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/detection/custom_loss.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="164">
           <caret line="25" selection-start-line="25" selection-end-line="25" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/custom_loss.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="67" selection-start-line="67" selection-end-line="67" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
@@ -962,86 +951,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/gradcam/pr_conv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="27" column="16" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/gradcam/gradcam.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="77" column="24" selection-start-line="77" selection-start-column="16" selection-end-line="77" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/gradcam/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
-          <folding>
-            <element signature="e#0#69#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/gradcam/guided_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="40" column="32" lean-forward="true" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/gradcam/top_down_backpropagation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="783">
-          <caret line="42" column="8" lean-forward="true" selection-start-line="42" selection-start-column="8" selection-end-line="65" selection-end-column="79" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/gradcam/guided_parts.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="624">
-          <caret line="32" column="9" selection-start-line="9" selection-end-line="32" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/call_backprop.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="816">
-          <caret line="218" column="6" selection-start-line="218" selection-start-column="6" selection-end-line="218" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/top_down_call.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="178" column="6" lean-forward="true" selection-start-line="178" selection-start-column="6" selection-end-line="178" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/propagation/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="48">
@@ -1069,26 +978,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/gradcam/new_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7">
-          <caret line="112" column="84" selection-start-line="112" selection-start-column="84" selection-end-line="112" selection-end-column="84" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="30" column="5" lean-forward="true" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/detection/multi.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
@@ -1099,30 +988,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/load.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="13" column="40" selection-start-line="13" selection-start-column="40" selection-end-line="13" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/graphcut/graphcut_main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="24">
           <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/graphcut/generate_boundary.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="30" column="69" selection-start-line="30" selection-start-column="69" selection-end-line="30" selection-end-column="69" />
-          <folding>
-            <element signature="e#0#63#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1142,46 +1011,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/miniconda3/envs/pytorch_pre/lib/python3.6/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="310" selection-start-line="310" selection-end-line="310" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/miniconda3/envs/pytorch_pre/lib/python3.6/site-packages/torch/nn/modules/module.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="488" selection-start-line="488" selection-end-line="488" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/network_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="82" column="37" selection-start-line="82" selection-start-column="37" selection-end-line="82" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/networks/custom_parts.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-730">
           <caret line="20" selection-start-line="20" selection-end-line="20" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/network_parts.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="85" column="14" selection-start-line="85" selection-start-column="14" selection-end-line="85" selection-end-column="14" />
-          <folding>
-            <element signature="e#32#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1193,26 +1028,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/detection/merge_net_train.py">
+    <entry file="file://$PROJECT_DIR$/graphcut/generate_boundary.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="5" selection-end-column="30" />
+        <state relative-caret-position="336">
+          <caret line="26" column="8" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="8" />
           <folding>
-            <element signature="e#0#12#0" expanded="true" />
+            <element signature="e#0#63#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BESnet/train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/detection/detection_main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
+        <state relative-caret-position="-168">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
@@ -1220,10 +1048,303 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/call_backprop.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="198" column="73" selection-start-line="198" selection-start-column="71" selection-end-line="198" selection-end-column="73" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/gradcam/gradcam.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="102" column="17" selection-start-line="102" selection-start-column="16" selection-end-line="102" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/gradcam/guided_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="40" column="32" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/gradcam/pr_conv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/gradcam/top_down_backpropagation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="48" selection-start-line="48" selection-end-line="48" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/miniconda3/envs/pytorch_pre/lib/python3.6/site-packages/torch/serialization.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4162">
+          <caret line="365" selection-start-line="365" selection-end-line="365" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detection/detection_eval.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-240">
+          <caret line="44" column="29" selection-start-line="44" selection-start-column="29" selection-end-line="44" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detection/detection_train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="305">
+          <caret line="83" column="66" selection-start-line="83" selection-start-column="66" selection-end-line="83" selection-end-column="66" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detection/merge_net_train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="68" column="18" selection-start-line="68" selection-start-column="18" selection-end-line="68" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BESnet/predict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="80" column="16" selection-start-line="80" selection-start-column="16" selection-end-line="80" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/miniconda3/envs/pytorch_pre/lib/python3.6/site-packages/torch/nn/functional.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="2026" selection-start-line="2026" selection-end-line="2026" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/networks/custom_loss.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/networks/network_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="93" selection-start-line="93" selection-end-line="93" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/matching.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="107" selection-start-line="107" selection-end-line="107" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detection/merge_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="816">
+          <caret line="37" column="21" selection-start-line="37" selection-start-column="21" selection-end-line="37" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/load.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="20" column="67" lean-forward="true" selection-start-line="20" selection-start-column="67" selection-end-line="20" selection-end-column="67" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/BESnet/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
+        <state relative-caret-position="125">
+          <caret line="28" column="21" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BESnet/train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="95" lean-forward="true" selection-start-line="95" selection-end-line="95" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/gradcam/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="3" column="47" selection-start-line="3" selection-start-column="47" selection-end-line="3" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#69#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detection/predict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="213" column="83" lean-forward="true" selection-start-line="206" selection-start-column="4" selection-end-line="213" selection-end-column="83" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/gradcam/module_custom.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25416">
+          <caret line="1059" column="27" selection-start-line="1059" selection-start-column="27" selection-end-line="1059" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/miniconda3/envs/pytorch_pre/lib/python3.6/site-packages/torch/nn/modules/container.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="6" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/miniconda3/envs/pytorch_pre/lib/python3.6/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-86">
+          <caret line="310" selection-start-line="310" selection-end-line="310" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/top_down_call.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="206" selection-start-line="206" selection-end-line="206" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/gradcam/guided_parts.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="66" selection-start-line="66" selection-end-line="66" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/networks/network_parts.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+          <folding>
+            <element signature="e#32#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/networks/unet_plus.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="264" selection-start-line="264" selection-end-line="264" />
+          <folding>
+            <element signature="e#60#93#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/miniconda3/envs/pytorch_pre/lib/python3.6/site-packages/torch/nn/modules/module.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="508" selection-start-line="508" selection-end-line="508" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/gradcam/new_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="316" column="16" selection-start-line="316" selection-start-column="16" selection-end-line="316" selection-end-column="84" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

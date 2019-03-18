@@ -265,7 +265,7 @@ class BackPropBacks(BackProp):
             masks[index == x, :] = gbs_coloring[x][index == x, :]
 
         cv2.imwrite(
-            str(self.output_path.joinpath(f"instance/{img_i:05d}.png")), masks
+            str(self.output_path.joinpath("instance/{:05d}.png".format(img_i))), masks
         )
 
     def main(self):
@@ -274,7 +274,7 @@ class BackPropBacks(BackProp):
         self.output_path.joinpath('instance').mkdir(parents=True, exist_ok=True)
         for img_i, path in enumerate(self.input_path):
             img = np.array(Image.open(path))
-            cv2.imwrite(str(self.output_path.joinpath(f"ori/{img_i:05d}.tif")), img)
+            cv2.imwrite(str(self.output_path.joinpath("ori/{:05d}.tif".format(img_i))), img)
             self.shape = img.shape
             if self.norm:
                 img = (img.astype(np.float32) / 255).reshape(
@@ -287,7 +287,7 @@ class BackPropBacks(BackProp):
             img = torch.from_numpy(img)
 
             pre_img = self.unet_pred(
-                img, self.output_path.joinpath(f"detection/{img_i:05d}.tif")
+                img, self.output_path.joinpath("detection/{:05d}.tif".format(img_i))
             )
 
             img.requires_grad = True

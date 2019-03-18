@@ -45,8 +45,9 @@ class _TrainBase:
         self.save_weight_path.parent.joinpath("epoch_weight").mkdir(
             parents=True, exist_ok=True
         )
-        self.save_path = save_path
-        self.save_path.mkdir(parents=True, exist_ok=True)
+        if save_path is not None:
+            self.save_path = save_path
+            self.save_path.mkdir(parents=True, exist_ok=True)
         print(
             "Starting training:\nEpochs: {}\nBatch size: {} \nLearning rate: {}\ngpu:{}\n"
             "plot_size:{}\nmode:{}".format(epochs, batch_size, lr, gpu, plot_size, mode)
@@ -80,7 +81,7 @@ class _TrainBase:
         plt.plot(x, self.evals)
         plt.show()
 
-    def validation(self, number_of_train_data, epoch):
+    def validation(self, number_of_train_data, epoch, mode='single'):
         loss = self.epoch_loss / (number_of_train_data + 1)
         print("Epoch finished ! Loss: {}".format(loss))
 
@@ -97,7 +98,7 @@ class _TrainBase:
 
         if loss < 0.01:
             fmeasure, val_loss = eval_net(
-                self.net, self.val, "single", norm=self.norm, gpu=self.gpu
+                self.net, self.val, mode=mode, norm=self.norm, gpu=self.gpu
             )
             print("f-measure: {}".format(fmeasure))
             print("val_loss: {}".format(val_loss))

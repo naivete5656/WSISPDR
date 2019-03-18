@@ -82,7 +82,7 @@ class Outconv(nn.Module):
         return x
 
 class Outconv2(nn.Module):
-    def __init__(self, in_ch, out_ch, sig):
+    def __init__(self, in_ch, out_ch, sig=True):
         super().__init__()
         self.conv = nn.Conv2d(in_ch, int(in_ch/2), 1)
         self.conv2 = nn.Conv2d(int(in_ch/2), out_ch, 1)

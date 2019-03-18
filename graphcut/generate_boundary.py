@@ -25,7 +25,7 @@ for i, path in enumerate(im_paths):
 
     shape = ori.shape
     try:
-        result = cv2.imread(str(instance_paths.joinpath(f'{i+1:05d}label.tif')), 0)
+        result = cv2.imread(str(instance_paths.joinpath(f'{i:05d}label.tif')), 0)
         seg = np.zeros(result.shape)
         seg[result > 0] = 255
         cv2.imwrite(str(save_path_seg.joinpath(f"{i:05d}.tif")), seg)

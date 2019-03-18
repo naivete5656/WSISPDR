@@ -4,7 +4,7 @@ import numpy as np
 import os
 
 os.chdir(Path.cwd().parent)
-from networks import UNetMultiTask
+from networks import UNetMultiTask2
 from datetime import datetime
 from PIL import Image
 import cv2
@@ -69,13 +69,13 @@ if __name__ == "__main__":
     gpu = True
     plot_size = 6
     key = 1
-    net = UNetMultiTask(n_channels=1, n_classes=1)
+    net = UNetMultiTask2(n_channels=1, n_classes=1)
     net.cuda()
 
-    weight_path = "./weights/2019-01-17/multi_task/best.pth"
-    root_path = Path("./images/a/cut")
+    weight_path = "/home/kazuya/file_server2/weights/multi_task/best.pth"
+    root_path = Path("/home/kazuya/file_server2/images/challenge_cut/frame1/ori")
     # root_path = Path("./images/train/ori")
-    save_path = Path("./outputs/{}/".format(date))
+    save_path = Path("/home/kazuya/file_server2/all_outputs/bes_out")
 
     pred = Predict(
         net=net,

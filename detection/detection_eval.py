@@ -28,6 +28,11 @@ def eval_net(
     for i, b in enumerate(dataset):
         img = b[0]
         true_mask = b[1]
+        if mode == 'marge':
+            img2 = b[0]
+            img2 = torch.from_numpy(img2).unsqueeze(0)
+            if gpu:
+                img2 = img2.cuda()
         with torch.no_grad():
             img = torch.from_numpy(img).unsqueeze(0)
             gt = torch.from_numpy(true_mask).unsqueeze(0)
@@ -37,6 +42,8 @@ def eval_net(
 
             if mode == "single":
                 mask_pred = net(img)
+            elif mode == 'marge':
+                mask_pred = net(img, img2)
             else:
                 _, _, _, mask_pred = net(img)
         pre_img = mask_pred.detach().cpu().numpy()[0, 0]

@@ -22,6 +22,7 @@ class TrainNet:
         train_path,
         weight_path,
         plot_size,
+        norm=True,
         val_path=None,
     ):
         self.net = net
@@ -36,7 +37,10 @@ class TrainNet:
 
         self.save_weight_path = weight_path
         self.save_weight_path.parent.mkdir(parents=True, exist_ok=True)
-
+        self.save_weight_path.parent.joinpath("epoch_weight").mkdir(
+            parents=True, exist_ok=True
+        )
+        self.norm = norm
         self.N_train = len(list(self.ori_img_path.glob("*.tif")))
         self.optimizer = optim.Adam(net.parameters(), lr=lr)
         self.epochs = epochs
@@ -54,6 +58,7 @@ class TrainNet:
         )
 
     def fit(self):
+
         losses = []
 
         bad = 0
@@ -63,8 +68,9 @@ class TrainNet:
 
             # reset the generators
             train = get_imgs_and_masks_boundaries(
-                self.ori_img_path, self.mask_path, self.boundary_path
+                self.ori_img_path, self.mask_path, self.boundary_path, self.norm
             )
+
             # val = get_imgs_and_masks_boundaries(self.val_path, self.val_mask_path, self.val_boundary_path)
 
             epoch_loss = 0
@@ -88,20 +94,24 @@ class TrainNet:
 
                 masks_pred, boundary_pred = self.net(imgs)
 
-                if i == 10:
-                    plt.imshow(masks_pred.detach().cpu().numpy()[0, 0]), plt.show()
-                    plt.imshow(boundary_pred.detach().cpu().numpy()[0, 0]), plt.show()
-                    plt.close()
-
+                # if i == 10:
+                #     plt.imshow(masks_pred.detach().cpu().numpy()[0, 0]), plt.show()
+                #     plt.imshow(boundary_pred.detach().cpu().numpy()[0, 0]), plt.show()
+                # #     plt.close()
+                # assert (masks_pred >= 0. & masks_pred <= 1.).all()
+                # assert (boundary_pred >= 0. & boundary_pred <= 1.).all()
+                if masks_pred.min() < 0:
+                    print(3)
 
                 masks_probs_flat = masks_pred.view(-1)
                 true_masks_flat = true_masks.view(-1)
-                loss1 = self.criterion(masks_probs_flat, true_masks_flat)
-
                 boundary_probs_flat = boundary_pred.view(-1)
                 true_boundary_flat = true_boundaries.view(-1)
+
+                loss1 = self.criterion(boundary_probs_flat, true_boundary_flat)
+
                 loss2 = self.criterion2(
-                    masks_probs_flat, boundary_probs_flat, true_boundary_flat
+                    masks_probs_flat, true_boundary_flat, true_masks_flat
                 )
 
                 loss = loss1 + loss2
@@ -125,6 +135,15 @@ class TrainNet:
                 print("stop running")
                 break
             print("bad = {}".format(bad))
+            if epoch % 10 == 0:
+                torch.save(
+                    self.net.state_dict(),
+                    str(
+                        self.save_weight_path.parent.joinpath(
+                            "epoch_weight/{:05d}.pth".format(epoch)
+                        )
+                    ),
+                )
 
             torch.save(self.net.state_dict(), str(self.save_weight_path))
         print("f_measure={}".format(max(self.evals)))

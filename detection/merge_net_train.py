@@ -1,5 +1,6 @@
 import torch
 from tqdm import tqdm
+
 from utils import *
 from datetime import datetime
 from networks import UNet, MargeNet
@@ -19,19 +20,21 @@ class TrainMarge(TrainNet):
         train_path,
         val_path,
         weight_path,
+        save_path,
     ):
         super().__init__(
-            net,
-            mode,
-            epochs,
-            batch_size,
-            lr,
-            gpu,
-            plot_size,
-            train_path,
-            val_path,
-            weight_path,
-            True,
+            net=net,
+            mode=mode,
+            epochs=epochs,
+            batch_size=batch_size,
+            lr=lr,
+            gpu=gpu,
+            plot_size=plot_size,
+            train_path=train_path,
+            weight_path=weight_path,
+            norm=True,
+            val_path=val_path,
+            save_path=save_path
         )
 
     def main(self):
@@ -65,7 +68,7 @@ class TrainMarge(TrainNet):
                 pbar.update(self.batch_size)
             pbar.close()
             if self.val_path is not None:
-                self.validation(i, epoch)
+                self.validation(i, epoch, mode='marge')
             else:
                 torch.save(
                     self.net.state_dict(),
@@ -76,45 +79,19 @@ class TrainMarge(TrainNet):
                     ),
                 )
 
+            torch.save(
+                self.net.state_dict(),
+                str(
+                    self.save_weight_path.parent.joinpath(
+                        "epoch_weight/{:05d}.pth".format(epoch)
+                    )
+                ),
+            )
+
             if self.bad >= 50:
                 print("stop running")
                 break
         self.show_graph()
 
 
-# if __name__ == "__main__":
-#
-#     torch.cuda.set_device(1)
-#     # mode = "single"
-#     mode = "single"
-#     plot_size = 3
-#     norm = True
-#     date = datetime.now().date()
-#     train_path = Path("./images/C2C12P7/sequ_cut/0318/sequ17")
-#     val_path = Path("./images/C2C12P7/sequ_cut/0318/sequ18")
-#     save_weight_path = Path("/home/kazuya/file_server2/weights/marge/best_{}.pth".format(plot_size))
-#     save_path = Path("./detection/confirm")
-#     pre_trained_path = './weights/MSELoss/best_12.pth'
-#     # pre_trained_path = ''
-#     models = {"single": MargeNet}
-#     net = UNet(n_channels=1, n_classes=1, sig=norm)
-#     if pre_trained_path is not None:
-#         net.load_state_dict(torch.load(pre_trained_path, map_location={"cuda:3": "cuda:1"}))
-#     net = MargeNet(n_channels=1, n_classes=1, sig=norm, net=net)
-#
-#     net.cuda()
-#
-#     train = TrainMarge(
-#         net=net,
-#         mode=mode,
-#         epochs=500,
-#         batch_size=5,
-#         lr=1e-5,
-#         gpu=True,
-#         plot_size=plot_size,
-#         train_path=train_path,
-#         val_path=val_path,
-#         weight_path=save_weight_path,
-#     )
-#
-#     train.main()
+

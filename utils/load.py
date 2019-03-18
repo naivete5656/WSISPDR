@@ -16,6 +16,8 @@ def to_cropped_imgs(ids, dir_img):
 def to_cropped_imgs2(dir_imgs):
     """From a list of tuples, returns the correct cropped img"""
     for dir_img in dir_imgs:
+        print(cv2.imread(str(dir_img))[:, :, :1].astype(np.float32).shape)
+        print(str(dir_img))
         yield cv2.imread(str(dir_img))[:, :, :1].astype(np.float32)
 
 
@@ -95,22 +97,29 @@ def get_imgs_and_masks2(ori_paths, mask_paths, norm):
     return zip(imgs_normalized, masks_normalized)
 
 
-def get_imgs_and_masks_boundaries(dir_img, dir_mask, dir_boundary):
+def get_imgs_and_masks_boundaries(dir_img, dir_mask, dir_boundary, norm):
     """Return all the couples (img, mask)"""
     paths = list(dir_img.glob("*.tif"))
     random.shuffle(list(paths))
 
     imgs = to_cropped_imgs(paths, dir_img)
     imgs_switched = map(hwc_to_chw, imgs)
-    imgs_normalized = map(normalize, imgs_switched)
 
     masks = to_cropped_imgs(paths, dir_mask)
     masks_switched = map(hwc_to_chw, masks)
-    masks_normalized = map(normalize, masks_switched)
 
     boundaries = to_cropped_imgs(paths, dir_boundary)
     boundaries_switched = map(hwc_to_chw, boundaries)
-    boundaries_normalized = map(normalize, boundaries_switched)
+
+    if norm:
+        imgs_normalized = map(normalize, imgs_switched)
+        masks_normalized = map(normalize, masks_switched)
+        boundaries_normalized = map(normalize, boundaries_switched)
+    else:
+        imgs_normalized = map(normalize2, imgs_switched)
+        masks_normalized = map(normalize2, masks_switched)
+        boundaries_normalized = map(normalize2, boundaries_switched)
+
 
     return zip(imgs_normalized, masks_normalized, boundaries_normalized)
 
