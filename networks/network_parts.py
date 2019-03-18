@@ -80,3 +80,19 @@ class Outconv(nn.Module):
         x = self.conv(x)
         x = self.act(x)
         return x
+
+class Outconv2(nn.Module):
+    def __init__(self, in_ch, out_ch, sig):
+        super().__init__()
+        self.conv = nn.Conv2d(in_ch, int(in_ch/2), 1)
+        self.conv2 = nn.Conv2d(int(in_ch/2), out_ch, 1)
+        if sig:
+            self.act = nn.Sigmoid()
+        else:
+            self.act = nn.Tanh()
+
+    def forward(self, x):
+        x = self.conv(x)
+        x = self.conv2(x)
+        x = self.act(x)
+        return x

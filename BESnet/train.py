@@ -4,15 +4,25 @@ from datetime import datetime
 import torch
 from tqdm import tqdm
 import matplotlib.pyplot as plt
+from pathlib import Path
+from .eval import eval_net
+
 from utils import *
 from networks import UNetMultiTask2, BoundaryEnhancedCrossEntropyLoss
-from eval import eval_net
-from pathlib import Path
 
 
 class TrainNet:
     def __init__(
-        self, net, epochs, batch_size, lr, gpu, train_path, weight_path, val_path=None
+        self,
+        net,
+        epochs,
+        batch_size,
+        lr,
+        gpu,
+        train_path,
+        weight_path,
+        plot_size,
+        val_path=None,
     ):
         self.net = net
 
@@ -78,13 +88,21 @@ class TrainNet:
 
                 masks_pred, boundary_pred = self.net(imgs)
 
+                if i == 10:
+                    plt.imshow(masks_pred.detach().cpu().numpy()[0, 0]), plt.show()
+                    plt.imshow(boundary_pred.detach().cpu().numpy()[0, 0]), plt.show()
+                    plt.close()
+
+
                 masks_probs_flat = masks_pred.view(-1)
                 true_masks_flat = true_masks.view(-1)
                 loss1 = self.criterion(masks_probs_flat, true_masks_flat)
 
                 boundary_probs_flat = boundary_pred.view(-1)
                 true_boundary_flat = true_boundaries.view(-1)
-                loss2 = self.criterion2(masks_probs_flat, boundary_probs_flat, true_boundary_flat)
+                loss2 = self.criterion2(
+                    masks_probs_flat, boundary_probs_flat, true_boundary_flat
+                )
 
                 loss = loss1 + loss2
 
@@ -138,30 +156,3 @@ class TrainNet:
         self.evals.append(val_dice)
         self.val_losses.append(val_loss)
         return bad
-
-
-if __name__ == "__main__":
-    torch.cuda.set_device(1)
-    mode = "single"
-    plot_size = 12
-    date = datetime.now().date()
-    # train_path = Path("./images/train")
-    train_path = Path("./images/train")
-    # val_path = Path("./images/val")
-    save_weight_path = Path("./weights/{}/multi_task/best.pth".format(date))
-
-    network = UNetMultiTask2(n_channels=1, n_classes=1)
-    network.cuda()
-
-    train = TrainNet(
-        net=network,
-        epochs=500,
-        batch_size=10,
-        lr=1e-5,
-        gpu=True,
-        train_path=train_path,
-        # val_path=val_path,
-        weight_path=save_weight_path,
-    )
-
-    train.fit()

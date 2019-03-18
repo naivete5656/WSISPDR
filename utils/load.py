@@ -8,8 +8,10 @@ import cv2
 def to_cropped_imgs(ids, dir_img):
     """From a list of tuples, returns the correct cropped img"""
     for id in ids:
-        yield cv2.imread(str(dir_img / id.name))[:, :, :1].astype(np.float32)
-
+        try:
+            yield cv2.imread(str(dir_img / id.name))[:, :, :1].astype(np.float32)
+        except TypeError:
+            print(str(dir_img / id.name))
 
 def to_cropped_imgs2(dir_imgs):
     """From a list of tuples, returns the correct cropped img"""

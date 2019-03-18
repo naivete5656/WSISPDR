@@ -6,8 +6,9 @@ import torch
 
 class UpIncBoundary(Up):
     def __init__(self, in_ch, inter_ch, out_ch):
-        super().__init__(in_ch + inter_ch, out_ch)
+        super().__init__(in_ch + inter_ch, int(in_ch + inter_ch / 2))
         self.up1 = nn.ConvTranspose2d(in_ch, inter_ch, kernel_size=2, stride=2)
+        self.conv = DoubleConv(in_ch + inter_ch, out_ch)
 
     def forward(self, x1, x2, x3):
         x1 = self.up(x1)

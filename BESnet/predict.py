@@ -1,6 +1,9 @@
 from pathlib import Path
 import torch
 import numpy as np
+import os
+
+os.chdir(Path.cwd().parent)
 from networks import UNetMultiTask
 from datetime import datetime
 from PIL import Image

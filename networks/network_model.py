@@ -68,6 +68,11 @@ class UNetMultiTask2(UNet):
         self.up3_boundary = UpIncBoundary(256, 128, 64)
         self.up4_boundary = UpIncBoundary(128, 64, 64)
         self.outc_boundary = Outconv(64, n_classes, sig=True)
+        self.up1 = Up(1024, 256)
+        self.up2 = Up(512, 128)
+        self.up3 = Up(256, 64)
+        self.up4 = Up(128, 64)
+        self.outc = Outconv2(128, n_classes, sig=True)
 
     def forward(self, x):
         x1 = self.inc(x)
