@@ -26,10 +26,19 @@ class TrainNet:
         val_path=None,
     ):
         self.net = net
+        if isinstance(train_path, list):
+            self.ori_img_path = []
+            self.mask_path = []
+            self.boundary_path = []
+            for tra_path in train_path:
+                self.ori_img_path.extend([tra_path.joinpath('ori')])
+                self.mask_path.extend([tra_path.joinpath("segmentation")])
+                self.boundary_path.extend([tra_path.joinpath("boundary")])
 
-        self.ori_img_path = train_path / Path("ori")
-        self.mask_path = train_path / Path("segmentation")
-        self.boundary_path = train_path / Path("boundary")
+        else:
+            self.ori_img_path = train_path / Path("ori")
+            self.mask_path = train_path / Path("segmentation")
+            self.boundary_path = train_path / Path("boundary")
 
         # self.val_path = val_path / Path("ori")
         # self.val_mask_path = val_path / Path("semantic")
@@ -56,6 +65,29 @@ class TrainNet:
                 epochs, batch_size, lr, gpu
             )
         )
+
+    def load(self):
+        if isinstance(self.ori_img_path, list):
+            ori_paths = []
+            mask_paths = []
+            boundary_paths = []
+            for paths in zip(self.ori_img_path, self.mask_path, self.boundary_path):
+                ori_paths.extend(sorted(list(paths[0].glob("*.tif"))))
+                mask_paths.extend(sorted(list(paths[1].glob("*.tif"))))
+                boundary_paths.extend(sorted(list(paths[2].glob("*.tif"))))
+            assert len(ori_paths) == len(mask_paths), "path のデータ数が正しくない"
+            ori_paths = np.array(ori_paths)
+            mask_paths = np.array(mask_paths)
+            boundary_paths = np.array(boundary_paths)
+            self.N_train = len(ori_paths)
+            self.train = get_imgs_and_masks_boundaries(
+                ori_paths, mask_paths, boundary_paths, norm=self.norm
+            )
+        else:
+            self.train = get_imgs_and_masks_boundaries(
+                self.ori_img_path, self.mask_path, self.boundary_path, norm=self.norm
+            )
+            self.N_train = len(list(self.ori_img_path.glob("*.tif")))
 
     def fit(self):
 
@@ -113,6 +145,8 @@ class TrainNet:
                 loss2 = self.criterion2(
                     masks_probs_flat, true_boundary_flat, true_masks_flat
                 )
+                print(loss1)
+                print(loss2)
 
                 loss = loss1 + loss2
 

@@ -7,17 +7,11 @@ import numpy as np
 def cut_image(plot_size="6", sequence=18, size=320, override=100, norm_value=255):
     paths = sorted(
         Path(
-            "/home/kazuya/main/dataset/dataset/elmer_set/heavy{}/{}".format(
-                sequence, plot_size
-            )
+            "/home/kazuya/file_server2/groundTruths/challenge/01_SEG/ori"
         ).glob("*.tif")
     )
+    savepath = Path("/home/kazuya/file_server2/groundTruths/challenge/01_SEG/ori_cut")
 
-    savepath = Path(
-        "/home/kazuya/main/dataset/elmer_cut/heavy{}/{}".format(
-            sequence, plot_size
-        )
-    )
     i = 0
     savepath.mkdir(parents=True, exist_ok=True)
     for path in paths:
@@ -49,12 +43,31 @@ def cut_image(plot_size="6", sequence=18, size=320, override=100, norm_value=255
     print(i)
 
 
+def sequ_cut_img(dataset, plot_size, num_sp_w, num_sp_h):
+    paths = sorted(
+        Path(
+            f"/home/kazuya/file_server2/images/dataset/{dataset}_set/{plot_size}"
+        ).glob("*.tif")
+    )
+    root_path = Path(f"/home/kazuya/file_server2/images/{dataset}_cut")
+    root_path.mkdir(parents=True, exist_ok=True)
+    for i, path in enumerate(paths):
+        img = cv2.imread(str(path), 0)
+        splits = np.vsplit(img, num_sp_w)
+        for j, split in enumerate(splits):
+            imgs = np.hsplit(split, num_sp_h)
+            for k, cut_img in enumerate(imgs):
+                save_path = root_path.joinpath(f"{num_sp_w * j + k:02d}/{plot_size}")
+                save_path.mkdir(parents=True, exist_ok=True)
+                cv2.imwrite(str(save_path.joinpath(f"{i:05d}.tif")), cut_img[:256,:320])
+
+
 if __name__ == "__main__":
     for i in range(1, 6):
-        cut_image(sequence=i, plot_size=3)
-        cut_image(sequence=i, plot_size=6)
-        cut_image(sequence=i, plot_size=9)
-        cut_image(sequence=i, plot_size=12)
+        # cut_image(sequence=i, plot_size=3)
+        # cut_image(sequence=i, plot_size=6)
+        # cut_image(sequence=i, plot_size=9)
+        # cut_image(sequence=i, plot_size=12)
 
         cut_image(sequence=i, plot_size="ori")
     # cut_image(sequence=9)

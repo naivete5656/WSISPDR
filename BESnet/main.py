@@ -8,19 +8,19 @@ from BESnet import TrainNet
 
 
 if __name__ == "__main__":
-    torch.cuda.set_device(0)
+    torch.cuda.set_device(1)
     mode = "single"
     plot_size = 12
     date = datetime.now().date()
     # train_path = Path("./images/train")
-    train_path = Path("/home/kazuya/file_server2/images/for_besnet")
+    train_path = [Path("/home/kazuya/file_server2/images/for_besnet"),Path("/home/kazuya/file_server2/images/for_besnet/sequ9")]
     # val_path = Path("./images/val")
     save_weight_path = Path("/home/kazuya/file_server2/weights/multi_task/best.pth")
 
     network = UNetMultiTask2(n_channels=1, n_classes=1, norm=True)
-    pre_trained_path = '/home/kazuya/file_server2/weights/multi_task/best.pth'
+    # pre_trained_path = '/home/kazuya/file_server2/weights/multi_task/best.pth'
 
-    network.load_state_dict(torch.load(pre_trained_path, map_location={"cuda:3": "cuda:1"}))
+    # network.load_state_dict(torch.load(pre_trained_path, map_location={"cuda:3": "cuda:1"}))
     network.cuda()
 
     train = TrainNet(

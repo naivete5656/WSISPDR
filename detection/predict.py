@@ -16,9 +16,10 @@ from networks import UNet, DilatedUNet, UnetMultiFixedWeight, MargeNet
 
 
 class Predict:
-    def __init__(self, net, gpu, root_path, save_path, norm_value=255):
+    def __init__(self, net, gpu, root_path, save_path, norm_value=255, norm=True):
         self.net = net
         self.gpu = gpu
+        self.norm = norm
 
         # self.ori_path = root_path
         self.ori_path = root_path
@@ -97,7 +98,7 @@ class PredictFmeasure(Predict):
         self.tps = 0
         self.fps = 0
         self.fns = 0
-        self.norm = norm
+
 
     def cal_tp_fp_fn(self, ori, gt_img, pre_img, i):
         gt = target_peaks_gen((gt_img).astype(np.uint8))
@@ -205,26 +206,27 @@ if __name__ == "__main__":
     #     plot_size, 13
     # )
     weight_path = "/home/kazuya/file_server2/weights/marge/best_12.pth"
+    weight_path = "/home/kazuya/file_server2/weights/challenge/best_12.pth"
     # root_path = Path("./images/C2C12P7/sequ_cut/0318/sequ18")
-    root_path = Path("/home/kazuya/file_server2/images/sequ18")
-    save_path = Path("/home/kazuya/file_server2/all_output/marge")
+    root_path = Path("/home/kazuya/file_server2/groundTruths/challenge/01_SEG/ori_cut")
+    save_path = Path("/home/kazuya/file_server2/all_outputs/bes_out/challenge_01")
     net = UNet(n_channels=1, n_classes=1, sig=norm)
-    net = models[key](n_channels=1, n_classes=1, sig=norm, net=net)
+    # net = models[key](n_channels=1, n_classes=1, sig=norm, net=net)
     net.cuda()
     net.load_state_dict(torch.load(weight_path, map_location={"cuda:3": "cuda:1"}))
-
-    pred = PredictFmeasure(
-        net=net,
-        gpu=gpu,
-        root_path=root_path,
-        save_path=save_path,
-        plot_size=plot_size,
-        peak_thresh=125,
-        dist_peak=2,
-        dist_threshold=20,
-        norm_value=255,
-        norm=norm,
-    )
+    pred = Predict(net=net, gpu=gpu, root_path=root_path, save_path=save_path, norm_value=255)
+    # pred = PredictFmeasure(
+    #     net=net,
+    #     gpu=gpu,
+    #     root_path=root_path,
+    #     save_path=save_path,
+    #     plot_size=plot_size,
+    #     peak_thresh=125,
+    #     dist_peak=2,
+    #     dist_threshold=20,
+    #     norm_value=255,
+    #     norm=norm,
+    # )
 
     pred.main()
 

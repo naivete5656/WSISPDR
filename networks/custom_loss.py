@@ -4,17 +4,18 @@ import torch.nn.functional as F
 
 
 class BoundaryEnhancedCrossEntropyLoss(nn.Module):
-    def __init__(self, weight=1.3, alf = 0.5, beta = 0.5):
+    def __init__(self, weight=1.3, alf = 0.5, beta = 0.8):
         super().__init__()
         self.weight = weight
         self.alf= alf
         self.beta = beta
+        self.sigma = 0.0001
 
     def forward(self, inputs, boundaries, targets):
         boundary_enhance = self.alf * torch.clamp(self.beta - boundaries, max=0)
-        loss = (1 + boundary_enhance) * targets * torch.log(inputs) + self.weight * (
+        loss = (1 + boundary_enhance) * targets * torch.log(inputs + self.sigma) + self.weight * (
             1 - targets
-        ) * torch.log(1 - inputs)
+        ) * torch.log(1 - inputs + self.sigma)
         return -torch.mean(loss)
 
 

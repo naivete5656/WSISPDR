@@ -73,9 +73,10 @@ if __name__ == "__main__":
     net.cuda()
 
     weight_path = "/home/kazuya/file_server2/weights/multi_task/best.pth"
-    root_path = Path("/home/kazuya/file_server2/images/challenge_cut/frame1/ori")
+    root_path = Path("/home/kazuya/file_server2/groundTruths/challenge/01_SEG/ori_cut")
+    # root_path = Path("/home/kazuya/file_server2/images/challenge_cut/frame1/ori")
     # root_path = Path("./images/train/ori")
-    save_path = Path("/home/kazuya/file_server2/all_outputs/bes_out")
+    save_path = Path("/home/kazuya/file_server2/all_outputs/bes_out/challenge_01")
 
     pred = Predict(
         net=net,
