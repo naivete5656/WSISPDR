@@ -231,7 +231,6 @@ class GuidedModel2(Sequ):
     def forward(
         self,
         img,
-        img2,
         root_path,
         peak=None,
         class_threshold=0,
@@ -239,6 +238,7 @@ class GuidedModel2(Sequ):
         retrieval_cfg=None,
     ):
         assert img.dim() == 4, "PeakResponseMapping layer only supports batch mode."
+        img2 = img.detach()
         if self.inferencing:
             img.requires_grad_()
             img2.requires_grad_()

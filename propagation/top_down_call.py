@@ -108,9 +108,12 @@ class TopDown(BackProp):
 
 
 class GuideCall(BackProp):
-    def __init__(self, img_path, output_path, weight_path, gpu=True, radius=1):
+    def __init__(self, img_path, output_path, weight_path, gpu=True, marge=False):
         super().__init__(img_path, output_path, weight_path, gpu)
-        self.back_model = GuidedModel(self.net)
+        if marge == True:
+            self.back_model = GuidedModel2(self.net)
+        else:
+            self.back_model = GuidedModel(self.net)
         self.back_model.inference()
         self.shape = None
         self.output_path_each = None
