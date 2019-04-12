@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image
 import cv2
 import matplotlib.pyplot as plt
-
+from .colorling import prm_visualize
 
 class TopDownBefore(BackProp):
     def __init__(self, input_path, output_path, weight_path, gpu=True, radius=1):
@@ -78,7 +78,7 @@ class TopDown(BackProp):
             prms_coloring = []
 
             for peak_i, prm in enumerate(prms):
-                prm = prm / prm.max() * 10
+                prm = prm / prm.max() * 255
                 prm = prm.clip(0, 255).astype(np.uint8)
                 result = np.ones((self.shape[0], self.shape[1], 3))
                 result = prm[..., np.newaxis] * result
@@ -141,6 +141,7 @@ class GuideCall(BackProp):
             prms = module(img, self.output_path_each)
 
             prms = np.array(prms)
+            # prms_coloring = prm_visualize(prms)
 
             r, g, b = np.loadtxt("./utils/color.csv", delimiter=",")
             prms_coloring = []
@@ -170,6 +171,7 @@ class GuideCall(BackProp):
 
             prm = np.max(prms, axis=0)
             prm = prm / prm.max() * 255
+            plt.imshow(prms_coloring), plt.show()
             cv2.imwrite(
                 str(self.output_path_each.joinpath("instance.tif")),
                 prms_coloring.astype(np.uint8),
@@ -207,40 +209,63 @@ class GuideOnly(GuideCall):
                 img2 = img2.cuda()
 
             module = self.back_model
-            prms = module(img, self.output_path_each, peak=1)
+            prms, prms2 = module(img, self.output_path_each, peak=1)
 
             prms = np.array(prms)
+            prms2 = np.array(prms2)
 
             r, g, b = np.loadtxt("./utils/color.csv", delimiter=",")
             prms_coloring = []
+            prms2_coloring = []
 
             for peak_i, prm in enumerate(prms):
                 prm = prm / prm.max() * 255
+                prm2 = prms2[peak_i]
+                prm2 = prm2 / prm2.max() * 255
                 prm = prm.clip(0, 255).astype(np.uint8)
+                prm2 = prm2.clip(0, 255).astype(np.uint8)
                 result = np.ones((self.shape[0], self.shape[1], 3))
+                result2 = np.ones((self.shape[0], self.shape[1], 3))
                 result = prm[..., np.newaxis] * result
+                result2 = prm2[..., np.newaxis] * result2
                 peak_i = peak_i % 20
                 result[..., 0][result[..., 0] != 0] = r[peak_i] * prm[prm != 0]
+                result2[..., 0][result2[..., 0] != 0] = r[peak_i] * prm2[prm2 != 0]
                 result[..., 1][result[..., 1] != 0] = g[peak_i] * prm[prm != 0]
+                result2[..., 1][result2[..., 1] != 0] = g[peak_i] * prm2[prm2 != 0]
                 result[..., 2][result[..., 2] != 0] = b[peak_i] * prm[prm != 0]
+                result2[..., 2][result2[..., 2] != 0] = b[peak_i] * prm2[prm2 != 0]
                 prms_coloring.append(result)
+                prms2_coloring.append(result2)
 
             prms_coloring = np.array(prms_coloring)
+            prms2_coloring = np.array(prms2_coloring)
             # index = np.argmax(prms, axis=0)
             # mask = np.zeros((self.shape[0], self.shape[1], 3))
             # for x in range(1, index.max() + 1):
             #     mask[index == x, :] = prms_coloring[x][index == x, :]
 
-            prms_coloring = np.max(prms_coloring, axis=0)
+            prms_coloring = np.max(prms_coloring[1:], axis=0)
+            prms2_coloring = np.max(prms2_coloring[1:], axis=0)
 
             prms_coloring = (
-                prms_coloring.astype(np.float) / prms_coloring.max() * 255
+                    prms_coloring.astype(np.float) / prms_coloring.max() * 255
+            ).astype(np.uint8)
+
+            prms2_coloring = (
+                prms2_coloring.astype(np.float) / prms2_coloring.max() * 255
             ).astype(np.uint8)
 
             prm = np.max(prms, axis=0)
             prm = prm / prm.max() * 255
+            prm2 = np.max(prms2, axis=0)
+            prm2 = prm2 / prm2.max() * 255
 
             cv2.imwrite(
                 str(save_paht.joinpath("{:05d}.tif".format(img_i))),
                 prms_coloring.astype(np.uint8),
+            )
+            cv2.imwrite(
+                str(save_paht.joinpath("{:05d}_prm2.tif".format(img_i))),
+                prms2_coloring.astype(np.uint8),
             )

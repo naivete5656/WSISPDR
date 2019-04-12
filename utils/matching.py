@@ -76,17 +76,20 @@ def remove_outside_plot(matrix, associate_id, i, window_size, window_thresh=10):
     """
     # delete edge plot 対応付けされなかった中で端のデータを消去
     index = np.delete(np.arange(matrix.shape[0]), associate_id[:, i])
-    a = np.where(
-        (matrix[index][:, 0] < window_thresh) | (matrix[index][:, 0] > window_size[1] - window_thresh)
-    )[0]
-    b = np.where(
-        (matrix[index][:, 1] < window_thresh) | (matrix[index][:, 1] > window_size[0] - window_thresh)
-    )[0]
-    delete_index = np.unique(np.append(a, b, axis=0))
-    return (
-        np.delete(matrix, index[delete_index], axis=0),
-        np.delete(index, delete_index),
-    )
+    if index.shape[0] != 0:
+        a = np.where(
+            (matrix[index][:, 0] < window_thresh) | (matrix[index][:, 0] > window_size[1] - window_thresh)
+        )[0]
+        b = np.where(
+            (matrix[index][:, 1] < window_thresh) | (matrix[index][:, 1] > window_size[0] - window_thresh)
+        )[0]
+        delete_index = np.unique(np.append(a, b, axis=0))
+        return (
+            np.delete(matrix, index[delete_index], axis=0),
+            np.delete(index, delete_index),
+        )
+    else:
+        return matrix, np.array([])
 
 
 def show_res(img, gt, res, no_detected_id, over_detection_id, path=None):
@@ -94,15 +97,17 @@ def show_res(img, gt, res, no_detected_id, over_detection_id, path=None):
     plt.imshow(img, plt.cm.gray)
     plt.plot(gt[:, 0], gt[:, 1], "y3", label="gt_annotation")
     plt.plot(res[:, 0], res[:, 1], "g4", label="pred")
-    plt.plot(
-        gt[no_detected_id][:, 0], gt[no_detected_id][:, 1], "b2", label="no_detected"
-    )
-    plt.plot(
-        res[over_detection_id][:, 0],
-        res[over_detection_id][:, 1],
-        "k1",
-        label="over_detection",
-    )
+    if no_detected_id.shape[0] > 0:
+        plt.plot(
+            gt[no_detected_id][:, 0], gt[no_detected_id][:, 1], "b2", label="no_detected"
+        )
+    if over_detection_id.shape[0] > 0:
+        plt.plot(
+            res[over_detection_id][:, 0],
+            res[over_detection_id][:, 1],
+            "k1",
+            label="over_detection",
+        )
     plt.legend(bbox_to_anchor=(0, 1.05), loc="upper left", fontsize=4, ncol=4)
     # plt.show()
     plt.savefig(path)

@@ -72,11 +72,11 @@ if __name__ == "__main__":
     net = UNetMultiTask2(n_channels=1, n_classes=1)
     net.cuda()
 
-    weight_path = "/home/kazuya/file_server2/weights/multi_task/best.pth"
-    root_path = Path("/home/kazuya/file_server2/groundTruths/challenge/01_SEG/ori_cut")
-    # root_path = Path("/home/kazuya/file_server2/images/challenge_cut/frame1/ori")
+    weight_path = "/home/kazuya/file_server2/weights/multi_task/sequ9/epoch_weight/00010.pth"
+    # root_path = Path("/home/kazuya/file_server2/groundTruths/challenge/01_SEG/ori_cut")
+    root_path = Path("/home/kazuya/file_server2/images/sequ9/ori")
     # root_path = Path("./images/train/ori")
-    save_path = Path("/home/kazuya/file_server2/all_outputs/bes_out/challenge_01")
+    save_path = Path("/home/kazuya/file_server2/all_outputs/bes_out/sequ18")
 
     pred = Predict(
         net=net,

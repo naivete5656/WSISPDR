@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
-from .matching import remove_outside_plot, optimum
+from .matching import remove_outside_plot, optimum, show_res
 
 
 class EvaluationMethods:
@@ -18,6 +18,7 @@ class EvaluationMethods:
         self.instance_dice_list = []
         self.iou_list = []
         self.dice_list = []
+        self.f_measure_list = []
 
     def save_result(self, mode, result):
         save_path = self.save_path / Path(self.mode + f"{mode}.txt")
@@ -26,13 +27,15 @@ class EvaluationMethods:
         with open(save_path, mode="w") as f:
             f.write(text)
 
-    def instance_eval(self, pred, target):
+    def instance_eval(self, pred, target, debug=False):
         assert pred.shape == target.shape, print("different shape at pred and target")
         tps = 0
         fps = 0
         fns = 0
         for target_label in range(1, target.max() + 1):
-            # seek pred label correspond to the label of target
+            if np.sum(target == target_label) < 20:
+                target[target == target_label] = 0
+                # seek pred label correspond to the label of target
             correspond_labels = pred[target == target_label]
             correspond_labels = correspond_labels[correspond_labels != 0]
             unique, counts = np.unique(correspond_labels, return_counts=True)
@@ -56,24 +59,45 @@ class EvaluationMethods:
             # create mask
             target_mask = np.zeros(target.shape)
             target_mask[target == target_label] = 1
-            # plt.imshow(target_mask), plt.show()
-            # plt.imshow(pred_mask), plt.show()
+            tar_x = target_mask
+            pre_x = pred_mask
+            if debug:
+                plt.imshow(target_mask), plt.show()
+                plt.imshow(pred_mask), plt.show()
             pred_mask = pred_mask.flatten()
             target_mask = target_mask.flatten()
 
             tp = pred_mask.dot(target_mask)
             fn = pred_mask.sum() - tp
             fp = target_mask.sum() - tp
+
             tps += tp
             fns += fn
             fps += fp
 
             iou = (tp / (tp + fp + fn))
-            print(iou)
-            self.instance_iou_list.append(iou)
+            bou_list = []
+            max_bou = tar_x.shape[0]
+            max_bou_h = tar_x.shape[1]
+            bou_list.extend(tar_x[0, :])
+            bou_list.extend(tar_x[max_bou - 1, :])
+            bou_list.extend(tar_x[:, max_bou_h - 1])
+            bou_list.extend(tar_x[:, 0])
+            bou_list = np.unique(bou_list)
+            if bou_list.max() == 0:
+                self.instance_iou_list.append(iou)
+            else:
+                pass
 
             dice = (2 * tp) / (2 * tp + fn + fp)
             self.instance_dice_list.append(dice)
+            # if iou<0.1:
+            #     plt.imshow(tar_x), plt.show()
+            #     plt.imshow(pre_x), plt.show()
+            #     print(iou)
+
+            if debug:
+                print(iou)
 
     def segmentation_eval(self, pred, target):
         pred_mask = np.zeros(pred.shape)
@@ -134,24 +158,30 @@ class EvaluationMethods:
             tp = 0
             fn = 0
             fp = 0
-        return tp, fn, fp
+
+        self.f_measure_list.append([tp, fn, fp])
 
     def review(self, evaluations):
+        tps, fns, fps = np.nansum(np.array(self.f_measure_list), axis=0)
+        precision = tps / (tps + fps)
+        recall = tps / (tps + fns)
+        f_measure = (2 * recall * precision) / (recall + precision)
 
         # segmentation
-        dice = np.nanmean(np.array(self.dice_list))
+        dice = np.nanmean(np.array(self.iou_list))
         iou = np.nanmean(np.array(self.dice_list))
 
         # instance segmentation
         instance_dice = np.nanmean(np.array(self.instance_dice_list))
         instance_iou = np.nanmean(np.array(self.instance_iou_list))
-        text = "segmentation\ndice:{}\niou:{}\n\
-                                    \ninstance-segmentation\ninstance_dice:{}\ninstance-iou:{}\n".format(dice, iou, instance_dice, instance_iou)
+        text = "f-measure:{} ,segmentation\ndice:{}\niou:{}\n\
+                                    \ninstance-segmentation\ninstance_dice:{}\ninstance-iou:{}\n".format(f_measure, dice, iou, instance_dice, instance_iou)
         print(text)
         plt.hist(self.instance_iou_list), plt.show()
         with open(self.save_path.joinpath(f"result.txt"), mode="w") as f:
             f.write(text)
 
-    def update_evaluation(self, pred, target, evaluations):
+    def update_evaluation(self, pred, target, debug):
         self.segmentation_eval(pred, target)
-        self.instance_eval(pred, target)
+        self.instance_eval(pred, target, debug=debug)
+        self.f_measure(pred, target)

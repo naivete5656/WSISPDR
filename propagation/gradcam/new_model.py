@@ -1,3 +1,4 @@
+from pathlib import Path
 from types import MethodType
 import torch.nn as nn
 from .guided_parts import guide_relu
@@ -12,6 +13,7 @@ from collections import OrderedDict
 from torch._six import container_abcs
 from itertools import islice
 import operator
+import matplotlib.pyplot as plt
 
 import torch
 
@@ -131,7 +133,7 @@ class GuidedModel(nn.Sequential):
                 str(root_path.joinpath("detection.tif")), (pre_img * 255).astype(np.uint8)
             )
         # peak
-        peaks = local_maxima((pre_img * 255).astype(np.uint8), 50, 2).astype(np.int)
+        peaks = local_maxima((pre_img * 255).astype(np.uint8), 125, 2).astype(np.int)
 
         gauses = []
         try:
@@ -151,39 +153,13 @@ class GuidedModel(nn.Sequential):
         gbs = []
         # each propagate
         peaks = np.insert(peaks, 0, [0, 0], axis=0)
-        if peak is None:
-            with open(root_path.joinpath("peaks.txt"), mode="w") as f:
-                f.write("ID,x,y\n")
-                for i in range(region.max() + 1):
-                    if img.grad is not None:
-                        img.grad.zero_()
-                    # f.write(f"{i},{peaks[i, 0]},{peaks[i ,1]}\n")
-                    f.write("{},{},{}\n".format(i, peaks[i, 0], peaks[i, 1]))
-                    mask = np.zeros(self.shape, dtype=np.float32)
-                    mask[region == i] = 1
-                    mask = mask.reshape([1, 1, self.shape[0], self.shape[1]])
-                    mask = torch.from_numpy(mask)
-                    mask = mask.cuda()
-
-                    class_response_maps.backward(mask, retain_graph=True)
-                    result = img.grad.detach().sum(1).clone().clamp(min=0).cpu().numpy()
-
-                    save_path = root_path.joinpath('each_peak')
-                    save_path.mkdir(parents=True, exist_ok=True)
-                    savemat(
-                        str(save_path.joinpath("{:04d}.mat".format(i))),
-                        {"image": result[0], "mask": mask},
-                    )
-                    cv2.imwrite(
-                        str(save_path.joinpath("{:04d}.png".format(i))),
-                        (result[0] * 255).astype(np.uint8),
-                    )
-                    gbs.append(result[0])
-
-        else:
+        with open(root_path.joinpath("peaks.txt"), mode="w") as f:
+            f.write("ID,x,y\n")
             for i in range(region.max() + 1):
                 if img.grad is not None:
                     img.grad.zero_()
+                # f.write(f"{i},{peaks[i, 0]},{peaks[i ,1]}\n")
+                f.write("{},{},{}\n".format(i, peaks[i, 0], peaks[i, 1]))
                 mask = np.zeros(self.shape, dtype=np.float32)
                 mask[region == i] = 1
                 mask = mask.reshape([1, 1, self.shape[0], self.shape[1]])
@@ -192,8 +168,19 @@ class GuidedModel(nn.Sequential):
 
                 class_response_maps.backward(mask, retain_graph=True)
                 result = img.grad.detach().sum(1).clone().clamp(min=0).cpu().numpy()
-                gbs.append(result[0])
 
+                save_path = root_path.joinpath('each_peak')
+                save_path.mkdir(parents=True, exist_ok=True)
+                savemat(
+                    str(save_path.joinpath("{:04d}.mat".format(i))),
+                    {"image": result[0], "mask": mask},
+                )
+                temp = (result[0]-result[0].min())/(result[0].max()- result[0].min())
+                cv2.imwrite(
+                    str(save_path.joinpath("{:04d}.png".format(i))),
+                    (temp * 255).astype(np.uint8),
+                )
+                gbs.append(result[0])
         return gbs
 
     def train(self, mode=True):
@@ -272,6 +259,7 @@ class GuidedModel2(Sequ):
             likely_map = np.zeros(self.shape)
 
         gbs = []
+        gbs2 = []
         # each propagate
         peaks = np.insert(peaks, 0, [0, 0], axis=0)
         if peak is None:
@@ -315,9 +303,16 @@ class GuidedModel2(Sequ):
 
                 class_response_maps.backward(mask, retain_graph=True)
                 result = img.grad.detach().sum(1).clone().clamp(min=0).cpu().numpy()
-                gbs.append(result[0])
+                result2 = img2.grad.detach().sum(1).clone().clamp(min=0).cpu().numpy()
 
-        return gbs
+                gbs.append(result[0])
+                gbs2.append(result2[0])
+                result = (result[0]-result[0].min()) / (result[0].max() - result[0].min()) *255
+                result2 = (result2[0]-result2[0].min()) / (result2[0].max() - result2[0].min())*255
+                plt.imshow(result), plt.show()
+                plt.imshow(result2), plt.show()
+
+        return gbs, gbs2
 
     def train(self, mode=True):
         super().train(mode)

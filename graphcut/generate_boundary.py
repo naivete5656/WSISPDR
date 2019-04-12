@@ -27,12 +27,12 @@ for i, path in enumerate(im_paths):
     try:
         result = cv2.imread(str(instance_paths.joinpath(f'{i:05d}label.tif')), 0)
 
-
         # calculate boundary
         bound = boundary_recognize(result)
 
         boundary = np.zeros(bound.shape)
         boundary[bound > 0] = 255
+
         cv2.imwrite(str(save_path_bou.joinpath("{:05d}.tif".format(i))), boundary)
         seg = np.zeros(result.shape)
         seg[result > 0] = 255

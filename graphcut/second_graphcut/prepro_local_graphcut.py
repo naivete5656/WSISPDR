@@ -81,25 +81,7 @@ def second_graphcut(paths, img, weight_path):
     return segmentation_results
 
 
-def boundary_recognize(result):
-    boundaries = []
-    for i in range(1, int(result.max() + 1)):
-        temp = np.zeros(result.shape)
-        temp[result == i] = result[result == i]
-        boundary = np.zeros(result.shape)
-        try:
-            contours = measure.find_contours(temp, 0.8)
-            for contour in contours:
-                for plot in contour:
-                    boundary[int(plot[0]), int(plot[1])] = i + 1
-        except IndexError:
-            print("Skip")
-        boundaries.append(boundary)
-    try:
-        boundary = np.max(boundaries, axis=0)
-    except ValueError:
-        boundary = np.zeros(result.shape)
-    return boundary
+
 
 
 def fix_segment(segments, peaks):

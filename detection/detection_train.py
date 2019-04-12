@@ -124,7 +124,7 @@ class _TrainBase:
             val_loss = eval_net(
                 self.net,
                 self.val,
-                "single",
+                mode=mode,
                 gpu=self.gpu,
                 only_loss=True,
                 norm=self.norm,

@@ -16,8 +16,6 @@ def to_cropped_imgs(ids, dir_img):
 def to_cropped_imgs2(dir_imgs):
     """From a list of tuples, returns the correct cropped img"""
     for dir_img in dir_imgs:
-        print(cv2.imread(str(dir_img))[:, :, :1].astype(np.float32).shape)
-        print(str(dir_img))
         yield cv2.imread(str(dir_img))[:, :, :1].astype(np.float32)
 
 

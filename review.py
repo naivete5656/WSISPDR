@@ -16,13 +16,25 @@ from utils import EvaluationMethods
 
 
 class UseMethods(EvaluationMethods):
-    def evaluation_all(self):
+    def evaluation_all(self, dataset, method, debug):
         evaluations = []
         for path in zip(self.pred_paths, self.target_path):
-            # pred = cv2.imread(str(path[0]), 0)
-            pred = np.load(path[0]).astype(np.int)
-            target = cv2.imread(str(path[1]), 0)
-            evaluations = self.update_evaluation(pred, target, evaluations)
+            if method == "bensh":
+                pred = np.load(path[0]).astype(np.int)
+            elif method == "prm":
+                pred = cv2.imread(str(path[0]), -1)
+                pred = cv2.resize(pred, (320, 256))
+            else:
+                pred = cv2.imread(str(path[0]), -1)
+            if dataset == "B23P17":
+                target = np.load(path[1]).astype(np.int)
+            else:
+                target = cv2.imread(str(path[1]), -1)
+            assert pred.shape == target.shape, print("defferent shape")
+            if debug:
+                plt.imshow(pred), plt.show()
+                plt.imshow(target), plt.show()
+            evaluations = self.update_evaluation(pred, target, debug=debug)
         self.review(evaluations)
 
     def noize_off(self):
@@ -73,6 +85,15 @@ class UseMethods(EvaluationMethods):
             output_path = path[0].parent.parent.joinpath("sophisticated_pred")
             output_path.mkdir(parents=True, exist_ok=True)
             np.save(output_path.joinpath(f"{img_i:05d}.npy"), new_pred)
+
+    def bensh(self):
+        for img_i, path in enumerate(zip(self.pred_paths, self.target_path)):
+            pred = cv2.imread(str(path[0]), 0)
+            label_image = cv2.connectedComponents(pred)[1]
+
+            output_path = path[0].parent.parent.joinpath("sophisticated_pred")
+            output_path.mkdir(parents=True, exist_ok=True)
+            np.save(output_path.joinpath(f"{img_i:05d}.npy"), label_image)
 
 
 class LinearReview(UseMethods):
@@ -150,24 +171,71 @@ class LinearReview(UseMethods):
 
             plt.imshow(markers), plt.show()
 
-    def evaluation_all(self):
+    def evaluation_all(self, debug=False):
         evaluations = []
         for path in zip(self.pred_paths, self.target_path):
             pred = cv2.imread(str(path[0]), 0)
             pred = cv2.connectedComponents(pred)[1]
             target = cv2.imread(str(path[1]), 0)
-            evaluations = self.update_evaluation(pred, target, evaluations)
-        self.review(evaluations)
+            # target = np.load(str(path[1])).astype(np.uint8)
+            evaluations = self.update_evaluation(pred, target, debug)
         self.review(evaluations)
 
 
 if __name__ == "__main__":
     date = datetime.now().date()
-    target_path = sorted(Path("/home/kazuya/file_server2/groundTruths/challenge/01_SEG/SEG_cut").glob('*.tif'))
-    pred_path = sorted(Path("/home/kazuya/file_server2/all_outputs/bes_out/challenge_01/sophisticated_pred").glob('*.npy'))
-    detection_path = sorted(Path("/home/kazuya/file_server2/all_outputs/bes_out/challenge_01/pred").glob('*.tif'))
-    save_path = Path("/home/kazuya/file_server2/all_outputs/bes_out/challenge_01/txt_result")
-
-    evaluation = UseMethods(pred_path, target_path,detection_path, save_path=save_path)
+    datasets = ["GBM", "B23P17", "0318_9", "sequence_10", "elmer", "challenge"]
+    dataset = datasets[1]
+    methods = ["bensh", "fogbank", "proposed", "linear", "prm"]
+    method = methods[2]
+    if dataset == "GBM":
+        target_path = sorted(
+            Path(f"/home/kazuya/file_server2/review/{dataset}/mask").glob("*.png")
+        )
+    elif dataset == "B23P17":
+        target_path = sorted(
+            Path(f"/home/kazuya/file_server2/review/{dataset}/mask").glob("*.npy")
+        )
+    elif dataset == "challenge":
+        target_path = sorted(
+            Path(f"/home/kazuya/file_server2/review/challenge/02_SEG/SEG_cut").glob(
+                "*.tif"
+            )
+        )
+    else:
+        target_path = sorted(
+            Path(f"/home/kazuya/file_server2/review/{dataset}/mask_cut").glob("*.tif")
+        )
+    # target_path = sorted(Path("/home/kazuya/file_server2/review/0318_9/mask_cut").glob('*.tif'))
+    if (method == "bensh") or (method == "fogbank") or (method == "prm"):
+        pred_path = Path(f"/home/kazuya/file_server2/review/out_{dataset}/{method}")
+    elif method == "proposed":
+        pred_path = Path(
+            f"/home/kazuya/file_server2/review/out_{dataset}/{method}/labelresults_0.100000_0.010000"
+        )
+    elif method == "linear":
+        pred_path = Path(f"/home/kazuya/file_server2/review/out_{dataset}/{method}/seg")
+    pred_paths = sorted(pred_path.glob("*.tif"))
+    detection_path = sorted(
+        Path("/home/kazuya/file_server2/all_outputs/bes_out/challenge_01/pred").glob(
+            "*.tif"
+        )
+    )
+    save_path = Path(f"/home/kazuya/file_server2/review/txt_result/{dataset}/{method}")
+    save_path.mkdir(parents=True, exist_ok=True)
+    assert len(target_path) > 0, print("target_no_data")
+    assert len(pred_paths) > 0, print("pred_no_data")
+    evaluation = UseMethods(
+        pred_paths, target_path, detection_path, save_path=save_path
+    )
+    # evaluation = LinearReview(
+    #     pred_paths, target_path, detection_path, save_path=save_path
+    # )
     # evaluation.noize_off()
-    evaluation.evaluation_all()
+    if method == "bensh":
+        evaluation.bensh()
+        evaluation.pred_paths = sorted(
+            pred_path.parent.joinpath("sophisticated_pred").glob("*.npy")
+        )
+    evaluation.evaluation_all(dataset, method, debug=False)
+    # evaluation.evaluation_all()

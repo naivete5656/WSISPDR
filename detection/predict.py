@@ -198,23 +198,23 @@ if __name__ == "__main__":
     date = datetime.now().date()
     gpu = True
     norm = True
-    plot_size = 12
+    plot_size = 6
     key = 2
 
     models = {1: UNet, 2:MargeNet,4: UnetMultiFixedWeight}
     # weight_path = "./weights/server_weights/MSELoss/{}/epoch_weight/{:05d}.pth".format(
     #     plot_size, 13
     # )
-    weight_path = "/home/kazuya/file_server2/weights/marge/best_12.pth"
-    weight_path = "/home/kazuya/file_server2/weights/challenge/best_12.pth"
+    # weight_path = "/home/kazuya/file_server2/weights/marge/best_12.pth"
+    weight_path = "/home/kazuya/file_server2/weights/elmer/6/best.pth"
     # root_path = Path("./images/C2C12P7/sequ_cut/0318/sequ18")
-    root_path = Path("/home/kazuya/file_server2/groundTruths/challenge/01_SEG/ori_cut")
-    save_path = Path("/home/kazuya/file_server2/all_outputs/bes_out/challenge_01")
+    root_path = Path("/home/kazuya/file_server2/images/dataset/elmer_set/heavy1/ori")
+    save_path = Path("/home/kazuya/file_server2/all_outputs/detection/elmer")
     net = UNet(n_channels=1, n_classes=1, sig=norm)
     # net = models[key](n_channels=1, n_classes=1, sig=norm, net=net)
     net.cuda()
     net.load_state_dict(torch.load(weight_path, map_location={"cuda:3": "cuda:1"}))
-    pred = Predict(net=net, gpu=gpu, root_path=root_path, save_path=save_path, norm_value=255)
+    pred = Predict(net=net, gpu=gpu, root_path=root_path, save_path=save_path, norm_value=4096)
     # pred = PredictFmeasure(
     #     net=net,
     #     gpu=gpu,
@@ -224,7 +224,7 @@ if __name__ == "__main__":
     #     peak_thresh=125,
     #     dist_peak=2,
     #     dist_threshold=20,
-    #     norm_value=255,
+    #     norm_value=4096,
     #     norm=norm,
     # )
 

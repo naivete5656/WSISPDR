@@ -22,7 +22,7 @@ if __name__ == "__main__":
     dirs = sorted(Path("/home/kazuya/file_server2/images/{}_cut/".format(dataset)).iterdir())
 
     input_path = sorted(Path("/home/kazuya/file_server2/images/sequ18/ori").glob('*.tif'))
-    output_path = Path("/home/kazuya/file_server2/all_outputs/guided_only/{}".format(dataset))
+    output_path = Path("/home/kazuya/file_server2/all_outputs/guided_only/test".format(dataset))
     # weight_path = "/home/kazuya/file_server2/weights/{}/{}/best_{}.pth".format(dataset, cross, plot_size)
     weight_path = "/home/kazuya/file_server2/weights/marge/best2_12.pth".format(dataset, cross, plot_size)
     net = UNet(n_channels=1, n_classes=1, sig=norm)
@@ -33,5 +33,5 @@ if __name__ == "__main__":
     )
 
     call = [GuideCall, GuideOnly]
-    bp = call[0](input_path, output_path, net, marge=True)
+    bp = call[1](input_path, output_path, net, marge=True)
     bp.main()
