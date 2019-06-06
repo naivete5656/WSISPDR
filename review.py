@@ -19,17 +19,10 @@ class UseMethods(EvaluationMethods):
     def evaluation_all(self, dataset, method, debug):
         evaluations = []
         for path in zip(self.pred_paths, self.target_path):
-            if method == "bensh":
-                pred = np.load(path[0]).astype(np.int)
-            elif method == "prm":
-                pred = cv2.imread(str(path[0]), -1)
-                pred = cv2.resize(pred, (320, 256))
-            else:
-                pred = cv2.imread(str(path[0]), -1)
-            if dataset == "B23P17":
-                target = np.load(path[1]).astype(np.int)
-            else:
-                target = cv2.imread(str(path[1]), -1)
+            pred = cv2.imread(str(path[0]), -1)
+
+            target = cv2.imread(str(path[1]), -1)
+
             assert pred.shape == target.shape, print("defferent shape")
             if debug:
                 plt.imshow(pred), plt.show()
@@ -39,7 +32,7 @@ class UseMethods(EvaluationMethods):
 
     def noize_off(self):
         for img_i, path in enumerate(
-            zip(self.pred_paths, self.target_path, self.detection_path)
+            zip(self.pred_paths, self.target_path)
         ):
             pred = cv2.imread(str(path[0]), 0)
             label_image = cv2.connectedComponents(pred)[1]
@@ -184,38 +177,20 @@ class LinearReview(UseMethods):
 
 if __name__ == "__main__":
     date = datetime.now().date()
-    datasets = ["GBM", "B23P17", "0318_9", "sequence_10", "elmer", "challenge"]
-    dataset = datasets[1]
+    datasets = ["GBM", "B23P17", "0318_9", "elmer"]
+    dataset = datasets[0]
     methods = ["bensh", "fogbank", "proposed", "linear", "prm"]
-    method = methods[2]
-    if dataset == "GBM":
-        target_path = sorted(
-            Path(f"/home/kazuya/file_server2/review/{dataset}/mask").glob("*.png")
-        )
-    elif dataset == "B23P17":
-        target_path = sorted(
-            Path(f"/home/kazuya/file_server2/review/{dataset}/mask").glob("*.npy")
-        )
-    elif dataset == "challenge":
-        target_path = sorted(
-            Path(f"/home/kazuya/file_server2/review/challenge/02_SEG/SEG_cut").glob(
-                "*.tif"
-            )
-        )
-    else:
-        target_path = sorted(
-            Path(f"/home/kazuya/file_server2/review/{dataset}/mask_cut").glob("*.tif")
-        )
-    # target_path = sorted(Path("/home/kazuya/file_server2/review/0318_9/mask_cut").glob('*.tif'))
-    if (method == "bensh") or (method == "fogbank") or (method == "prm"):
-        pred_path = Path(f"/home/kazuya/file_server2/review/out_{dataset}/{method}")
-    elif method == "proposed":
-        pred_path = Path(
-            f"/home/kazuya/file_server2/review/out_{dataset}/{method}/labelresults_0.100000_0.010000"
-        )
-    elif method == "linear":
-        pred_path = Path(f"/home/kazuya/file_server2/review/out_{dataset}/{method}/seg")
+    method = "proposed"
+
+    target_path = sorted(
+        Path(f"/home/kazuya/file_server2/review/{dataset}/mask_cut").glob("*.tif")
+    )
+
+    pred_path = Path(
+        f"/home/kazuya/file_server2/review/out_{dataset}/{method}/labelresults_0.100000_0.010000"
+    )
     pred_paths = sorted(pred_path.glob("*.tif"))
+
     detection_path = sorted(
         Path("/home/kazuya/file_server2/all_outputs/bes_out/challenge_01/pred").glob(
             "*.tif"
@@ -226,16 +201,6 @@ if __name__ == "__main__":
     assert len(target_path) > 0, print("target_no_data")
     assert len(pred_paths) > 0, print("pred_no_data")
     evaluation = UseMethods(
-        pred_paths, target_path, detection_path, save_path=save_path
+        pred_paths, target_path, save_path=save_path
     )
-    # evaluation = LinearReview(
-    #     pred_paths, target_path, detection_path, save_path=save_path
-    # )
-    # evaluation.noize_off()
-    if method == "bensh":
-        evaluation.bensh()
-        evaluation.pred_paths = sorted(
-            pred_path.parent.joinpath("sophisticated_pred").glob("*.npy")
-        )
     evaluation.evaluation_all(dataset, method, debug=False)
-    # evaluation.evaluation_all()

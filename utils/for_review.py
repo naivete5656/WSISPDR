@@ -5,10 +5,9 @@ from .matching import remove_outside_plot, optimum, show_res
 
 
 class EvaluationMethods:
-    def __init__(self, pred_path, target_path, detection_path, save_path, each_save=False):
+    def __init__(self, pred_path, target_path, save_path, each_save=False):
         self.pred_paths = pred_path
         self.target_path = target_path
-        self.detection_path = detection_path
         self.save_path = save_path
         self.each_save = False
         save_path.mkdir(parents=True, exist_ok=True)

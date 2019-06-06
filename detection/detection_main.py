@@ -19,7 +19,7 @@ mode = "single"
 plot_size = 9
 norm = True
 
-for cross in range(1, 5):
+for cross in range(4):
     date = datetime.now().date()
     dataset = ['GBM', 'B23P17', 'elmer']
     dataset = dataset[1]
