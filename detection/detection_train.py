@@ -199,16 +199,6 @@ class TrainNet(_TrainBase):
                 self.optimizer.step()
 
                 pbar.update(self.batch_size)
-                if i == 1:
-                    pre_img = masks_pred.detach().cpu().numpy()[0, 0]
-                    if self.norm:
-                        pre_img = (pre_img * 255).astype(np.uint8)
-                    else:
-                        pre_img = ((pre_img + 1) * (255 / 2)).astype(np.uint8)
-                    cv2.imwrite(
-                        str(self.save_path.joinpath("{:05d}.tif".format(epoch))),
-                        pre_img,
-                    )
             pbar.close()
             if self.val_path is not None:
                 self.validation(i, epoch)

@@ -1,7 +1,6 @@
 from .network_parts import *
 from .custom_parts import UpIncBoundary
 import torch.nn as nn
-import torch
 
 
 class UNet(nn.Module):

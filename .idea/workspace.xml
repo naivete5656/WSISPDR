@@ -2,22 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6e56797c-7ef8-4fa1-a274-fdcf870ea749" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/propagation/colorling.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/propagation/temp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BESnet/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/BESnet/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BESnet/predict.py" beforeDir="false" afterPath="$PROJECT_DIR$/BESnet/predict.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detection/detection_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/detection/detection_main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/detection/detection_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/detection/detection_train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/detection/predict.py" beforeDir="false" afterPath="$PROJECT_DIR$/detection/predict.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/generate_boundary.py" beforeDir="false" afterPath="$PROJECT_DIR$/graphcut/generate_boundary.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/second_graphcut/prepro_local_graphcut.py" beforeDir="false" afterPath="$PROJECT_DIR$/graphcut/second_graphcut/prepro_local_graphcut.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/propagation/gradcam/new_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/gradcam/new_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/propagation/multi_propagation.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/multi_propagation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/propagation/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/propagation/top_down_call.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/top_down_call.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/review.py" beforeDir="false" afterPath="$PROJECT_DIR$/review.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/for_review.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/for_review.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/load.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/load.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/matching.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/matching.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/network_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/network_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/network_parts.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/network_parts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/propagation/propagation_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/propagation_main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -75,19 +67,75 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/likelymapgen.py">
+        <entry file="file://$PROJECT_DIR$/detection/detection_main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="63" column="3" selection-start-line="63" selection-start-column="3" selection-end-line="63" selection-end-column="3" />
+            <state relative-caret-position="576">
+              <caret line="24" column="23" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#12#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/detection/second_detection_step.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-725">
+              <folding>
+                <element signature="e#0#12#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/detection/train_second.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-725" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/detection/predict.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5160">
+              <caret line="215" column="4" selection-start-line="215" selection-start-column="4" selection-end-line="215" selection-end-column="83" />
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/detection/custom_loss.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/detection/detection_eval.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-605">
+              <caret line="57" column="29" selection-start-line="57" selection-start-column="29" selection-end-line="57" selection-end-column="29" />
+              <folding>
+                <element signature="e#0#12#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/detection/detection_train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="744">
-              <caret line="67" column="24" selection-start-line="67" selection-start-column="24" selection-end-line="67" selection-end-column="24" />
+            <state relative-caret-position="222">
+              <caret line="202" column="41" lean-forward="true" selection-start-line="202" selection-start-column="41" selection-end-line="202" selection-end-column="41" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -96,55 +144,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/detection/detection_eval.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="81" column="59" selection-start-line="81" selection-start-column="59" selection-end-line="81" selection-end-column="59" />
-              <folding>
-                <element signature="e#0#12#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/matching.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/load.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="387">
-              <caret line="57" column="15" selection-start-line="57" selection-start-column="15" selection-end-line="57" selection-end-column="15" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/detection/detection_main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="552">
-              <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
-              <folding>
-                <element signature="e#0#12#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/detection/merge_main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1032">
-              <caret line="47" selection-start-line="47" selection-end-line="47" />
+            <state relative-caret-position="168">
+              <caret line="23" column="110" lean-forward="true" selection-start-line="23" selection-start-column="110" selection-end-line="24" selection-end-column="27" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -155,8 +158,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/networks/network_model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-line="32" />
+            <state relative-caret-position="-1728">
+              <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -167,22 +170,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/networks/network_parts.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="24" selection-end-line="97" selection-end-column="16" />
+            <state relative-caret-position="240">
+              <caret line="10" column="8" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
               <folding>
                 <element signature="e#32#44#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/miniconda3/envs/pytorch_pre/lib/python3.6/site-packages/torch/nn/modules/module.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="12024">
-              <caret line="508" selection-start-line="508" selection-end-line="508" />
-              <folding>
-                <element signature="e#0#35#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -227,7 +218,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/guided_main.py" />
         <option value="$PROJECT_DIR$/utils/utils.py" />
         <option value="$PROJECT_DIR$/unet_grad_cam/gradcam/guided_model.py" />
         <option value="$PROJECT_DIR$/unet_grad_cam/top_down_call.py" />
@@ -241,10 +231,8 @@
         <option value="$PROJECT_DIR$/detection/train_second.py" />
         <option value="$PROJECT_DIR$/detection/second_detection_step.py" />
         <option value="$PROJECT_DIR$/propagation/gradcam/guided_parts.py" />
-        <option value="$PROJECT_DIR$/detection/detection_main.py" />
         <option value="$PROJECT_DIR$/networks/__init__.py" />
         <option value="$PROJECT_DIR$/train.py" />
-        <option value="$PROJECT_DIR$/propagation/propagation_main.py" />
         <option value="$PROJECT_DIR$/propagation/__init__.py" />
         <option value="$PROJECT_DIR$/detection/__init__.py" />
         <option value="$PROJECT_DIR$/networks/custom_parts.py" />
@@ -254,7 +242,6 @@
         <option value="$PROJECT_DIR$/detection/detection_eval.py" />
         <option value="$PROJECT_DIR$/detection/merge_net_train.py" />
         <option value="$PROJECT_DIR$/detection/merge_main.py" />
-        <option value="$PROJECT_DIR$/networks/network_model.py" />
         <option value="$PROJECT_DIR$/networks/unet_plus.py" />
         <option value="$PROJECT_DIR$/propagation/gradcam/__init__.py" />
         <option value="$PROJECT_DIR$/propagation/gradcam/module_custom.py" />
@@ -267,7 +254,6 @@
         <option value="$PROJECT_DIR$/propagation/multi_propagation.py" />
         <option value="$PROJECT_DIR$/graphcut/generate_boundary.py" />
         <option value="$PROJECT_DIR$/utils/load.py" />
-        <option value="$PROJECT_DIR$/detection/detection_train.py" />
         <option value="$PROJECT_DIR$/propagation/gradcam/new_model.py" />
         <option value="$PROJECT_DIR$/utils/for_review.py" />
         <option value="$PROJECT_DIR$/utils/matching.py" />
@@ -278,14 +264,19 @@
         <option value="$PROJECT_DIR$/propagation/test.py" />
         <option value="$PROJECT_DIR$/detection/predict.py" />
         <option value="$PROJECT_DIR$/networks/network_parts.py" />
+        <option value="$PROJECT_DIR$/propagation/propagation_main.py" />
+        <option value="$PROJECT_DIR$/propagation/temp.py" />
+        <option value="$PROJECT_DIR$/detection/detection_train.py" />
+        <option value="$PROJECT_DIR$/networks/network_model.py" />
+        <option value="$PROJECT_DIR$/detection/detection_main.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="67" />
-    <option name="y" value="299" />
+    <option name="x" value="1987" />
+    <option name="y" value="226" />
     <option name="width" value="1853" />
-    <option name="height" value="1053" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -308,12 +299,13 @@
             <path>
               <item name="weakly_supervised_instance_segmentation" type="b2602c69:ProjectViewProjectNode" />
               <item name="weakly_supervised_instance_segmentation" type="462c0819:PsiDirectoryNode" />
-              <item name="networks" type="462c0819:PsiDirectoryNode" />
+              <item name="weights" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="weakly_supervised_instance_segmentation" type="b2602c69:ProjectViewProjectNode" />
               <item name="weakly_supervised_instance_segmentation" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
+              <item name="weights" type="462c0819:PsiDirectoryNode" />
+              <item name="MSELoss" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -352,8 +344,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.predict">
-    <configuration name="for_review" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.detection_main">
+    <configuration name="detection_main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="weakly_supervised_instance_segmentation" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -361,12 +353,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/detection" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/for_review.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/detection/detection_main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -375,7 +367,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="matching" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="detection_train" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="weakly_supervised_instance_segmentation" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -383,12 +375,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/detection" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/matching.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/detection/detection_train.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -419,7 +411,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="review" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="temp" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="weakly_supervised_instance_segmentation" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -427,12 +419,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/propagation" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/review.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/propagation/temp.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -465,11 +457,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.detection_main" />
+        <item itemvalue="Python.detection_train" />
+        <item itemvalue="Python.temp" />
         <item itemvalue="Python.predict" />
         <item itemvalue="Python.test" />
-        <item itemvalue="Python.review" />
-        <item itemvalue="Python.for_review" />
-        <item itemvalue="Python.matching" />
       </list>
     </recent_temporary>
   </component>
@@ -560,11 +552,17 @@
       <workItem from="1554787292274" duration="3000" />
       <workItem from="1554893474429" duration="3746000" />
       <workItem from="1555046729974" duration="4324000" />
+      <workItem from="1555204859379" duration="3048000" />
+      <workItem from="1555501995262" duration="767000" />
+      <workItem from="1555638195531" duration="1301000" />
+      <workItem from="1559021054704" duration="4526000" />
+      <workItem from="1559529151467" duration="253000" />
+      <workItem from="1559812900429" duration="2845000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="532543000" />
+    <option name="totallyTimeSpent" value="545283000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -576,15 +574,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="67" y="299" width="1853" height="1053" extended-state="6" />
+    <frame x="1987" y="226" width="1853" height="1080" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" sideWeight="0.50088495" side_tool="true" weight="0.29806095" />
       <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.49822694" visible="true" weight="0.116601884" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.49822694" visible="true" weight="0.12770683" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32969433" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.63626945" weight="0.43164694" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49750692" weight="0.29601723" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.63626945" visible="true" weight="0.43126386" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49750692" weight="0.29600886" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32969433" />
@@ -593,12 +592,12 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.36373058" side_tool="true" weight="0.5832866" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49844623" weight="0.29912663" />
-      <window_info anchor="bottom" id="Python Console" order="12" weight="0.7346683" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.7339246" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" sideWeight="0.49851924" weight="0.32953367" />
-      <window_info anchor="right" x="3907" y="37" width="1013" height="1883" id="SciView" maximized="true" order="4" sideWeight="0.50148076" side_tool="true" weight="0.11160466" />
+      <window_info anchor="right" x="3907" y="37" width="1013" height="1883" id="SciView" maximized="true" order="4" sideWeight="0.50148076" side_tool="true" type="WINDOWED" visible="true" weight="0.11160466" />
     </layout>
     <layout-to-restore>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17950138" />
@@ -866,6 +865,26 @@
           <line>216</line>
           <option name="timeStamp" value="659" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/detection/detection_train.py</url>
+          <line>170</line>
+          <option name="timeStamp" value="660" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/detection/detection_train.py</url>
+          <line>171</line>
+          <option name="timeStamp" value="661" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/detection/detection_train.py</url>
+          <line>141</line>
+          <option name="timeStamp" value="662" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/detection/detection_main.py</url>
+          <line>41</line>
+          <option name="timeStamp" value="663" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -880,43 +899,11 @@
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$test.coverage" NAME="test Coverage Results" MODIFIED="1554465992996" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/propagation" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$predict.coverage" NAME="predict Coverage Results" MODIFIED="1554468765741" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/detection" />
     <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$review.coverage" NAME="review Coverage Results" MODIFIED="1554124094476" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$detection_main.coverage" NAME="detection_main Coverage Results" MODIFIED="1559821992020" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/detection" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$temp.coverage" NAME="temp Coverage Results" MODIFIED="1559028033458" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/propagation" />
+    <SUITE FILE_PATH="coverage/weakly_supervised_instance_segmentation$detection_train.coverage" NAME="detection_train Coverage Results" MODIFIED="1559820492248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/detection" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/networks/custom_parts.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-730">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BESnet/__initi__.py" />
-    <entry file="file://$PROJECT_DIR$/propagation/gradcam/gradcam.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="102" column="17" selection-start-line="102" selection-start-column="16" selection-end-line="102" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/miniconda3/envs/pytorch_pre/lib/python3.6/site-packages/torch/serialization.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4162">
-          <caret line="365" selection-start-line="365" selection-end-line="365" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/miniconda3/envs/pytorch_pre/lib/python3.6/site-packages/torch/nn/functional.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="2026" selection-start-line="2026" selection-end-line="2026" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/propagation/gradcam/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
@@ -928,15 +915,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/propagation/gradcam/module_custom.py" />
-    <entry file="file://$PROJECT_DIR$/utils/ven_diagram.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
@@ -951,16 +929,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="639" selection-start-line="639" selection-end-line="639" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/cutimg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="17" column="59" selection-start-line="17" selection-start-column="59" selection-end-line="17" selection-end-column="59" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1002,16 +970,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/multi_propagation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="771">
-          <caret line="36" selection-start-line="36" selection-end-line="36" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BESnet/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
@@ -1028,16 +986,6 @@
           <caret line="92" selection-start-line="92" selection-end-line="92" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/propagation_main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="696">
-          <caret line="32" selection-start-line="32" selection-end-line="32" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1089,49 +1037,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/top_down_call.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2760">
-          <caret line="115" column="35" selection-start-line="115" selection-start-column="35" selection-end-line="115" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/propagation/gradcam/top_down_backpropagation.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1152">
           <caret line="48" selection-start-line="48" selection-end-line="48" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/miniconda3/envs/pytorch_pre/lib/python3.6/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7440">
-          <caret line="310" selection-start-line="310" selection-end-line="310" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="87" selection-start-line="87" selection-end-line="87" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/call_backprop.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="140" column="12" selection-start-line="140" selection-start-column="12" selection-end-line="142" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1156,16 +1067,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/for_review.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="29" column="8" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/graphcut/generate_boundary.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
@@ -1182,35 +1083,6 @@
           <caret line="216" column="47" selection-start-line="216" selection-start-column="47" selection-end-line="216" selection-end-column="47" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/propagation/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="696">
-          <caret line="32" selection-start-line="32" selection-end-line="32" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/detection/predict.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1320">
-          <caret line="61" selection-start-line="61" selection-end-line="61" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/detection/custom_loss.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1251,32 +1123,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/detection/merge_main.py">
+    <entry file="file://$USER_HOME$/miniconda3/envs/pytorch_pre/lib/python3.6/codecs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1032">
-          <caret line="47" selection-start-line="47" selection-end-line="47" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="7392">
+          <caret line="308" selection-start-line="308" selection-end-line="308" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/networks/network_model.py">
+    <entry file="file://$PROJECT_DIR$/detection/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret selection-end-line="32" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/network_parts.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="24" selection-end-line="97" selection-end-column="16" />
-          <folding>
-            <element signature="e#32#44#0" expanded="true" />
+            <element signature="e#0#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1291,56 +1149,224 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/matching.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/utils/color.csv">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/load.py">
+    <entry file="file://$PROJECT_DIR$/utils/cutimg.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="57" column="15" selection-start-line="57" selection-start-column="15" selection-end-line="57" selection-end-column="15" />
+        <state relative-caret-position="-648">
+          <caret line="17" column="59" selection-start-line="17" selection-start-column="59" selection-end-line="17" selection-end-column="59" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/detection/detection_eval.py">
+    <entry file="file://$PROJECT_DIR$/utils/for_review.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="81" column="59" selection-start-line="81" selection-start-column="59" selection-end-line="81" selection-end-column="59" />
+        <state relative-caret-position="-3096">
+          <caret line="29" column="8" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
           <folding>
-            <element signature="e#0#12#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/utils/likelymapgen.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
+        <state relative-caret-position="822">
           <caret line="63" column="3" selection-start-line="63" selection-start-column="3" selection-end-line="63" selection-end-column="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/detection/detection_main.py">
+    <entry file="file://$PROJECT_DIR$/utils/load.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
+        <state relative-caret-position="822">
+          <caret line="63" selection-start-line="63" selection-end-line="63" />
           <folding>
-            <element signature="e#0#12#0" expanded="true" />
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/matching.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="822">
+          <caret line="48" selection-start-line="48" selection-end-line="48" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="87" selection-start-line="87" selection-end-line="87" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/ven_diagram.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/top_down_call.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1176">
+          <caret line="193" column="34" lean-forward="true" selection-start-line="193" selection-start-column="34" selection-end-line="194" selection-end-column="86" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/propagation_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="5" column="38" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/call_backprop.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4992">
+          <caret line="57" column="15" selection-start-line="41" selection-start-column="4" selection-end-line="57" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/multi_propagation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="771">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/temp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="13" column="42" selection-start-line="13" selection-start-column="42" selection-end-line="13" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/propagation/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="40" column="85" lean-forward="true" selection-start-line="40" selection-start-column="85" selection-end-line="40" selection-end-column="85" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/detection/detection_train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="744">
-          <caret line="67" column="24" selection-start-line="67" selection-start-column="24" selection-end-line="67" selection-end-column="24" />
+        <state relative-caret-position="222">
+          <caret line="202" column="41" lean-forward="true" selection-start-line="202" selection-start-column="41" selection-end-line="202" selection-end-column="41" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/networks/network_parts.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="10" column="8" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
+          <folding>
+            <element signature="e#32#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/networks/network_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1728">
+          <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detection/merge_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="23" column="110" lean-forward="true" selection-start-line="23" selection-start-column="110" selection-end-line="24" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detection/detection_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="24" column="23" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detection/train_second.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-725" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detection/second_detection_step.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-725">
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detection/predict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5160">
+          <caret line="215" column="4" selection-start-line="215" selection-start-column="4" selection-end-line="215" selection-end-column="83" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detection/custom_loss.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detection/detection_eval.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-605">
+          <caret line="57" column="29" selection-start-line="57" selection-start-column="29" selection-end-line="57" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -16,8 +16,8 @@ if __name__ == "__main__":
     key = 3
 
     cross = 0
-    dataset = 'GBM'
-    dirs = sorted(Path("/home/kazuya/file_server2/images/{}_cut/".format(dataset)).iterdir())
+    dataset = 'elmer'
+    dirs = sorted(Path("/home/kazuya/file_server2/miccai/images/elmer_cut".format(dataset)).iterdir())
 
     input_path = dirs.pop(cross).joinpath('ori').glob('*.tif')
     output_path = Path("/home/kazuya/file_server2/all_outputs/guided_only/{}".format(dataset))
