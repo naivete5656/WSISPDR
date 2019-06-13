@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 from pathlib import Path
-import matplotlib.pyplot as plt
 from utils import target_peaks_gen, remove_outside_plot, optimum, local_maxima, show_res
 import numpy as np
 
@@ -9,8 +8,6 @@ import numpy as np
 def eval_net(
     net,
     dataset,
-    mode,
-    norm,
     save_path=None,
     gpu=True,
     debug=False,
@@ -28,11 +25,6 @@ def eval_net(
     for i, b in enumerate(dataset):
         img = b[0]
         true_mask = b[1]
-        if mode == 'marge':
-            img2 = b[0]
-            img2 = torch.from_numpy(img2).unsqueeze(0)
-            if gpu:
-                img2 = img2.cuda()
         with torch.no_grad():
             img = torch.from_numpy(img).unsqueeze(0)
             gt = torch.from_numpy(true_mask).unsqueeze(0)
@@ -40,25 +32,21 @@ def eval_net(
                 img = img.cuda()
                 gt = gt.cuda()
 
-            if mode == "single":
-                mask_pred = net(img)
-            elif mode == 'marge':
-                mask_pred = net(img, img2)
-            else:
-                _, _, _, mask_pred = net(img)
+            mask_pred = net(img)
+
         pre_img = mask_pred.detach().cpu().numpy()[0, 0]
-        if norm:
-            pre_img = pre_img * 255
-        else:
-            pre_img = ((pre_img + 1) * (255 / 2)).astype(np.uint8)
+
         loss = criterion(mask_pred, gt)
         losses += loss.item()
+
         if not only_loss:
-            if norm:
-                gt = target_peaks_gen((true_mask[0] * 255).astype(np.uint8))
-            else:
-                gt = target_peaks_gen(((true_mask[0] + 1) * (255 / 2)).astype(np.uint8))
+            pre_img = pre_img * 255
+
+            # calculate f measure
+            gt = target_peaks_gen((true_mask[0] * 255).astype(np.uint8))
+
             res = local_maxima(pre_img, peak_thresh, dist_peak)
+
             associate_id = optimum(gt, res, dist_threshold)
 
             gt_final, no_detected_id = remove_outside_plot(

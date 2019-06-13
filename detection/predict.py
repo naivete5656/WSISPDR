@@ -1,4 +1,3 @@
-from pathlib import Path
 from datetime import datetime
 from PIL import Image
 import torch
@@ -11,15 +10,14 @@ if __name__ == "__main__":
 
     os.chdir(Path.cwd().parent)
 
+from networks import UNet
 from utils import local_maxima, show_res, optimum, target_peaks_gen, remove_outside_plot
-from networks import UNet, DilatedUNet, UnetMultiFixedWeight, MargeNet
 
 
 class Predict:
-    def __init__(self, net, gpu, root_path, save_path, norm_value=255, norm=True):
+    def __init__(self, net, gpu, root_path, save_path, norm_value=255):
         self.net = net
         self.gpu = gpu
-        self.norm = norm
 
         # self.ori_path = root_path
         self.ori_path = root_path
@@ -33,31 +31,23 @@ class Predict:
         self.norm_value = norm_value
 
     def pred(self, ori):
-        if self.norm:
-            img = (ori.astype(np.float32) / self.norm_value).reshape(
-                (1, ori.shape[0], ori.shape[1])
-            )
-        else:
-            img = (ori.astype(np.float32) / (self.norm_value / 2) - 1).reshape(
-                (1, ori.shape[0], ori.shape[1])
-            )
+        img = (ori.astype(np.float32) / self.norm_value).reshape(
+            (1, ori.shape[0], ori.shape[1])
+        )
+
         with torch.no_grad():
             img = torch.from_numpy(img).unsqueeze(0)
             if self.gpu:
                 img = img.cuda()
             mask_pred = self.net(img)
         pre_img = mask_pred.detach().cpu().numpy()[0, 0]
-        if self.norm:
-            pre_img = (pre_img * 255).astype(np.uint8)
-        else:
-            pre_img = ((pre_img + 1) * 255 / 2).astype(np.uint8)
+        pre_img = (pre_img * 255).astype(np.uint8)
         return pre_img
 
     def main(self):
         self.net.eval()
         # path def
         paths = sorted(self.ori_path.glob("*.tif"))
-        """Evaluation without the densecrf with the dice coefficient"""
         for i, path in enumerate(paths):
             ori = np.array(Image.open(path))
             pre_img = self.pred(ori)
@@ -77,7 +67,6 @@ class PredictFmeasure(Predict):
         dist_peak=10,
         dist_threshold=20,
         norm_value=255,
-        norm=True,
     ):
         super().__init__(net, gpu, root_path, save_path, norm_value=norm_value)
         # self.ori_path = root_path
@@ -98,7 +87,6 @@ class PredictFmeasure(Predict):
         self.tps = 0
         self.fps = 0
         self.fns = 0
-
 
     def cal_tp_fp_fn(self, ori, gt_img, pre_img, i):
         gt = target_peaks_gen((gt_img).astype(np.uint8))
@@ -138,7 +126,6 @@ class PredictFmeasure(Predict):
         path_y = sorted(self.gt_path.glob("*.tif"))
 
         z = zip(path_x, path_y)
-        """Evaluation without the densecrf with the dice coefficient"""
 
         for i, b in enumerate(z):
             import gc
@@ -162,74 +149,24 @@ class PredictFmeasure(Predict):
             f.write("%f,%f,%f\n" % (precision, recall, f_measure))
 
 
-class PredSecond(PredictFmeasure):
-    def __init__(
-            self,
-            net,
-            gpu,
-            root_path,
-            save_path,
-            plot_size,
-            peak_thresh=100,
-            dist_peak=10,
-            dist_threshold=20,
-            norm_value=255,
-            norm=True,
-    ):
-        super().__init__(
-            net,
-            gpu,
-            root_path,
-            save_path,
-            plot_size,
-            peak_thresh=100,
-            dist_peak=10,
-            dist_threshold=20,
-            norm_value=255,
-            norm=True,
-        )
-        self.ori_path = root_path / Path("pred")
-        self.gt_path = root_path / Path("gt")
-
-
 if __name__ == "__main__":
     torch.cuda.set_device(1)
 
     date = datetime.now().date()
     gpu = True
-    norm = True
     plot_size = 6
     key = 2
 
-    models = {1: UNet, 2:MargeNet,4: UnetMultiFixedWeight}
-    # weight_path = "./weights/server_weights/MSELoss/{}/epoch_weight/{:05d}.pth".format(
-    #     plot_size, 13
-    # )
-    # weight_path = "/home/kazuya/file_server2/weights/marge/best_12.pth"
     weight_path = "/home/kazuya/file_server2/weights/elmer/6/best.pth"
-    # root_path = Path("./images/C2C12P7/sequ_cut/0318/sequ18")
     root_path = Path("/home/kazuya/file_server2/images/dataset/elmer_set/heavy1/ori")
     save_path = Path("/home/kazuya/file_server2/all_outputs/detection/elmer")
-    net = UNet(n_channels=1, n_classes=1, sig=norm)
-    # net = models[key](n_channels=1, n_classes=1, sig=norm, net=net)
+
+    net = UNet(n_channels=1, n_classes=1)
     net.cuda()
     net.load_state_dict(torch.load(weight_path, map_location={"cuda:3": "cuda:1"}))
-    pred = Predict(net=net, gpu=gpu, root_path=root_path, save_path=save_path, norm_value=4096)
-    # pred = PredictFmeasure(
-    #     net=net,
-    #     gpu=gpu,
-    #     root_path=root_path,
-    #     save_path=save_path,
-    #     plot_size=plot_size,
-    #     peak_thresh=125,
-    #     dist_peak=2,
-    #     dist_threshold=20,
-    #     norm_value=4096,
-    #     norm=norm,
-    # )
+
+    pred = Predict(
+        net=net, gpu=gpu, root_path=root_path, save_path=save_path, norm_value=4096
+    )
 
     pred.main()
-
-    import gc
-
-    gc.collect()

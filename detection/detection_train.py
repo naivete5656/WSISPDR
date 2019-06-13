@@ -1,18 +1,16 @@
 from tqdm import tqdm
 from torch import optim
 from .detection_eval import *
-from utils import get_imgs_and_masks, get_imgs_and_masks2, batch, get_imgs_multi
+from utils import get_imgs_and_masks, get_imgs_and_masks2, batch
 from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
-import cv2
 
 
 class _TrainBase:
     def __init__(
         self,
         net,
-        mode,
         epochs,
         batch_size,
         lr,
@@ -21,9 +19,7 @@ class _TrainBase:
         train_path,
         weight_path,
         save_path=None,
-        norm=None,
         val_path=None,
-        pre_trained_path=None,
     ):
         if isinstance(train_path, list):
             self.ori_path = []
@@ -50,7 +46,7 @@ class _TrainBase:
             self.save_path.mkdir(parents=True, exist_ok=True)
         print(
             "Starting training:\nEpochs: {}\nBatch size: {} \nLearning rate: {}\ngpu:{}\n"
-            "plot_size:{}\nmode:{}".format(epochs, batch_size, lr, gpu, plot_size, mode)
+            "plot_size:{}\n".format(epochs, batch_size, lr, gpu, plot_size)
         )
 
         self.net = net
@@ -70,7 +66,6 @@ class _TrainBase:
         self.evals = []
         self.epoch_loss = 0
         self.bad = 0
-        self.norm = norm
 
     def show_graph(self):
         print("f-measure={}".format(max(self.evals)))
@@ -81,7 +76,7 @@ class _TrainBase:
         plt.plot(x, self.evals)
         plt.show()
 
-    def validation(self, number_of_train_data, epoch, mode='single'):
+    def validation(self, number_of_train_data, epoch):
         loss = self.epoch_loss / (number_of_train_data + 1)
         print("Epoch finished ! Loss: {}".format(loss))
 
@@ -97,9 +92,7 @@ class _TrainBase:
             )
 
         if loss < 0.01:
-            fmeasure, val_loss = eval_net(
-                self.net, self.val, mode=mode, norm=self.norm, gpu=self.gpu
-            )
+            fmeasure, val_loss = eval_net(self.net, self.val, gpu=self.gpu)
             print("f-measure: {}".format(fmeasure))
             print("val_loss: {}".format(val_loss))
             try:
@@ -121,14 +114,7 @@ class _TrainBase:
             self.val_losses.append(val_loss)
         else:
             print("loss is too large. Continue train")
-            val_loss = eval_net(
-                self.net,
-                self.val,
-                mode=mode,
-                gpu=self.gpu,
-                only_loss=True,
-                norm=self.norm,
-            )
+            val_loss = eval_net(self.net, self.val, gpu=self.gpu, only_loss=True)
             self.evals.append(0)
             self.val_losses.append(val_loss)
         print("bad = {}".format(self.bad))
@@ -149,7 +135,7 @@ class TrainNet(_TrainBase):
             ori_paths = np.array(ori_paths)
             mask_paths = np.array(mask_paths)
             self.N_train = len(ori_paths)
-            self.train = get_imgs_and_masks2(ori_paths, mask_paths, norm=self.norm)
+            self.train = get_imgs_and_masks2(ori_paths, mask_paths)
         else:
             self.train = get_imgs_and_masks(
                 self.ori_path, self.mask_path, norm=self.norm
