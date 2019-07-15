@@ -100,7 +100,7 @@ class GuidedModel(nn.Sequential):
 
     def _recover(self):
         for module in self.modules():
-            if isinstance(module, nn.Conv2d) and hasattr(module, "_original_forward"):
+            if isinstance(module, nn.ReLU) and hasattr(module, "_original_forward"):
                 module.forward = module._original_forward
 
     def forward(

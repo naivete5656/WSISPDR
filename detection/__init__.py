@@ -1,2 +1,2 @@
 from .detection_train import TrainNet
-from .predict import Predict, PredictFmeasure
+from .detection_predict import Predict, PredictFmeasure

@@ -138,12 +138,12 @@ class TrainNet(_TrainBase):
             self.train = get_imgs_and_masks2(ori_paths, mask_paths)
         else:
             self.train = get_imgs_and_masks(
-                self.ori_path, self.mask_path, norm=self.norm
+                self.ori_path, self.mask_path
             )
             self.N_train = len(list(self.ori_path.glob("*.tif")))
         if self.val_path is not None:
             self.val = get_imgs_and_masks(
-                self.val_path, self.val_mask_path, norm=self.norm
+                self.val_path, self.val_mask_path
             )
 
     def loss_calculate(self, masks_probs_flat, true_masks_flat):
@@ -167,12 +167,6 @@ class TrainNet(_TrainBase):
                     true_masks = true_masks.cuda()
 
                 masks_pred = self.net(imgs)
-
-                # inputs = np.sign(imgs.min().detach().cpu().numpy())
-                # if inputs == 0:
-                #     inputs = 1
-                # outputs = np.sign(masks_pred.min().detach().cpu().numpy())
-                # assert inputs == outputs, print('mis normalizing')
 
                 masks_probs_flat = masks_pred.view(-1)
                 true_masks_flat = true_masks.view(-1)
