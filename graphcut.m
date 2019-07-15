@@ -1,5 +1,5 @@
-addpath('../Kernel_GraphCuts/GCMex-master')
-addpath('./src')
+addpath('./graphcut/Kernel_GraphCuts/GCMex-master')
+addpath('./graphcut/code')
 debug = false;
 
 min_cell_size = 50;
@@ -7,30 +7,28 @@ min_hole_size = 10;
 max_hole_size = Inf;
 hole_min_perct_intensity = 0;
 hole_max_perct_intensity = 100;
-bp_thresh = 0.05;
-bp_thresh2 = 0.05;
+bp_thresh = 0.001;
+bp_thresh2 = 0.00001;
 fill_holes_bool_oper = 'and';
 manual_finetune = 0;
-set_num = 4;
-dataset_list = ["GBM","B23P17","challenge","elmer", 'sequence_10', '0318_9'];
-dataset_list(set_num);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % load data
-basefolder = ['/home/kazuya/ssd/weakly_supervised_instance_segmentation/out/' char(dataset_list(set_num)) '/'];
-outfolder = ['/home/kazuya/ssd/weakly_supervised_instance_segmentation/out/graphcut/' char(dataset_list(set_num)) '/results/'];
-outfolder2 = ['/home/kazuya/ssd/weakly_supervised_instance_segmentation/out/graphcut/' char(dataset_list(set_num)) '/labelresults/'];
-outfolder3 = ['/home/kazuya/ssd/weakly_supervised_instance_segmentation/out/graphcut/' char(dataset_list(set_num)) '/for_bounding/'];
+inpbasefolder = './output/';
+outbasefolder = './resultout';
+outfolder = [outbasefolder '/results/'];
+outfolder2 = [outbasefolder '/labelresults/'];
+outfolder3 = [outbasefolder '/for_bounding/'];
 
-infolders = dir(basefolder);
+infolders = dir(inpbasefolder);
 mkdir(outfolder);
 mkdir(outfolder2);
 mkdir(outfolder3);
 
 for fileIndex=3:length(infolders)
     baseID = infolders(fileIndex).name;
-    infolder = [basefolder baseID '/'];
+    infolder = [inpbasefolder baseID '/'];
     infile = fullfile(infolder,'original.tif');
     fcnfile = fullfile(infolder,'detection.tif');
     posfile = fullfile(infolder,'peaks.txt');
@@ -78,10 +76,8 @@ for fileIndex=3:length(infolders)
     th_FCN = 0.91;
     maskF = zeros(size(F));
     maskF(F>th_FCN) = 1;
-
-    % substract the guided backpropagation maxidx = BP map の中で値がおおきいもの,
-    % tmp= exp(BP)の総和
-    % idx =  
+    
+    BP(BP < bp_thresh) = 0;
     [bpm maxidx] = max(BP,[],3);
     maxidx(bpm==0) = 0;
     BPM = zeros(Ny,Nx,Nz);
@@ -96,13 +92,11 @@ for fileIndex=3:length(infolders)
     for fidx=1:Nz;
         pos = fpos(fidx,:);% [y x]
         % max
-%         idxは自分でない領域のindex BPMはmaxでないものを削除したもの
         idx = find(maxidx~=fidx);
         bpm = BP(:,:,fidx);
         bpm(idx) = 0;
         BPM(:,:,fidx) = bpm;
         % softmax
-%         自分の領域と他のBPをsoftmaxした値にしているBPSM
         bpsm = exp(BP(:,:,fidx))./tmp.*im2bw(max(BP,[],3),bp_thresh);
         bpsm(find(BP(:,:,fidx)==0)) = 0;
         BPSM(:,:,fidx) = bpsm;
@@ -114,53 +108,14 @@ for fileIndex=3:length(infolders)
         b(:,:,1) = orgim + bpsm;
         b(:,:,2) = orgim - bpsm;
         b(:,:,3) = orgim - bpsm;
-        
-%         aがmaxのみ,bpsmがsoft max
-
-%         if debug
-%         figure(3);imshow(a);hold on; scatter(pos(2),pos(1),'g+'); hold off;
-%         figure(4);imshow(b);hold on; scatter(pos(2),pos(1),'g+'); hold off;
-%         end
     end
 
     RGB = label2rgb(maxidx,'jet','black','shuffle');
 
-    %% pre process for original images
-    % win_size = 9;
-    % dark_channel = get_dark_channel(orgim, win_size);
-%     sigma=1.5;     % scale parameter in Gaussian kernel
-%     bgim = 1 - orgim;
-%     G=fspecial('gaussian',15,sigma);
-%     Img_smooth=conv2(orgim,G,'same');  % smooth image by Gaussiin convolution
-%     [Ix,Iy]=gradient(orgim);
-%     f=Ix.^2+Iy.^2;
-%     f = (f-min(f(:)))/(max(f(:))-min(f(:)));
-%     g=1./(1+f);  % edge indicator function.
-% 
-%     % estimate foreground region 正規化した画像
-%     [nrows, ncols] = size(orgim);
-%     N = nrows*ncols;
-%     ftmp = exp(-orgim*10).^0.4;
-%     ftmp = imfilter(ftmp,fspecial('gaussian',3,1));
-% 
-%     %for flatten images
-%     [xx yy] = meshgrid(1:ncols, 1:nrows);
-%     xx = xx(:); yy = yy(:);
-%     X = [ones(N,1), xx, yy, xx.^2, xx.*yy, yy.^2];
-%     p = X\ftmp(:); 		%	p = (X'*X)^(-1)*X'*im(:);   
-%     ftmp = reshape(ftmp(:)-X*p,[nrows,ncols]);
-%     ftmp = ftmp - median(ftmp(:));
-% 
-%     % EGT foreground segmentation
-%     EGT = EGT_Segmentation(orgim, min_cell_size, min_hole_size, max_hole_size, hole_min_perct_intensity, hole_max_perct_intensity, fill_holes_bool_oper, manual_finetune);
-%     EGTbw = boundarymask(EGT);
-%     rgbEGT = imoverlay(orgim,EGTbw,[1 0 0]);
-% %     figure(3);imshow(rgbEGT);
 
     %%%%%%%%%%%%%%%%%%%%%%
     %% GraphCut
     c0=2;
-%     A_th = 10;
     A_th = 3;
     AL = zeros(size(orgim),'uint8');
     for fidx=1:Nz;
@@ -184,14 +139,8 @@ for fileIndex=3:length(infolders)
         if debug;
             figure(6);imshow(BWf);
         end  
-%         figure(6);imshow(BWf);
-
-        if ftmp(pos(1),pos(2)) < 0;
-            Dc1 = 0.4999*ones(size(orgim));
-        else
-%             Dc1 = 0.49*ones(size(orgim)) + ftmp;
-            Dc1 = 0.4999*ones(size(orgim));
-        end
+        
+        Dc1 = 0.4999*ones(size(orgim));
         Dc2 = 1 - Dc1;
 
         finds = find(BWf>0);
@@ -211,9 +160,6 @@ for fileIndex=3:length(infolders)
         [gch L] = GraphCut('expand',gch);
         gch = GraphCut('close', gch);
         
-        figure(7);imshow(L > 0);
-        
-%         L = L.*int32(EGT);
         Ltmp = bwconncomp(L);
 
         ddd = [];
@@ -233,7 +179,6 @@ for fileIndex=3:length(infolders)
         interIDs = setdiff(unique(AL(InterInds)),0);
         nonInterInds = find(L==1 & AL==0);
         
-        figure(7);imshow(L>0);
         % separate the intersections
         if length(interIDs)>0;
             tmpInter = zeros(size(orgim));
@@ -279,9 +224,6 @@ for fileIndex=3:length(infolders)
     imwrite(rgb2,out);
     out = [outfolder2 baseID 'label.tif'];
     imwrite(AL,out);
-
-    out = [outfolder3 baseID 'label.tif'];
-    imwrite(uint8(EGT),out);
 end
 1;
 

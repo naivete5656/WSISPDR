@@ -171,13 +171,6 @@ class GuidedModel(nn.Sequential):
                     str(save_path.joinpath("{:04d}.mat".format(i))),
                     {"image": result[0], "mask": mask},
                 )
-                temp = (result[0] - result[0].min()) / (
-                    result[0].max() - result[0].min()
-                )
-                cv2.imwrite(
-                    str(save_path.joinpath("{:04d}.png".format(i))),
-                    (temp * 255).astype(np.uint8),
-                )
                 gbs.append(result[0])
         return gbs
 

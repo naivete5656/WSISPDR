@@ -154,7 +154,7 @@ if __name__ == "__main__":
 
     date = datetime.now().date()
     gpu = True
-    plot_size = 6
+    plot_size = 9
     key = 2
 
     weight_path = "/home/kazuya/file_server2/weights/elmer/6/best.pth"
