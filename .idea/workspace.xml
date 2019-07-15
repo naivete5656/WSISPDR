@@ -2,55 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6e56797c-7ef8-4fa1-a274-fdcf870ea749" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/detection/detection_predict.py" beforeDir="false" afterPath="$PROJECT_DIR$/detection/detection_predict.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/main.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/EGT_Segmentation.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/assign_nearest_connected_label.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/break_holes.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/check_body_connectivity.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/check_body_connectivity_mex.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/check_body_connectivity_mex.mexa64" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/cluster_objects.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/fill_holes.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/fill_holes_between.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/filter_by_circularity.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/find_edges.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/find_edges_labeled.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/fog_bank_perctile_geodist.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/fog_bank_perctile_geodist_seed.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/generate_border_mask.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/generate_image_to_threshold.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/generate_seed_mask.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/gui_functions/checkbox.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/gui_functions/editbox.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/gui_functions/editbox_check.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/gui_functions/label.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/gui_functions/popupmenu.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/gui_functions/push_button.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/gui_functions/sub_panel.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/labeled_geodesic_dist.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/labeled_geodesic_dist_mex.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/labeled_geodesic_dist_mex.mexa64" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/morphOp.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/percentile.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/print_to_command.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/print_update.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/relabel_image.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/save_32_tiff.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/segplot.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/superimpose_colormap_contour.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/threshold_image.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/src/validate_filepath.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/test.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/test_EGTSegment.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/test_graphcut.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/test_graphcut_withOrg.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphcut/code/test_graphcut_withOrg_batch.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphcut.m" beforeDir="false" afterPath="$PROJECT_DIR$/graphcut.m" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networks/network_parts.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/network_parts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/propagation/gen_guided_model/guided_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/propagation/gen_guided_model/guided_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rsync.sh" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -113,8 +67,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="27" column="19" lean-forward="true" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
+            <state relative-caret-position="288">
+              <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -574,12 +528,12 @@
       <workItem from="1562740750251" duration="7000" />
       <workItem from="1563166876103" duration="2319000" />
       <workItem from="1563172480258" duration="660000" />
-      <workItem from="1563173163283" duration="918000" />
+      <workItem from="1563173163283" duration="1653000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="579055000" />
+    <option name="totallyTimeSpent" value="579790000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -599,7 +553,7 @@
       <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49707603" visible="true" weight="0.11927112" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3292683" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6357579" visible="true" weight="0.22643554" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6357579" visible="true" weight="0.22643554" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49750692" weight="0.29577464" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -779,7 +733,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>37</line>
+          <line>34</line>
           <option name="timeStamp" value="676" />
         </line-breakpoint>
       </breakpoints>
@@ -986,8 +940,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="27" column="19" lean-forward="true" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
+        <state relative-caret-position="288">
+          <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>

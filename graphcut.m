@@ -19,7 +19,6 @@ inpbasefolder = './output/';
 outbasefolder = './resultout';
 outfolder = [outbasefolder '/results/'];
 outfolder2 = [outbasefolder '/labelresults/'];
-outfolder3 = [outbasefolder '/for_bounding/'];
 
 infolders = dir(inpbasefolder);
 mkdir(outfolder);

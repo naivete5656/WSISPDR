@@ -11,19 +11,15 @@ if __name__ == "__main__":
 
     date = datetime.now().date()
     gpu = True
-    plot_size = 9
     key = 2
 
     weight_path = "./weight/best.pth"
     # image_path
     train_path = Path("./images/train")
-    train_path = Path("/home/kazuya/main/weakly_supervised_instance_segmentation/images/sequ9")
     val_path = Path("./images/val")
     guided_input_path = sorted(
         train_path.joinpath("ori").glob("*.tif")
     )
-
-    guided_input_path = guided_input_path[20000:]
 
     # guided output
     output_path = Path("output")
