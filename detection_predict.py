@@ -4,12 +4,6 @@ import torch
 import numpy as np
 from pathlib import Path
 import cv2
-
-if __name__ == "__main__":
-    import os
-
-    os.chdir(Path.cwd().parent)
-
 from networks import UNet
 from utils import local_maxima, show_res, optimum, target_peaks_gen, remove_outside_plot
 
@@ -62,7 +56,6 @@ class PredictFmeasure(Predict):
         gpu,
         root_path,
         save_path,
-        plot_size,
         peak_thresh=100,
         dist_peak=10,
         dist_threshold=20,
@@ -71,7 +64,7 @@ class PredictFmeasure(Predict):
         super().__init__(net, gpu, root_path, save_path, norm_value=norm_value)
         # self.ori_path = root_path
         self.ori_path = root_path / Path("ori")
-        self.gt_path = root_path / Path("{}".format(plot_size))
+        self.gt_path = root_path / Path("gt")
 
         self.save_gt_path = save_path / Path("gt")
         self.save_error_path = save_path / Path("error")
@@ -131,8 +124,8 @@ class PredictFmeasure(Predict):
             import gc
 
             gc.collect()
-            ori = np.array(Image.open(b[0]))
-            gt_img = np.array(Image.open(b[1]))
+            ori = cv2.imread(str(b[0]), 0)[:512, :512]
+            gt_img = cv2.imread(str(b[1]), 0)[:512, :512]
 
             pre_img = self.pred(ori)
 
@@ -150,23 +143,18 @@ class PredictFmeasure(Predict):
 
 
 if __name__ == "__main__":
-    torch.cuda.set_device(1)
-
-    date = datetime.now().date()
     gpu = True
-    plot_size = 9
-    key = 2
 
-    weight_path = "/home/kazuya/file_server2/weights/elmer/6/best.pth"
-    root_path = Path("/home/kazuya/file_server2/images/dataset/elmer_set/heavy1/ori")
-    save_path = Path("/home/kazuya/file_server2/all_outputs/detection/elmer")
+    weight_path = "weight path"
+    root_path = Path("image_dir")
+    save_path = Path("output_dir")
 
     net = UNet(n_channels=1, n_classes=1)
     net.cuda()
-    net.load_state_dict(torch.load(weight_path, map_location={"cuda:3": "cuda:1"}))
+    net.load_state_dict(torch.load(weight_path, map_location="cuda:0"))
 
-    pred = Predict(
-        net=net, gpu=gpu, root_path=root_path, save_path=save_path, norm_value=4096
+    pred = PredictFmeasure(
+        net=net, gpu=gpu, root_path=root_path, save_path=save_path, norm_value=255
     )
 
     pred.main()

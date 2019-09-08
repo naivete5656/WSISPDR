@@ -2,7 +2,9 @@ import random
 from pathlib import Path
 from skimage.feature import peak_local_max
 import numpy as np
+import torch
 import cv2
+from scipy.ndimage.interpolation import rotate
 
 
 def to_cropped_imgs(ids, dir_img):
@@ -12,6 +14,7 @@ def to_cropped_imgs(ids, dir_img):
             yield cv2.imread(str(dir_img / id.name))[:, :, :1].astype(np.float32)
         except TypeError:
             print(str(dir_img / id.name))
+
 
 def to_cropped_imgs2(dir_imgs):
     """From a list of tuples, returns the correct cropped img"""
@@ -53,36 +56,48 @@ def local_maxima(img, threshold=100, dist=2):
     return data
 
 
-def get_imgs_and_masks(dir_img, dir_mask):
-    """Return all the couples (img, mask)"""
-    paths = list(dir_img.glob("*.tif"))
-    random.shuffle(list(paths))
-    imgs = to_cropped_imgs(paths, dir_img)
-    # need to transform from HWC to CHW
-    imgs_switched = map(hwc_to_chw, imgs)
-    masks = to_cropped_imgs(paths, dir_mask)
-    masks_switched = map(hwc_to_chw, masks)
-    imgs_normalized = map(normalize, imgs_switched)
-    masks_normalized = map(normalize, masks_switched)
-    return zip(imgs_normalized, masks_normalized)
+class CellImageLoad(object):
+    def __init__(self, ori_path, gt_path, crop_size=(256, 256)):
+        self.ori_paths = ori_path
+        self.gt_paths = gt_path
+        self.crop_size = crop_size
 
+    def __len__(self):
+        return len(self.ori_paths) - 1
 
-def get_imgs_and_masks2(ori_paths, mask_paths):
-    index = list(range(ori_paths.shape[0]))
-    random.shuffle(index)
+    def random_crop_param(self, shape):
+        h, w = shape
+        top = np.random.randint(0, h - self.crop_size[0])
+        left = np.random.randint(0, w - self.crop_size[1])
+        bottom = top + self.crop_size[0]
+        right = left + self.crop_size[1]
+        return top, bottom, left, right
 
-    imgs = ori_paths[index]
-    masks = mask_paths[index]
+    def __getitem__(self, data_id):
+        img_name = self.ori_paths[data_id]
+        img = cv2.imread(str(img_name), 0)[:880]
+        img = img / img.max()
 
-    imgs = to_cropped_imgs2(imgs)
-    masks = to_cropped_imgs2(masks)
-    # need to transform from HWC to CHW
-    imgs_switched = map(hwc_to_chw, imgs)
-    masks_switched = map(hwc_to_chw, masks)
-    imgs_normalized = map(normalize, imgs_switched)
-    masks_normalized = map(normalize, masks_switched)
+        gt_name = self.gt_paths[data_id]
+        gt = cv2.imread(str(gt_name), 0)
+        gt = gt / gt.max()
 
-    return zip(imgs_normalized, masks_normalized)
+        # data augumentation
+        top, bottom, left, right = self.random_crop_param(img.shape)
+
+        img = img[top:bottom, left:right]
+        gt = gt[top:bottom, left:right]
+
+        rand_value = np.random.randint(0, 4)
+        img = rotate(img, 90 * rand_value, mode="nearest")
+        gt = rotate(gt, 90 * rand_value)
+
+        img = torch.from_numpy(img.astype(np.float32))
+        gt = torch.from_numpy(gt.astype(np.float32))
+
+        datas = {"image": img.unsqueeze(0), "gt": gt.unsqueeze(0)}
+
+        return datas
 
 
 def get_feature_map(ids, dir_after):

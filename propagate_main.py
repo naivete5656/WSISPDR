@@ -1,8 +1,5 @@
 from pathlib import Path
 from datetime import datetime
-import os
-
-os.chdir(Path.cwd().parent)
 from propagation import GuideCall
 from pathlib import Path
 import torch
@@ -29,16 +26,10 @@ if __name__ == "__main__":
     cross = 0
     dataset = datasets[3]
     input_path = sorted(
-        Path(
-            "/home/kazuya/ssd/weakly_supervised_instance_segmentation/images/data/elmer_cut/0/ori"
-        ).glob("*.tif")
+        Path("/home/kazuya/main/WSISPDR/image/riken/B2_1/ori").glob("*.tif")
     )
-    output_path = Path(
-        "/home/kazuya/ssd/weakly_supervised_instance_segmentation/out/{}".format(
-            dataset
-        )
-    )
-    weight_path = "/home/kazuya/file_server2/miccai/weights/elmer/0/best_9.pth"
+    output_path = Path("/home/kazuya/main/WSISPDR/output/riken/B2/guided")
+    weight_path = "/home/kazuya/main/WSISPDR/weights/riken/best.pth"
 
     net = UNet(n_channels=1, n_classes=1)
 

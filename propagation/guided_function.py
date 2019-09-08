@@ -4,6 +4,7 @@ import numpy as np
 from PIL import Image
 import cv2
 import matplotlib.pyplot as plt
+from scipy.io import savemat
 
 
 class BackProp(object):
@@ -66,7 +67,7 @@ class GuideCall(BackProp):
             self.output_path_each.mkdir(parents=True, exist_ok=True)
 
             # load image
-            img = np.array(Image.open(path))
+            img = cv2.imread(str(path), 0)[:512, :512]
             self.shape = img.shape
             cv2.imwrite(str(self.output_path_each.joinpath("original.tif")), img)
 
@@ -100,20 +101,19 @@ class GuideCall(BackProp):
 
             prms_coloring = np.array(prms_coloring)
 
+            savemat(
+                str(self.output_path_each.joinpath("prms.mat")),
+                {"prms": prms, "color": prms_coloring},
+            )
+
             prms_coloring = np.max(prms_coloring, axis=0)
 
             prms_coloring = (
                 prms_coloring.astype(np.float) / prms_coloring.max() * 255
             ).astype(np.uint8)
 
-            prm = np.max(prms, axis=0)
-            prm = prm / prm.max() * 255
-            plt.imshow(prms_coloring), plt.show()
+            # plt.imshow(prms_coloring), plt.show()
             cv2.imwrite(
                 str(self.output_path_each.joinpath("instance.tif")),
                 prms_coloring.astype(np.uint8),
-            )
-            cv2.imwrite(
-                str(self.output_path_each.joinpath("{:05d}.tif".format(img_i))),
-                prm.astype(np.uint8),
             )

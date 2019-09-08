@@ -1,5 +1,4 @@
-addpath('./graphcut/Kernel_GraphCuts/GCMex-master')
-addpath('./graphcut/code')
+addpath('./graphcut/GCmex1.9')
 debug = false;
 
 min_cell_size = 50;
@@ -15,15 +14,15 @@ manual_finetune = 0;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % load data
-inpbasefolder = './output/';
-outbasefolder = './resultout';
+inpbasefolder = './output/riken/B2/guided/';
+outbasefolder = './output/riken/B2/segmentation';
 outfolder = [outbasefolder '/results/'];
 outfolder2 = [outbasefolder '/labelresults/'];
 
 infolders = dir(inpbasefolder);
 mkdir(outfolder);
 mkdir(outfolder2);
-mkdir(outfolder3);
+% mkdir(outfolder3);
 
 for fileIndex=3:length(infolders)
     baseID = infolders(fileIndex).name;
