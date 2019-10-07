@@ -75,7 +75,7 @@ matlab -nodesktop -nosplash -r 'graphcut; exit'
 ```
 
 <div style="color:#0000FF" align="center">
- <img src="./image/test/ori/00000.png" width="300"/> <img src="./image/test/gt/00000.png" width="300"/><img src="./output/seg/result_bp/00000segbp.png" width="300"/>
+ <img src="./image/test/ori/00000.png" width="290"/> <img src="./image/test/gt/00000.png" width="290"/><img src="./output/seg/result_bp/00000segbp.png" width="290"/>
 </div>
 **This is a sample code.**
 **We don't provide dataset.**
