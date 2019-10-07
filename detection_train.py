@@ -1,54 +1,93 @@
 from tqdm import tqdm
 from torch import optim
 import torch.utils.data
+import torch.nn as nn
 from detection import *
-from utils import CellImageLoad, batch
+from utils import CellImageLoad
 from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 import cv2
+from networks import UNet
+import argparse
+
+
+def parse_args():
+    """
+  Parse input arguments
+  """
+    parser = argparse.ArgumentParser(description="Train data path")
+    parser.add_argument(
+        "-t",
+        "--train_path",
+        dest="train_path",
+        help="training dataset's path",
+        default="./image/train",
+        type=str,
+    )
+    parser.add_argument(
+        "-v",
+        "--val_path",
+        dest="val_path",
+        help="validation data path",
+        default="./image/val",
+        type=str,
+    )
+    parser.add_argument(
+        "-w",
+        "--weight_path",
+        dest="weight_path",
+        help="save weight path",
+        default="./weight/best.pth",
+    )
+    parser.add_argument(
+        "-g", "--gpu", dest="gpu", help="whether use CUDA", action="store_true"
+    )
+    parser.add_argument(
+        "-b", "--batch_size", dest="batch_size", help="batch_size", default=16, type=int
+    )
+    parser.add_argument(
+        "-e", "--epochs", dest="epochs", help="epochs", default=500, type=int
+    )
+    parser.add_argument(
+        "-l",
+        "--learning_rate",
+        dest="learning_rate",
+        help="learning late",
+        default=1e-3,
+        type=float,
+    )
+
+    args = parser.parse_args()
+    return args
 
 
 class _TrainBase:
-    def __init__(
-        self,
-        net,
-        epochs,
-        batch_size,
-        lr,
-        gpu,
-        plot_size,
-        train_path,
-        weight_path,
-        save_path=None,
-        val_path=None,
-    ):
-        ori_paths = self.gather_path(train_path, "ori")
-        gt_paths = self.gather_path(train_path, "gt")
+    def __init__(self, args):
+        ori_paths = self.gather_path(args.train_path, "ori")[:300]
+        gt_paths = self.gather_path(args.train_path, "gt")[:300]
         data_loader = CellImageLoad(ori_paths, gt_paths)
         self.train_dataset_loader = torch.utils.data.DataLoader(
-            data_loader, batch_size=batch_size, shuffle=True, num_workers=0
+            data_loader, batch_size=args.batch_size, shuffle=True, num_workers=0
         )
         self.number_of_traindata = data_loader.__len__()
 
-        ori_paths = self.gather_path(val_path, "ori")
-        gt_paths = self.gather_path(val_path, "gt")
+        ori_paths = self.gather_path(args.val_path, "ori")[:300]
+        gt_paths = self.gather_path(args.val_path, "gt")[:300]
         data_loader = CellImageLoad(ori_paths, gt_paths)
         self.val_loader = torch.utils.data.DataLoader(
             data_loader, batch_size=5, shuffle=False, num_workers=0
         )
 
-        self.save_weight_path = weight_path
+        self.save_weight_path = args.weight_path
         self.save_weight_path.parent.mkdir(parents=True, exist_ok=True)
         self.save_weight_path.parent.joinpath("epoch_weight").mkdir(
             parents=True, exist_ok=True
         )
-        if save_path is not None:
-            self.save_path = save_path
-            self.save_path.mkdir(parents=True, exist_ok=True)
         print(
-            "Starting training:\nEpochs: {}\nBatch size: {} \nLearning rate: {}\ngpu:{}\n"
-            "plot_size:{}\n".format(epochs, batch_size, lr, gpu, plot_size)
+            "Starting training:\nEpochs: {}\nBatch size: {} \nLearning rate: {}\ngpu:{}\n".format(
+                args.epochs, args.batch_size, args.learning_rate, args.gpu
+            )
         )
 
         self.net = net
@@ -57,11 +96,10 @@ class _TrainBase:
         self.val = None
 
         self.N_train = None
-        self.optimizer = optim.Adam(net.parameters(), lr=lr)
-        self.epochs = epochs
-        self.batch_size = batch_size
-        self.gpu = gpu
-        self.plot_size = plot_size
+        self.optimizer = optim.Adam(net.parameters(), lr=args.learning_rate)
+        self.epochs = args.epochs
+        self.batch_size = args.batch_size
+        self.gpu = args.gpu
         self.criterion = nn.MSELoss()
         self.losses = []
         self.val_losses = []
@@ -158,28 +196,20 @@ class TrainNet(_TrainBase):
 
 
 if __name__ == "__main__":
-    plot_size = 6
+    args = parse_args()
 
-    train_path = [Path("dir")]
-    val_path = [Path("dir")]
-
+    args.train_path = [Path(args.train_path)]
+    args.val_path = [Path(args.val_path)]
     # save weight path
-    save_weight_path = Path("./weights/{}/best.pth".format(dataset))
+    args.weight_path = Path(args.weight_path)
 
     # define model
     net = UNet(n_channels=1, n_classes=1)
-    net.cuda()
+    if args.gpu:
+        net.cuda()
 
-    train = TrainNet(
-        net=net,
-        epochs=500,
-        batch_size=16,
-        lr=1e-3,
-        gpu=True,
-        plot_size=plot_size,
-        train_path=train_path,
-        val_path=val_path,
-        weight_path=save_weight_path,
-    )
+    args.net = net
+
+    train = TrainNet(args)
 
     train.main()

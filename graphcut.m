@@ -1,4 +1,4 @@
-addpath('./graphcut/GCmex1.9')
+addpath('./graphcut')
 debug = false;
 
 min_cell_size = 50;
@@ -6,16 +6,16 @@ min_hole_size = 10;
 max_hole_size = Inf;
 hole_min_perct_intensity = 0;
 hole_max_perct_intensity = 100;
-bp_thresh = 0.001;
-bp_thresh2 = 0.00001;
+bp_thresh = 0.01;
+bp_thresh2 = 0.001;
 fill_holes_bool_oper = 'and';
 manual_finetune = 0;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % load data
-inpbasefolder = './output/riken/B2/guided/';
-outbasefolder = './output/riken/B2/segmentation';
+inpbasefolder = './output/guided/';
+outbasefolder = './output/output/sef';
 outfolder = [outbasefolder '/results/'];
 outfolder2 = [outbasefolder '/labelresults/'];
 
@@ -27,8 +27,8 @@ mkdir(outfolder2);
 for fileIndex=3:length(infolders)
     baseID = infolders(fileIndex).name;
     infolder = [inpbasefolder baseID '/'];
-    infile = fullfile(infolder,'original.tif');
-    fcnfile = fullfile(infolder,'detection.tif');
+    infile = fullfile(infolder,'original.png');
+    fcnfile = fullfile(infolder,'detection.png');
     posfile = fullfile(infolder,'peaks.txt');
     bpfolder = [infolder 'each_peak/'];
     bpfiles = dir([bpfolder '*.mat']);

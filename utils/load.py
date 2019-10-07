@@ -7,42 +7,6 @@ import cv2
 from scipy.ndimage.interpolation import rotate
 
 
-def to_cropped_imgs(ids, dir_img):
-    """From a list of tuples, returns the correct cropped img"""
-    for id in ids:
-        try:
-            yield cv2.imread(str(dir_img / id.name))[:, :, :1].astype(np.float32)
-        except TypeError:
-            print(str(dir_img / id.name))
-
-
-def to_cropped_imgs2(dir_imgs):
-    """From a list of tuples, returns the correct cropped img"""
-    for dir_img in dir_imgs:
-        yield cv2.imread(str(dir_img))[:, :, :1].astype(np.float32)
-
-
-def hwc_to_chw(img):
-    return np.transpose(img, axes=[2, 0, 1])
-
-
-def normalize(x):
-    return x / 255
-
-
-def batch(iterable, batch_size):
-    """Yields lists by batch"""
-    b = []
-    for i, t in enumerate(iterable):
-        b.append(t)
-        if (i + 1) % batch_size == 0:
-            yield b
-            b = []
-
-    if len(b) > 0:
-        yield b
-
-
 def local_maxima(img, threshold=100, dist=2):
     assert len(img.shape) == 2
     data = np.zeros((0, 2))
@@ -98,8 +62,3 @@ class CellImageLoad(object):
         datas = {"image": img.unsqueeze(0), "gt": gt.unsqueeze(0)}
 
         return datas
-
-
-def get_feature_map(ids, dir_after):
-    for id in ids:
-        yield np.load(dir_after / Path(id.name[:-4] + ".npy"))[0]

@@ -125,7 +125,7 @@ class GuidedModel(nn.Sequential):
         self.shape = pre_img.shape
         if peak is None:
             cv2.imwrite(
-                str(root_path.joinpath("detection.tif")),
+                str(root_path.joinpath("detection.png")),
                 (pre_img * 255).astype(np.uint8),
             )
         # peak

@@ -24,14 +24,13 @@ def optimum(target, pred, dist_threshold):
     d = np.array([])
     associate_id = np.zeros((0, 2))
 
-    # GT position との距離を算出
+    # distance to GT position 
     for ii in range(int(target.shape[0])):
         dist = pred[:, 0:2] - np.tile(target[ii, 0:2], (pred.shape[0], 1))
-        # 一点との距離を算出
+        # calculate distance
         dist_lis = np.sqrt(np.sum(np.square(dist), axis=1))
         cc = np.where(dist_lis <= dist_threshold)[0]
 
-        # 可能性がある候補に１を立てる
         for j in cc:
             c1 = np.zeros((1, target.shape[0] + pred.shape[0]))
             c1[0, ii] = 1
@@ -40,24 +39,19 @@ def optimum(target, pred, dist_threshold):
             d = np.append(d, math.exp(-r * dist_lis[j]))
             associate_id = np.append(associate_id, [[ii, j]], axis=0)
 
-    # 最適化問題を最大を求める問題に設定
     prob = pulp.LpProblem("review", pulp.LpMaximize)
 
     index = list(range(d.shape[0]))  # type:
 
     x_vars = pulp.LpVariable.dict("x", index, lowBound=0, upBound=1, cat="Integer")
 
-    # 最大化する値
     prob += sum([d[i] * x_vars[i] for i in range(d.shape[0])])
 
-    # 条件の定義
     for j in range(c.shape[1]):
         prob += sum([c[i, j] * x_vars[i] for i in range(d.shape[0])]) <= 1
 
-    # 最適化問題を解く
     prob.solve()
 
-    # 最適化結果を抽出　=0 のデータを削除
     x_list = np.zeros(d.shape[0], dtype=int)
     for jj in range(d.shape[0]):
         x_list[jj] = int(x_vars[jj].value())
@@ -69,12 +63,12 @@ def remove_outside_plot(matrix, associate_id, i, window_size, window_thresh=10):
     """
     delete peak that outside
     :param matrix:target matrix
-    :param associate_id:optimizeした結果
-    :param i: 0 or 1 0の場合target,1の場合predを対象にする
+    :param associate_id:optimize result
+    :param i: 0 or 1 .0->target,1->pred
     :param window_size: window size
     :return: removed outside plots
     """
-    # delete edge plot 対応付けされなかった中で端のデータを消去
+    # delete edge plot
     index = np.delete(np.arange(matrix.shape[0]), associate_id[:, i])
     if index.shape[0] != 0:
         a = np.where(
@@ -138,10 +132,10 @@ def gaus_filter(img, kernel_size, sigma):
     pad_size = int(kernel_size - 1 / 2)
     img_t = np.pad(
         img, (pad_size, pad_size), "constant"
-    )  # zero padding(これしないと正規化後、画像端付近の尤度だけ明るくなる)
+    )  # zero padding
     img_t = cv2.GaussianBlur(
         img_t, ksize=(kernel_size, kernel_size), sigmaX=sigma
-    )  # filter gaussian(適宜パラメータ調整)
+    )  # gaussian filter 
     img_t = img_t[pad_size:-pad_size, pad_size:-pad_size]  # remove padding
     return img_t
 
@@ -164,51 +158,22 @@ def gt_id_gen():
                 j += 1
 
 
-def matching():
-    # targetのIDを取ってきて端削除
-    gts = np.loadtxt('./image/gt_id.txt', delimiter=',')
-    gts = gts[(10 < gts[:, 2]) | (gts[:, 2] < 1030)]
-    gts = gts[(10 < gts[:, 3]) | (gts[:, 3] < 1382)]
-
-    # 検出できたIDを保持する配列
-    id_lis = np.zeros((gts.shape[0], 5), dtype=np.int64)
-    id_lis[:, 0] = gts[:, 0]
-    df = pd.DataFrame(data=id_lis[:, 1:5], columns=['expert1', 'expert2', 'expert3', 'expert4'])
-
-    # plot_size = '3'
-    # expert = 'expert1'
-    # df = associate(plot_size, gts, expert, df)
-
-    plot_size = '6'
-    expert = 'expert2'
-    df = associate(plot_size, gts, expert, df)
-
-    plot_size = '9'
-    expert = 'expert3'
-    df = associate(plot_size, gts, expert, df)
-
-    plot_size = '12'
-    expert = 'expert4'
-    df = associate(plot_size, gts, expert, df)
-    df.to_csv('./output/each_expert_tp.csv')
-
-
 def associate(plot_size, gts, expert, df):
     res_paths = sorted(Path('/home/kazuya/ssd/detection/output/test18/MSELoss/%s/res' % plot_size).glob('*.tif'))
     ori_paths = sorted(Path('./image/originalTiff18').glob('*.tif'))
     paths = zip(res_paths, ori_paths)
     for i, path in enumerate(paths):
-        # 画像読み込み
+        # load image
         img = np.array(Image.open(str(path[0])))
         ori = np.array(Image.open(str(path[1])))
-        # local local_maxima取得
+        get # local local_maxima
         res = local_maxima(img, 100, 2)
         gt = gts[gts[:, 1] == i + 600][:, [3, 2, 0]]
 
-        # 対応付
+        # associate
         associate_id = optimum(gt, res, 10).astype(int)
 
-        # 対応付けされたID
+        # associated ID
         df.loc[gt[associate_id[:, 0]][:, 2], expert] = 1
     return df
 

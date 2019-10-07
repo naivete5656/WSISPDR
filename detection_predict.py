@@ -6,26 +6,60 @@ from pathlib import Path
 import cv2
 from networks import UNet
 from utils import local_maxima, show_res, optimum, target_peaks_gen, remove_outside_plot
+import argparse
+
+
+def parse_args():
+    """
+  Parse input arguments
+  """
+    parser = argparse.ArgumentParser(description="Train data path")
+    parser.add_argument(
+        "-i",
+        "--input_path",
+        dest="input_path",
+        help="dataset's path",
+        default="./image/test",
+        type=str,
+    )
+    parser.add_argument(
+        "-o",
+        "--output_path",
+        dest="output_path",
+        help="output path",
+        default="./output/detection",
+        type=str,
+    )
+    parser.add_argument(
+        "-w",
+        "--weight_path",
+        dest="weight_path",
+        help="load weight path",
+        default="./weight/best.pth",
+    )
+    parser.add_argument(
+        "-g", "--gpu", dest="gpu", help="whether use CUDA", action="store_true"
+    )
+
+    args = parser.parse_args()
+    return args
 
 
 class Predict:
-    def __init__(self, net, gpu, root_path, save_path, norm_value=255):
-        self.net = net
-        self.gpu = gpu
+    def __init__(self, args):
+        self.net = args.net
+        self.gpu = args.gpu
 
-        # self.ori_path = root_path
-        self.ori_path = root_path
+        self.ori_path = args.input_path
 
-        self.save_ori_path = save_path / Path("ori")
-        self.save_pred_path = save_path / Path("pred")
+        self.save_ori_path = args.output_path / Path("ori")
+        self.save_pred_path = args.output_path / Path("pred")
 
         self.save_ori_path.mkdir(parents=True, exist_ok=True)
         self.save_pred_path.mkdir(parents=True, exist_ok=True)
 
-        self.norm_value = norm_value
-
     def pred(self, ori):
-        img = (ori.astype(np.float32) / self.norm_value).reshape(
+        img = (ori.astype(np.float32) / ori.max()).reshape(
             (1, ori.shape[0], ori.shape[1])
         )
 
@@ -50,32 +84,21 @@ class Predict:
 
 
 class PredictFmeasure(Predict):
-    def __init__(
-        self,
-        net,
-        gpu,
-        root_path,
-        save_path,
-        peak_thresh=100,
-        dist_peak=10,
-        dist_threshold=20,
-        norm_value=255,
-    ):
-        super().__init__(net, gpu, root_path, save_path, norm_value=norm_value)
-        # self.ori_path = root_path
-        self.ori_path = root_path / Path("ori")
-        self.gt_path = root_path / Path("gt")
+    def __init__(self, args):
+        super().__init__(args)
+        self.ori_path = args.input_path / Path("ori")
+        self.gt_path = args.input_path / Path("gt")
 
-        self.save_gt_path = save_path / Path("gt")
-        self.save_error_path = save_path / Path("error")
-        self.save_txt_path = save_path / Path("f-measure.txt")
+        self.save_gt_path = args.output_path / Path("gt")
+        self.save_error_path = args.output_path / Path("error")
+        self.save_txt_path = args.output_path / Path("f-measure.txt")
 
         self.save_gt_path.mkdir(parents=True, exist_ok=True)
         self.save_error_path.mkdir(parents=True, exist_ok=True)
 
-        self.peak_thresh = peak_thresh
-        self.dist_peak = dist_peak
-        self.dist_threshold = dist_threshold
+        self.peak_thresh = 100
+        self.dist_peak = 2
+        self.dist_threshold = 10
 
         self.tps = 0
         self.fps = 0
@@ -143,18 +166,18 @@ class PredictFmeasure(Predict):
 
 
 if __name__ == "__main__":
-    gpu = True
+    args = parse_args()
 
-    weight_path = "weight path"
-    root_path = Path("image_dir")
-    save_path = Path("output_dir")
+    args.input_path = Path(args.input_path)
+    args.output_path = Path(args.output_path)
 
     net = UNet(n_channels=1, n_classes=1)
-    net.cuda()
-    net.load_state_dict(torch.load(weight_path, map_location="cuda:0"))
+    net.load_state_dict(torch.load(args.weight_path, map_location="cpu"))
 
-    pred = PredictFmeasure(
-        net=net, gpu=gpu, root_path=root_path, save_path=save_path, norm_value=255
-    )
+    if args.gpu:
+        net.cuda()
+    args.net = net
+
+    pred = PredictFmeasure(args)
 
     pred.main()

@@ -4,36 +4,54 @@ from propagation import GuideCall
 from pathlib import Path
 import torch
 from networks import UNet
+import argparse
 
-datasets = {
-    1: "GBM",
-    2: "B23P17",
-    3: "elmer",
-    4: "challenge",
-    5: "0318_9",
-    6: "sequence_10",
-}
-torch.cuda.set_device(0)
+
+def parse_args():
+    """
+  Parse input arguments
+  """
+    parser = argparse.ArgumentParser(description="data path")
+    parser.add_argument(
+        "-i",
+        "--input_path",
+        dest="input_path",
+        help="dataset's path",
+        default="./image/test",
+        type=str,
+    )
+    parser.add_argument(
+        "-o",
+        "--output_path",
+        dest="output_path",
+        help="output path",
+        default="./output/guided",
+        type=str,
+    )
+    parser.add_argument(
+        "-w",
+        "--weight_path",
+        dest="weight_path",
+        help="load weight path",
+        default="./weights/best.pth",
+    )
+    parser.add_argument(
+        "-g", "--gpu", dest="gpu", help="whether use CUDA", action="store_true"
+    )
+
+    args = parser.parse_args()
+    return args
 
 
 if __name__ == "__main__":
-    gpu = True
-    norm = True
-    plot_size = 9
-    radius = 1
-    date = datetime.now().date()
-    key = 0
-    cross = 0
-    dataset = datasets[3]
-    input_path = sorted(
-        Path("/home/kazuya/main/WSISPDR/image/riken/B2_1/ori").glob("*.tif")
-    )
-    output_path = Path("/home/kazuya/main/WSISPDR/output/riken/B2/guided")
-    weight_path = "/home/kazuya/main/WSISPDR/weights/riken/best.pth"
+    args = parse_args()
+
+    args.input_path = sorted(Path(args.input_path).joinpath("ori").glob("*.png"))
+    args.output_path = Path(args.output_path)
 
     net = UNet(n_channels=1, n_classes=1)
+    net.load_state_dict(torch.load(args.weight_path, map_location="cpu"))
+    args.net = net
 
-    net.load_state_dict(torch.load(weight_path, map_location={"cuda:2": "cuda:0"}))
-
-    bp = GuideCall(input_path, output_path, net)
+    bp = GuideCall(args)
     bp.main()
