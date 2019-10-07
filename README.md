@@ -2,7 +2,7 @@
 
 [![](https://img.shields.io/badge/pytorch-1.0-red.svg)](https://github.com/ZhouYanzhao/PRM/tree/pytorch)
 
-[[Home]](http://yzhou.work) [[Project]](http://yzhou.work/PRM) 
+[[Home]](http://human.ait.kyushu-u.ac.jp/~bise/researches-bise.html) [[Project]](https://naivete5656.github.io/WSISPDR/) 
 <!-- [[Paper]](https://arxiv.org/pdf/1804.00880)  -->
 <!-- [[Supp]](http://yzhou.work/PRM/Supplementary.pdf)  -->
 <!-- [[Poster]](http://yzhou.work/PRM/Poster.pdf)  -->
@@ -25,6 +25,7 @@ The setting of Detection network with python
 conda env create -f=env_name.yml
 conda activate pytorch
 ```
+
 ### Docker user
 ```besh
 docker build ./docker
@@ -34,6 +35,7 @@ sh run_docker.sh
 Graph-cut setting
 
 We use following code.
+
 https://jp.mathworks.com/matlabcentral/fileexchange/38555-kernel-graph-cut-image-segmentation
 Copyright (c) 2012, Ismail Ben Ayed
 All rights reserved.
@@ -51,17 +53,20 @@ cd ..
 ## Demo
 ## Back propagate from each cell
 ### Use cuda
-'''bash
+```bash
 python propagate_main.py -g
-'''
+```
 ### Use cpu
-'''bash
+```bash
 python detection_train.py 
-'''
+```
 #### Optins:
 -i :input path(str)
+
 -o :output path(str)
+
 -w :weight path want to load
+
 -g :whether use CUDA
 
 ## Graph-cut
@@ -84,10 +89,15 @@ python likelymapgen.py
 ```
 #### Option:
 -i :txt_file_path (str)
+
 -o :output_path  (str)
+
 -w :width (int)
+
 -h :height (int)
+
 -g :gaussian variance size (int)
+
 
 ## Train 
 ### Use cuda
@@ -100,11 +110,17 @@ python detection_train.py
 '''
 #### Optins:
 -t :train path(str)
+
 -v :validation path(str)
+
 -w :save path of weight(str)
+
 -g :whether use CUDA
+
 -b :batch size (default is 16)
+
 -e :epochs (default is 500)
+
 -l :learning rate(default is 1e-3)
 
 ## Predict
@@ -117,7 +133,11 @@ python detection_train.py -g
 python detection_train.py 
 '''
 #### Optins:
--i :input path(str)
+-i :input path(str) 
+
 -o :output path(str)
+
 -w :weight path want to load
+
 -g :whether use CUDA
+
