@@ -11,15 +11,15 @@
 ![Illustration](./image/proposed_method_overview.png)
 
 ## Prerequisites
-- python3
-- ubuntu 18.04
+- [python >= 3.6](https://www.python.org)
+- [ubuntu 18.04](https://ubuntu.com/)
 - CPU or GPU
 - nvidia driver 430
-- matlab
+- [matlab](https://jp.mathworks.com/products/matlab.html)
 
 ## Installation
 
-The setting of Detection network with python 
+Python setting
 ### Conda user
 ```bash
 conda env create -f=env_name.yml
