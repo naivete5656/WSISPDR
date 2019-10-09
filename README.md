@@ -141,3 +141,11 @@ python detection_train.py
 
 -g :whether use CUDA
 
+## citation
+
+@INPROCEEDINGS{Nishimura2019WSISPDR,
+    author = {Kazuya Nishihmura, Dai Fei Elmer Ker, Ryoma Bise},
+    title = {Weakly Supervised Cell Instance Segmentation<br>by Propagating from Detection Response},
+    booktitle = {MICCAI},
+    year = {2019}
+}
