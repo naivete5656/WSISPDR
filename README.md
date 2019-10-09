@@ -37,6 +37,7 @@ Graph-cut setting
 We use following code.
 
 https://jp.mathworks.com/matlabcentral/fileexchange/38555-kernel-graph-cut-image-segmentation
+
 Copyright (c) 2012, Ismail Ben Ayed
 All rights reserved.
 
@@ -146,7 +147,8 @@ python detection_train.py
 
 ## citation
 
-```
+If you find the code useful for your research, please cite:
+```bibtex
 @INPROCEEDINGS{Nishimura2019WSISPDR,
     author = {Kazuya Nishihmura, Dai Fei Elmer Ker, Ryoma Bise},
     title = {Weakly Supervised Cell Instance Segmentation<br>by Propagating from Detection Response},
