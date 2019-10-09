@@ -51,6 +51,9 @@ cd ..
 
 
 ## Demo
+This demo is only one image's demo.
+If you want to apply this method to your dataset, you should prepare the likelihood map.
+
 ## Back propagate from each cell
 ### Use cuda
 ```bash
