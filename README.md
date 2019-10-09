@@ -13,8 +13,7 @@
 ## Prerequisites
 - [python >= 3.6](https://www.python.org)
 - [ubuntu 18.04](https://ubuntu.com/)
-- CPU or GPU
-- nvidia driver 430
+- CPU or GPU(NVIDIA Driver >= 430)
 - [matlab](https://jp.mathworks.com/products/matlab.html)
 
 ## Installation
