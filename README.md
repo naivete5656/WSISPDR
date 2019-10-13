@@ -148,7 +148,7 @@ python detection_train.py
 
 If you find the code useful for your research, please cite:
 ```bibtex
-@INPROCEEDINGS{Nishimura2019WSISPDR,
+@article{Nishimura2019WSISPDR,
     author = {Kazuya Nishihmura, Dai Fei Elmer Ker, Ryoma Bise},
     title = {Weakly Supervised Cell Instance Segmentation<br>by Propagating from Detection Response},
     booktitle = {MICCAI},
