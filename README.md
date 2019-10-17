@@ -80,8 +80,11 @@ matlab -nodesktop -nosplash -r 'graphcut; exit'
 <div style="color:#0000FF" align="center">
  <img src="./image/test/ori/00000.png" width="280"/> <img src="./image/test/gt/00000.png" width="280"/><img src="./output/seg/result_bp/00000segbp.png" width="280"/>
 </div>
+
 **This is a sample code.**
+
 **We don't provide dataset.**
+
 If you want to apply your dataset, you should prepare the original image and point level annotation(cell centroid).
 The text file format contains a cell position(frame,x,y) as each row.
 Prepare the same format text file for your dataset.
