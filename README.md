@@ -151,10 +151,12 @@ python detection_train.py
 
 If you find the code useful for your research, please cite:
 ```bibtex
-@article{Nishimura2019WSISPDR,
-    author = {Kazuya Nishihmura, Dai Fei Elmer Ker, Ryoma Bise},
-    title = {Weakly Supervised Cell Instance Segmentation<br>by Propagating from Detection Response},
-    booktitle = {MICCAI},
-    year = {2019}
+@inproceedings{nishimura2019weakly,
+  title={Weakly Supervised Cell Instance Segmentation by Propagating from Detection Response},
+  author={Nishimura, Kazuya and Bise, Ryoma and others},
+  booktitle={International Conference on Medical Image Computing and Computer-Assisted Intervention},
+  pages={649--657},
+  year={2019},
+  organization={Springer}
 }
 ```
