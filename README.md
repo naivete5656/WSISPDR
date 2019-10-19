@@ -1,6 +1,6 @@
 <h2 align="center">Weakly Supervised Cell Instance Segmentation<br>by Propagating from Detection Response</h2>
 
-[![](https://img.shields.io/badge/pytorch-1.0-red.svg)](https://github.com/ZhouYanzhao/PRM/tree/pytorch)
+by Kazuya Nishimura, KER Dai Fei Elmer, Ryoma Bise
 
 [[Home]](http://human.ait.kyushu-u.ac.jp/~bise/researches-bise.html) [[Project]](https://naivete5656.github.io/WSISPDR/) 
 <!-- [[Paper]](https://arxiv.org/pdf/1804.00880)  -->
@@ -9,6 +9,8 @@
 <!-- [[Presentation]](https://www.youtube.com/embed/lNqXyJliVSo?start=4615&end=4850&autoplay=1&controls=0) -->
 
 ![Illustration](./image/proposed_method_overview.png)
+
+
 
 ## Prerequisites
 - [python >= 3.6](https://www.python.org)
