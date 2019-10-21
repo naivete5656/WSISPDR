@@ -88,13 +88,19 @@ matlab -nodesktop -nosplash -r 'graphcut; exit'
 **We don't provide dataset.**
 
 If you want to apply your dataset, you should prepare the original image and point level annotation(cell centroid).
-The text file format contains a cell position(frame,x,y) as each row.
+The attached text file (sample_cell_position.txt) contains a cell position(frame,x,y) as each row.
 Prepare the same format text file for your dataset.
 
+
+
 ## Generate likelyfood map
+
+**Set the variance to a value sufficiently larger than the target object.**
+
 ```bash
 python likelymapgen.py 
 ```
+
 #### Option:
 -i :txt_file_path (str)
 
@@ -109,13 +115,13 @@ python likelymapgen.py
 
 ## Train 
 ### Use cuda
-'''bash
+```bash
 python detection_train.py -g
-'''
+```
 ### Use cpu
-'''bash
+```bash
 python detection_train.py 
-'''
+```
 #### Optins:
 -t :train path(str)
 
@@ -133,9 +139,9 @@ python detection_train.py
 
 ## Predict
 ### Use cuda
-'''bash
+```bash
 python detection_train.py -g
-'''
+```
 ### Use cpu
 '''bash
 python detection_train.py 
