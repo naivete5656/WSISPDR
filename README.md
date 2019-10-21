@@ -96,6 +96,7 @@ Prepare the same format text file for your dataset.
 ## Generate likelyfood map
 
 **Set the variance to a value sufficiently larger than the target object.**
+The guided backpropagation depends on variance size.
 
 ```bash
 python likelymapgen.py 
