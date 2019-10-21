@@ -144,9 +144,9 @@ python detection_train.py
 python detection_train.py -g
 ```
 ### Use cpu
-'''bash
+```bash
 python detection_train.py 
-'''
+```
 #### Optins:
 -i :input path(str) 
 
