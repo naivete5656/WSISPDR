@@ -2,7 +2,7 @@
 
 by Kazuya Nishimura, KER Dai Fei Elmer, Ryoma Bise
 
-[[Home]](http://human.ait.kyushu-u.ac.jp/~bise/researches-bise.html) [[Project]](https://naivete5656.github.io/WSISPDR/) 
+[[Home]](http://human.ait.kyushu-u.ac.jp/~bise/researches-bise-CIA.html) [[Project]](https://naivete5656.github.io/WSISPDR/) 
 <!-- [[Paper]](https://arxiv.org/pdf/1804.00880)  -->
 <!-- [[Supp]](http://yzhou.work/PRM/Supplementary.pdf)  -->
 <!-- [[Poster]](http://yzhou.work/PRM/Poster.pdf)  -->
