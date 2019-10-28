@@ -39,8 +39,6 @@ We use following code.
 
 https://jp.mathworks.com/matlabcentral/fileexchange/38555-kernel-graph-cut-image-segmentation
 
-Copyright (c) 2012, Ismail Ben Ayed
-All rights reserved.
 
 ```bash
 mkdir graphcut 
