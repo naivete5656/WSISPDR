@@ -1,6 +1,6 @@
 <h2 align="center">Weakly Supervised Cell Instance Segmentation<br>by Propagating from Detection Response</h2>
 
-by Kazuya Nishimura, KER Dai Fei Elmer, Ryoma Bise
+by Kazuya Nishimura, Ker Dai Fei Elmer, Ryoma Bise
 
 [[Home]](http://human.ait.kyushu-u.ac.jp/~bise/researches-bise-CIA.html) [[Project]](https://naivete5656.github.io/WSISPDR/) [[Paper]](https://arxiv.org/abs/1911.13077) 
 <!-- [[Paper]](https://arxiv.org/pdf/1804.00880)  -->
