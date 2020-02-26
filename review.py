@@ -91,13 +91,10 @@ class UseMethods(EvaluationMethods):
 
 class LinearReview(UseMethods):
     def center_get(self, pred):
-        # しきい値処理
         thresh, bin_img = cv2.threshold(
             pred.astype(np.uint8), 0, 255, cv2.THRESH_BINARY_INV
         )
-        # 色を反転
         bin_img = cv2.bitwise_not(bin_img)
-        # ノイズ除去
         kernel = np.ones((3, 3), np.uint8)
         opening = cv2.morphologyEx(bin_img, cv2.MORPH_OPEN, kernel, iterations=2)
 
@@ -130,13 +127,13 @@ class LinearReview(UseMethods):
 
             target = cv2.imread(str(path[1]), 0)
 
-            # しきい値処理
+            # threshold
             thresh, bin_img = cv2.threshold(
                 gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU
             )
-            # 色を反転
+            # inverse color
             bin_img = cv2.bitwise_not(bin_img)
-            # ノイズ除去
+            # denoising
             kernel = np.ones((3, 3), np.uint8)
             opening = cv2.morphologyEx(bin_img, cv2.MORPH_OPEN, kernel, iterations=2)
 
@@ -176,27 +173,22 @@ class LinearReview(UseMethods):
 
 
 if __name__ == "__main__":
-    date = datetime.now().date()
-    datasets = ["GBM", "B23P17", "0318_9", "elmer"]
-    dataset = datasets[0]
-    methods = ["bensh", "fogbank", "proposed", "linear", "prm"]
-    method = "proposed"
 
     target_path = sorted(
-        Path(f"/home/kazuya/file_server2/review/{dataset}/mask_cut").glob("*.tif")
+        Path(f"target path").glob("*.tif")
     )
 
     pred_path = Path(
-        f"/home/kazuya/file_server2/review/out_{dataset}/{method}/labelresults_0.100000_0.010000"
+        f"pred path"
     )
     pred_paths = sorted(pred_path.glob("*.tif"))
 
     detection_path = sorted(
-        Path("/home/kazuya/file_server2/all_outputs/bes_out/challenge_01/pred").glob(
+        Path("detection path").glob(
             "*.tif"
         )
     )
-    save_path = Path(f"/home/kazuya/file_server2/review/txt_result/{dataset}/{method}")
+    save_path = Path(f"save path")
     save_path.mkdir(parents=True, exist_ok=True)
     assert len(target_path) > 0, print("target_no_data")
     assert len(pred_paths) > 0, print("pred_no_data")
