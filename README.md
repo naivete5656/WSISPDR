@@ -23,7 +23,7 @@ by Kazuya Nishimura, Ker Dai Fei Elmer, Ryoma Bise
 Python setting
 ### Conda user
 ```bash
-conda env create -f=env_name.yml
+conda env create -f=requirement.yml
 conda activate pytorch
 ```
 
