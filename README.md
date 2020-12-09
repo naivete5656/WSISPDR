@@ -53,6 +53,9 @@ cd ..
 ## Demo
 This demo is only one image's demo.
 If you want to apply this method to your dataset, you should prepare the likelihood map.
+```bash
+python main.py -g
+```
 
 ## Back propagate from each cell
 ### Use cuda
@@ -112,7 +115,7 @@ python likelymapgen.py
 -g :gaussian variance size (int)
 
 
-## Train 
+## Train cell detection CNN
 ### Use cuda
 ```bash
 python detection_train.py -g
@@ -136,14 +139,14 @@ python detection_train.py
 
 -l :learning rate(default is 1e-3)
 
-## Predict
+## Predict cell detection
 ### Use cuda
 ```bash
-python detection_train.py -g
+python detection_predict.py -g
 ```
 ### Use cpu
 ```bash
-python detection_train.py 
+python detection_predict.py 
 ```
 #### Optins:
 -i :input path(str) 
